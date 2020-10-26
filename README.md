@@ -3,7 +3,8 @@
 One Paragraph of project description goes here
 
 ## Credits
-Gianmaria Pizzo, Riccardo Peresin, Aleksandra
+Gianmaria Pizzo, Riccardo Peresin, Aleksandra Gjorgievska
+
 
 ### Prerequisites
 
