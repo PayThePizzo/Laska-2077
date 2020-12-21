@@ -15,19 +15,19 @@ leggenda id
 enum ide {white_empty_box, black_box, white_pawn, black_pawn, w_dama_pawn, b_dama_pawn};
 typedef enum ide t_ide;
 
-typedef struct point{
+typedef struct point{                   /*coordinate scacchiera */
     int x, y;
 } point;
 
-typedef struct pawn {
+typedef struct boxpawn {                /*se la cella è vuota rappresenta il colore, sennè rappresenta la pedina (ovviamente la cella è bianca)*/
     int id;
-    struct pawn *next;
-} tpawn;
+    struct boxpawn *next;
+} boxpawn;
 
-typedef struct dama{
+typedef struct dama{                    /*scacchiera*/
     int cols;
     int rows;
-    tpawn ***mat;
+    boxpawn ***mat;
 } tgame;
 
 tgame* create(int cols,int rows);
@@ -39,80 +39,121 @@ void add(tgame *dama, t_ide pedina, int r, int c);
 int remove_pawn(tgame *dama, int r, int c);
 point findmiddle(point a, point b);
 void move (tgame *dama, point a, point b);
+int game(tgame *dama, int rows, int cols);
+int legal_move (tgame *dama, point a, point b);
 
 int main() {
     tgame *dama;
     point a,b;
     dama=create(7,7);
-    private_print(*dama,dama->rows,dama->cols);
-    add (dama, 2, 0, 0);
-    remove_pawn(dama, 0, 0);
-    printf("Write the start coordinate\n or Press x to give up\n");
-    printf("X:");
-    a.x=convert();
-    if(a.y == -1)
-        exit (1);
-    printf("Y:");
-    scanf("%d",&a.y);
-    --(a.y);
-    printf("Write the destination coordinate\n");
-    printf("Y:");
-    b.y=convert();
-    printf("X:");
-    scanf("%d",&b.x);
-    --(b.x);
-    /* if legal move .. */
-    move(dama, a, b);
-    private_print(*dama,dama->rows,dama->cols);
+    int winner;
+    winner = game (dama, dama->rows, dama->cols);
+
+    if(winner==0){
+        printf("White gamer is the winner!!!");
+    }else {
+        printf("Black player is the winner!!!");
+    }
     printf("\n");
     
     freegame(dama,dama->rows,dama->cols);
     return 0;
 }
 
+int game(tgame *dama, int rows, int cols){
+    point a,b;
+    int turn = 0;
+    int endgame = 0;
+
+        while(!endgame){
+            private_print (*dama, rows, cols);
+            printf("Write the start coordinate or Press x to give up\n");
+            if(turn ==0)
+                printf("It's white turn\n");
+            else
+                printf("It's black turn\n");
+            printf("Letter:");
+            a.x=convert();
+            if(a.y == -1)
+                return (turn == 0 ? 1 : 0);
+            else{
+                printf("Number:");
+                scanf("%d",&a.y);
+                --(a.y);
+                /* è una mia pedina?*/
+                if(dama->mat[a.y][a.x]->id== turn+2 || dama->mat[a.y][a.x]->id== turn+4){
+                    do
+                    {
+                    printf("Write the destination coordinate\n");
+                    printf("Letter:");
+                    b.x=convert();
+                    printf("Number:");
+                    scanf("%d",&b.y);
+                    --(b.y);
+                    } while (!legal_move (dama, a, b));
+
+                    move(dama, a, b);
+                    private_print (*dama,dama->rows,dama->cols);
+                    /* if vittoria (...) return 0/1 */
+        
+                    if(turn == 0)
+                        turn = 1;
+                    else
+                        turn = 0;;
+            }
+            else {
+                printf("Please select your pawn\n");
+            }
+        }
+        }
+}
+
+int legal_move (tgame *dama, point a, point b){
+    return 1;                                                 /* da implementare */
+}
 tgame* create(int cols,int rows){
-    tgame *result;
+    tgame *dama;
     int i, j;
 
 
-    result=(tgame*)malloc(sizeof(tgame));
-    assert(result!=NULL);
+    dama=(tgame*)malloc(sizeof(tgame));                       /*alloca lo spazio alla struct*/
+    assert(dama!=NULL);
 
-    result->rows=rows;
-    result->cols=cols;
+    dama->rows=rows;                                          /*salva le dimensioni*/
+    dama->cols=cols;
 
-    result->mat=(tpawn***)malloc(sizeof(tpawn**)*rows);
-    assert(result->mat!=NULL);
+    dama->mat=(boxpawn***)malloc(sizeof(boxpawn**)*rows);     /*alloca vettore righe*/
+    assert(dama->mat!=NULL);
 
     for(i=0;i<rows;i++){
-        result->mat[i]=(tpawn**)malloc(sizeof(tpawn*)*cols);
-        assert(result->mat[i]!=NULL);
+        dama->mat[i]=(boxpawn**)malloc(sizeof(boxpawn*)*cols);/*alloca le varie righe*/
+        assert(dama->mat[i]!=NULL);
         for(j=0;j<cols;j++){
-            result->mat[i][j]=(tpawn*)malloc(sizeof(tpawn));
-            assert(result->mat[i][j]!=NULL);
-            result->mat[i][j]->next=NULL;
+            dama->mat[i][j]=(boxpawn*)malloc(sizeof(boxpawn));/*alloca 1 casella contenente colore o pedina per ciascun punto della schacchiera*/
+            assert(dama->mat[i][j]!=NULL);
+            dama->mat[i][j]->next=NULL;
         }
     }
     /*creazione scacchiera*/
     for(i = 0;i<rows;i++){
         for(j=0;j<cols;j++) {
             if (i % 2 == 0 && j % 2 == 0) {
-                result->mat[i][j]->id = 0;
+                dama->mat[i][j]->id = 0;
             } else if (i % 2 != 0 && j % 2 != 0) {
-                result->mat[i][j]->id = 0;
+                dama->mat[i][j]->id = 0;
             } else {
-                result->mat[i][j]->id = 1;
+                dama->mat[i][j]->id = 1;
             }
         }
     }
     /*posizionamento pedine*/
     for (i = 0; i <rows ; i++) {
         for (j = 0; j < cols; j++) {
-            if (result->mat[i][j]->id == 0) {
+            if (dama->mat[i][j]->id == 0) {
                 if (i > rows / 2 && i <= rows) {
-                    result->mat[i][j]->id = 2;
+                    dama->mat[i][j]->id = 2;
                 } else if (i >= 0 && i < rows / 2) {
-                    result->mat[i][j]->id = 3;
+                    dama->mat[i][j]->id = 3;
                 }
             }
 
@@ -120,7 +161,7 @@ tgame* create(int cols,int rows){
     }
 
 
-    return result;
+    return dama;
 }
 
 void freegame(tgame *dama, int rows, int cols) {
@@ -129,13 +170,13 @@ void freegame(tgame *dama, int rows, int cols) {
     for(i = 0; i<rows; i++){
         for (j=0; j<cols; j++){
             if(dama->mat[i][j]->next==NULL)
-                free(dama->mat[i][j]);
+                free(dama->mat[i][j]);                      /*caso con 1 sola bowpawn*/
             else if(dama->mat[i][j]->next->next==NULL){ 
-                free(dama->mat[i][j]->next);
+                free(dama->mat[i][j]->next);                /*caso con 2 boxpawn*/
                 free(dama->mat[i][j]);
             }
             else{
-                free(dama->mat[i][j]->next->next);
+                free(dama->mat[i][j]->next->next);          /*caso con 3 boxpawn*/
                 free(dama->mat[i][j]->next);
                 free(dama->mat[i][j]); 
             }
@@ -253,7 +294,7 @@ void add(tgame *dama, t_ide pawn, int r, int c){
     dama->mat[r][c]->id = pawn;
     }
     else{
-    tpawn *n= (tpawn *) malloc(sizeof(tpawn));
+    boxpawn *n= (boxpawn *) malloc(sizeof(boxpawn));
     n->next = NULL;
     n->id = pawn;
     if (dama->mat[r][c]->next==NULL){
@@ -288,7 +329,7 @@ int remove_pawn(tgame *dama, int r, int c){
        return estract;
    }
    else{
-       tpawn *element = dama->mat[r][c];
+       boxpawn *element = dama->mat[r][c];
        estract = dama->mat[r][c]->id;
        dama->mat[r][c] = dama->mat[r][c]->next;
        free(element);
@@ -323,13 +364,13 @@ point findmiddle(point a, point b){
 }
 void move (tgame *dama, point a, point b){
     if (abs(b.x - a.x)==1 && dama->mat[b.y][b.x]->id == 0){
-        tpawn * temporary = dama->mat[b.y][b.x];                    /*swap spostamento cella vuola*/
+        boxpawn * temporary = dama->mat[b.y][b.x];                    /*swap spostamento cella vuola*/
         dama->mat[b.y][b.x]= dama->mat[a.y][a.x];
         dama->mat[a.y][a.x]= temporary;
     }
     else if(abs(b.y - a.y)==2 && dama->mat[b.y][b.x]->id == 0){ /*spostamento con conquista*/
         int conquered;
-        tpawn * temporary = dama->mat[b.y][b.x];  
+        boxpawn * temporary = dama->mat[b.y][b.x];  
         point middle = findmiddle( a, b);
 
         conquered = remove_pawn(dama, middle.y, middle.x);
@@ -342,3 +383,4 @@ void move (tgame *dama, point a, point b){
     }
 
 }
+
