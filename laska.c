@@ -74,7 +74,7 @@ int game(tgame *dama, int rows, int cols){
                 printf("It's black turn\n");
             printf("Letter:");
             a.x=convert();
-            if(a.x == 0)
+            if(a.x == -1)
                 return (turn == 0 ? 1 : 0);
             else{
                 printf("Number:");
@@ -196,7 +196,7 @@ int convert(){
     else if(a>='a' && a<='g')
         return i=a-97;
     else if (a=='x'||a=='X')
-        return 0;
+        return -1;
     else{
         convert();
     }
