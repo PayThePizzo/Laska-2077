@@ -218,8 +218,12 @@ void official_print(tgame result, int rows , int cols){
             }else if(result.mat[i][j]->id==1){
                 printf("%c ",' ');
             }else if(result.mat[i][j]->id==2){
-                printf("%c ",'W');
+                printf("%c ",'w');
             }else if(result.mat[i][j]->id==3){
+                printf("%c ",'b');
+            }else if(result.mat[i][j]->id==4){
+                printf("%c ",'W');
+            }else if(result.mat[i][j]->id==5){
                 printf("%c ",'B');
             }
         }
