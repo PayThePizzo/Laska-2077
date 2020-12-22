@@ -74,7 +74,7 @@ int game(tgame *dama, int rows, int cols){
                 printf("It's black turn\n");
             printf("Letter:");
             a.x=convert();
-            if(a.y == -1)
+            if(a.x == 0)
                 return (turn == 0 ? 1 : 0);
             else{
                 printf("Number:");
@@ -93,7 +93,7 @@ int game(tgame *dama, int rows, int cols){
                     } while (!legal_move (dama, a, b));
 
                     move(dama, a, b);
-                    private_print (*dama,dama->rows,dama->cols);
+                    /*private_print (*dama,dama->rows,dama->cols);  magari solo all'ultima mossa */
                     /* if vittoria (...) return 0/1 */
         
                     if(turn == 0)
@@ -232,7 +232,7 @@ void private_print(tgame result, int rows , int cols){
     printf(" ");
     int i , j;
     for (int i = 0; i < rows; ++i) {
-        printf(" %c   ",65+i);
+        printf(" %c    ",65+i);
     }
 
     printf("\n");
@@ -277,7 +277,9 @@ void private_print(tgame result, int rows , int cols){
             else{
                 printf("   ");
             }
+            printf("|");
         }
+        printf("\n  __________________________________________");
         printf("\n");
 
     }
@@ -383,4 +385,3 @@ void move (tgame *dama, point a, point b){
     }
 
 }
-
