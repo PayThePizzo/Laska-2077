@@ -1,4 +1,4 @@
-# C-Dama-Beginner
+# Laska 2077
 
 This project was made for our Introduction to Programming Course. It represent the digital version of the famous tablegame, Laska.
 Check out the official site of the game, here: http://www.lasca.org/
