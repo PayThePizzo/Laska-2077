@@ -93,11 +93,13 @@ void freegame(tgame *result, int rows, int cols);
 /**
  *
  * @param dama
+ * @param turn
  * @param a
  * @param b
+ * @param have_to_capture
  * @return
  */
-int legal_move (tgame *dama, point a, point b);
+int legal_move (tgame *dama, int turn, point a, point b, int have_to_capture);
 
 /**
  *
@@ -108,6 +110,12 @@ int legal_move (tgame *dama, point a, point b);
  */
 int legal_choice(tgame *dama, point a, point b);
 
+/**
+ *
+ * @param dim
+ * @return
+ */
+int check_number(int dim);
 
 /********** Print **********/
 
@@ -166,6 +174,13 @@ int remove_pawn(tgame *dama, int r, int c);
  */
 point findmiddle(point a, point b);
 
+/**
+ *
+ * @param dama
+ * @param turn
+ */
+void promotion(tgame *dama, int turn);
+
 
 /********** Move Pawn **********/
 
@@ -203,3 +218,12 @@ void main_menu();
  * @return
  */
 int game(tgame *dama, int rows, int cols);
+
+/**
+ *
+ * @param dama
+ * @param rows
+ * @param cols
+ * @return
+ */
+int game_p(tgame *dama, int rows, int cols);

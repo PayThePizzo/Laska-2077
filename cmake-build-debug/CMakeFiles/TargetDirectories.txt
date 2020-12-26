@@ -1,3 +1,0 @@
-C:/Users/PayThePizzo/Sites/Mini-Lasca-C/cmake-build-debug/CMakeFiles/Mini_Lasca_C.dir
-C:/Users/PayThePizzo/Sites/Mini-Lasca-C/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/PayThePizzo/Sites/Mini-Lasca-C/cmake-build-debug/CMakeFiles/rebuild_cache.dir

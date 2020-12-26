@@ -86,12 +86,111 @@ void freegame(tgame *dama, int rows, int cols) {
 
 // Legal Side
 
-int legal_move (tgame *dama, point a, point b){     /* da implementare */
+int legal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
+
+    /*
+        return 1;
+    */
+    if (turn ==0){                              /*bianchi*/
+        if(dama->mat[a.y][a.x]->id == 2){            /*soldato semplice*/
+            if (have_to_capture==1){             /*deve conquistare affinchè la mossa sia valida */
+                if (dama->mat[b.y][b.x]->id== 0 && b.y==a.y-2 && (b.x==a.x+2||b.x==a.x-2) && (dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id==3 ||dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==5 ))
+                    return 1;
+                else{
+                    printf("Mossa non valida\n");
+                    return 0;
+                }
+            }
+            else {                              /* muovi soltanto senza conquistare */
+                if (dama->mat[b.y][b.x]->id== 0 && b.y==a.y-2 && (b.x==a.x+2||b.x==a.x-2) && (dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id==3 ||dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==5 ))
+                    return 1;
+                if(dama->mat[b.y][b.x]->id == 0 && b.y==a.y-1 && (b.x==a.x+1||b.x==a.x-1))
+                    return 1;
+                else{
+                    printf("Mossa non valida\n");
+                    return 0;
+                }
+            }
+        }
+        else {                                  /* se sto muovendo una dama */
+            if (have_to_capture==1){             /*deve conquistare affinchè la mossa sia valida */
+                if (dama->mat[b.y][b.x]->id == 0 && abs(b.y - a.y)==2 && abs(b.x - a.x)==2 && (dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==3 ||dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==5 ))
+                    return 1;
+                else{
+                    printf("Mossa non valida\n");
+                    return 0;
+                }
+            }
+            else {                              /* muovi soltanto senza conquistare */
+                if (dama->mat[b.y][b.x]->id == 0 && abs(b.y - a.y)==2 && abs(b.x - a.x)==2 && (dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==3 ||dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==5 ))
+                    return 1;
+                if(dama->mat[b.y][b.x]->id == 0 && abs(b.x - a.x)==1 && abs(b.y - a.y)==1)
+                    return 1;
+                else{
+                    printf("Mossa non valida\n");
+                    return 0;
+                }
+            }
+        }
+    }
+    else {                                         /* turno neri*/
+        if(dama->mat[a.y][a.x]->id == 3){            /*soldato semplice*/
+            if (have_to_capture==1){             /*deve conquistare affinchè la mossa sia valida */
+                if (dama->mat[b.y][b.x]->id == 0 && b.y==a.y+2 && (b.x==a.x+2||b.x==a.x-2) && (dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==2 ||dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==4 ))
+                    return 1;
+                else{
+                    printf("Mossa non valida\n");
+                    return 0;
+                }
+            }
+            else {
+                if (dama->mat[b.y][b.x]->id == 0 && b.y==a.y+2 && (b.x==a.x+2||b.x==a.x-2) && (dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==2 ||dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==4 ))
+                    return 1;                          /* muovi soltanto senza conquistare */
+                if(dama->mat[b.y][b.x]->id == 0 && b.y==a.y+1 && (b.x==a.x+1||b.x==a.x-1))
+                    return 1;
+                else{
+                    printf("Mossa non valida\n");
+                    return 0;
+                }
+            }
+        }
+        else {                                  /* se sto muovendo una dama */
+            if (have_to_capture==1){             /*deve conquistare affinchè la mossa sia valida */
+                if (dama->mat[b.y][b.x]->id == 0 && abs(b.y - a.y)==2 && abs(b.x - a.x)==2 && (dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==2 ||dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==4 ))
+                    return 1;
+                else{
+                    printf("Mossa non valida\n");
+                    return 0;
+                }
+            }
+            else {
+                if (dama->mat[b.y][b.x]->id == 0 && abs(b.y - a.y)==2 && abs(b.x - a.x)==2 && (dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==2 ||dama->mat[findmiddle( a, b).y][findmiddle( a, b).x]->id ==4 ))
+                    return 1;                         /* muovi soltanto senza conquistare */
+                if(dama->mat[b.y][b.x]->id == 0 && abs(b.x - a.x)==1 && abs(b.y - a.y)==1)
+                    return 1;
+                else{
+                    printf("Mossa non valida\n");
+                    return 0;
+                }
+            }
+        }
+    }
 }
 
 int legal_choice(tgame *dama, point a, point b){
 }
 
+int check_number(int dim){
+    int i;
+    while (1){
+        scanf("%d",&i);
+        if(i>=1 && i<=dim)
+            return i;
+        else {
+            printf("The selected box doesn't exist. Please select a number from %d to %d\n", 1, dim);
+        }
+    }
+}
 
 // Print
 
@@ -287,6 +386,16 @@ point findmiddle(point a, point b){
 
 }
 
+void promotion(tgame *dama, int turn){
+    int i,j;
+    turn == 0? i=0 : (i=((dama->rows)-1));
+
+    for (j=0; j<dama->cols; j++){
+        if (dama->mat[i][j]->id == turn+2)
+            dama->mat[i][j]->id +=2;
+    }
+}
+
 
 void move (tgame *dama, point a, point b){
     if (abs(b.x - a.x)==1 && dama->mat[b.y][b.x]->id == 0){
@@ -314,6 +423,12 @@ void move (tgame *dama, point a, point b){
 //Auxiliary
 
 int coin_toss(){
+    double flip = (double)rand()/(double)RAND_MAX;
+    if(flip >= 0.5){
+        return 1;
+    }else{
+        return 0;
+    }
 }
 
 
@@ -376,3 +491,57 @@ int game(tgame *dama, int rows, int cols){
         }
     }
 }
+
+/*
+
+int game_p(tgame *dama, int rows, int cols){
+    point a,b;
+    int turn = 0;
+    int endgame = 0;
+
+    while(!endgame){
+        private_print (*dama, rows, cols);
+        printf("Write the start coordinate or Press x to give up\n");
+        if(turn ==0)
+            printf("It's white turn\n");
+        else
+            printf("It's black turn\n");
+        printf("Letter:");
+        a.x=convert(dama->cols);
+        if(a.x == -1)
+            return (turn == 0 ? 1 : 0);
+        else{
+            printf("Number:");
+            a.y = check_number(dama->cols);
+            (a.y) --;
+            if(legal_selection(dama, turn, a)){
+                if(dama->mat[a.y][a.x]->id== turn+2 || dama->mat[a.y][a.x]->id== turn+4){
+                    do
+                    {
+                        printf("Write the destination coordinate\n");
+                        printf("Letter:");
+                        b.x=convert(dama->cols);
+                        printf("Number:");
+                        b.y = check_number(dama->cols);
+                        (b.y) --;
+                    } while (!legal_move (dama, turn, a, b, 2));
+                    move(dama, a, b);
+                    promotion(dama, turn);
+
+                    if(turn == 0)
+                        turn = 1;
+                    else
+                        turn = 0;;
+                }
+                else {
+                    printf("Please select your pawn\n");
+                }
+            }
+
+            else{
+                printf("the selected move is not valid beacause you have to capture enemy's pawn\n");
+            }
+        }
+    }
+}
+*/

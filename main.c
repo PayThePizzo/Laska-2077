@@ -53,8 +53,8 @@ int main() {
     printf("You can Quit or Give Up at any time, unless two PCs are playing.\n");
     printf("Yeah, you do not want to see them angry... They really love the game\n");
     printf("\n");
-    printf("\n");
     printf("Let's hear it then, have you made up your mind?(Y/N)");
+    printf("\n");
     printf("\n");
 
 
