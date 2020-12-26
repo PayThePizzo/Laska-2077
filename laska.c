@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <time.h>
 #include <math.h>
+#include <time.h>
+#include "laska.h"
+
 /*
 leggenda id
 0-> cella bianca
@@ -12,109 +14,11 @@ leggenda id
 4-> pedina bianca promossa
 5-> pedina nera promossa
 */
-enum ide {white_empty_box, black_box, white_pawn, black_pawn, w_dama_pawn, b_dama_pawn};
-typedef enum ide t_ide;
 
-typedef struct point{                   /*coordinate scacchiera */
-    int x, y;
-} point;
 
-typedef struct boxpawn {                /*se la cella è vuota rappresenta il colore, sennè rappresenta la pedina (ovviamente la cella è bianca)*/
-    int id;
-    struct boxpawn *next;
-} boxpawn;
-
-typedef struct dama{                    /*scacchiera*/
-    int cols;
-    int rows;
-    boxpawn ***mat;
-} tgame;
-
-tgame* create(int cols,int rows);
-void official_print(tgame result, int rows , int cols);
-void private_print(tgame result, int rows , int cols);
-void freegame(tgame *result, int rows, int cols);
-int convert();
-void add(tgame *dama, t_ide pedina, int r, int c);
-int remove_pawn(tgame *dama, int r, int c);
-point findmiddle(point a, point b);
-void move (tgame *dama, point a, point b);
-int game(tgame *dama, int rows, int cols);
-int legal_move (tgame *dama, point a, point b);
-
-int main() {
-    tgame *dama;
-    point a,b;
-    dama=create(7,7);
-    int winner;
-    winner = game (dama, dama->rows, dama->cols);
-
-    if(winner==0){
-        printf("White gamer is the winner!!!");
-    }else {
-        printf("Black player is the winner!!!");
-    }
-    printf("\n");
-    
-    freegame(dama,dama->rows,dama->cols);
-    return 0;
-}
-
-int game(tgame *dama, int rows, int cols){
-    point a,b;
-    int turn = 0;
-    int endgame = 0;
-
-        while(!endgame){
-            private_print (*dama, rows, cols);
-            printf("Write the start coordinate or Press x to give up\n");
-            if(turn ==0)
-                printf("It's white turn\n");
-            else
-                printf("It's black turn\n");
-            printf("Letter:");
-            a.x=convert();
-            if(a.x == -1)
-                return (turn == 0 ? 1 : 0);
-            else{
-                printf("Number:");
-                scanf("%d",&a.y);
-                --(a.y);
-                /* è una mia pedina?*/
-                if(dama->mat[a.y][a.x]->id== turn+2 || dama->mat[a.y][a.x]->id== turn+4){
-                    do
-                    {
-                    printf("Write the destination coordinate\n");
-                    printf("Letter:");
-                    b.x=convert();
-                    printf("Number:");
-                    scanf("%d",&b.y);
-                    --(b.y);
-                    } while (!legal_move (dama, a, b));
-
-                    move(dama, a, b);
-                    /*private_print (*dama,dama->rows,dama->cols);  magari solo all'ultima mossa */
-                    /* if vittoria (...) return 0/1 */
-        
-                    if(turn == 0)
-                        turn = 1;
-                    else
-                        turn = 0;;
-            }
-            else {
-                printf("Please select your pawn\n");
-            }
-        }
-        }
-}
-
-int legal_move (tgame *dama, point a, point b){
-    return 1;                                                 /* da implementare */
-}
 tgame* create(int cols,int rows){
     tgame *dama;
     int i, j;
-
 
     dama=(tgame*)malloc(sizeof(tgame));                       /*alloca lo spazio alla struct*/
     assert(dama!=NULL);
@@ -164,6 +68,7 @@ tgame* create(int cols,int rows){
     return dama;
 }
 
+
 void freegame(tgame *dama, int rows, int cols) {
     int i , j;
 
@@ -183,10 +88,18 @@ void freegame(tgame *dama, int rows, int cols) {
         }
         free(dama->mat[i]);
     }
-
     free(dama->mat);
     free(dama);
 }
+
+int legal_move (tgame *dama, point a, point b){
+                                                 /* da implementare */
+}
+
+/*
+int legal_choice(tgame *dama, point a, point b,)
+*/
+
 int convert(){
     char a;
     int i = 0;
@@ -201,6 +114,7 @@ int convert(){
         convert();
     }
 }
+
 void official_print(tgame result, int rows , int cols){
     printf("%32s","LASKA GAME\n");
     printf(" ");
@@ -228,9 +142,9 @@ void official_print(tgame result, int rows , int cols){
             }
         }
         printf("\n");
-
     }
 }
+
 void private_print(tgame result, int rows , int cols){
     printf("%25s","LASKA GAME\n");
     printf(" ");
@@ -342,6 +256,7 @@ int remove_pawn(tgame *dama, int r, int c){
        return estract;
    }
 }
+
 point findmiddle(point a, point b){
     point middle;
         if(a.y>b.y){
@@ -368,6 +283,7 @@ point findmiddle(point a, point b){
     return middle;
 
 }
+
 void move (tgame *dama, point a, point b){
     if (abs(b.x - a.x)==1 && dama->mat[b.y][b.x]->id == 0){
         boxpawn * temporary = dama->mat[b.y][b.x];                    /*swap spostamento cella vuola*/
@@ -388,4 +304,53 @@ void move (tgame *dama, point a, point b){
         printf("Error move function");
     }
 
+}
+
+int game(tgame *dama, int rows, int cols){
+    point a,b;
+    int turn = 0;
+    int endgame = 0;
+
+    while(!endgame) {
+        private_print(*dama, rows, cols);
+        printf("\n");
+        printf("\n");
+        printf("Write the start coordinate or Press x to give up\n");
+        if (turn == 0)
+            printf("It's white turn\n");
+        else
+            printf("It's black turn\n");
+        printf("Letter:");
+
+        a.x = convert();
+        if (a.x == -1)
+            return (turn == 0 ? 1 : 0);
+        else {
+            printf("Number:");
+            scanf("%d", &a.y);
+            --(a.y);
+            /* è una mia pedina?*/
+            if (dama->mat[a.y][a.x]->id == turn + 2 || dama->mat[a.y][a.x]->id == turn + 4) {
+                do {
+                    printf("Write the destination coordinate\n");
+                    printf("Letter:");
+                    b.x = convert();
+                    printf("Number:");
+                    scanf("%d", &b.y);
+                    --(b.y);
+                } while (!legal_move(dama, a, b));
+
+                move(dama, a, b);
+                /*private_print (*dama,dama->rows,dama->cols);  magari solo all'ultima mossa */
+                /* if vittoria (...) return 0/1 */
+
+                if (turn == 0)
+                    turn = 1;
+                else
+                    turn = 0;;
+            } else {
+                printf("Please select your pawn\n");
+            }
+        }
+    }
 }
