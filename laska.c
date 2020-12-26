@@ -5,16 +5,8 @@
 #include <time.h>
 #include "laska.h"
 
-/*
-leggenda id
-0-> cella bianca
-1-> cella nera
-2-> pedina bianca
-3-> pedina nera
-4-> pedina bianca promossa
-5-> pedina nera promossa
-*/
 
+// Create and Free
 
 tgame* create(int cols,int rows){
     tgame *dama;
@@ -68,7 +60,6 @@ tgame* create(int cols,int rows){
     return dama;
 }
 
-
 void freegame(tgame *dama, int rows, int cols) {
     int i , j;
 
@@ -92,28 +83,17 @@ void freegame(tgame *dama, int rows, int cols) {
     free(dama);
 }
 
-int legal_move (tgame *dama, point a, point b){
-                                                 /* da implementare */
+
+// Legal Side
+
+int legal_move (tgame *dama, point a, point b){     /* da implementare */
 }
 
-/*
-int legal_choice(tgame *dama, point a, point b,)
-*/
-
-int convert(){
-    char a;
-    int i = 0;
-    scanf("%c",&a);
-    if(a>='A' && a<='G')
-        return i=a-65;
-    else if(a>='a' && a<='g')
-        return i=a-97;
-    else if (a=='x'||a=='X')
-        return -1;
-    else{
-        convert();
-    }
+int legal_choice(tgame *dama, point a, point b){
 }
+
+
+// Print
 
 void official_print(tgame result, int rows , int cols){
     printf("%32s","LASKA GAME\n");
@@ -203,6 +183,26 @@ void private_print(tgame result, int rows , int cols){
     }
 }
 
+
+// Conversion
+
+int convert(){
+    char a;
+    int i = 0;
+    scanf("%c",&a);
+    if(a>='A' && a<='G')
+        return i=a-65;
+    else if(a>='a' && a<='g')
+        return i=a-97;
+    else if (a=='x'||a=='X')
+        return -1;
+    else{
+        convert();
+    }
+}
+
+
+// Pawn Grow Function
 void add(tgame *dama, t_ide pawn, int r, int c){
     /*
     if (dama->arr[r][c]->id==1){
@@ -230,6 +230,8 @@ void add(tgame *dama, t_ide pawn, int r, int c){
     }
 }
 
+
+// Remove Pawn
 int remove_pawn(tgame *dama, int r, int c){
     int estract;
     /*
@@ -256,6 +258,7 @@ int remove_pawn(tgame *dama, int r, int c){
        return estract;
    }
 }
+
 
 point findmiddle(point a, point b){
     point middle;
@@ -284,6 +287,7 @@ point findmiddle(point a, point b){
 
 }
 
+
 void move (tgame *dama, point a, point b){
     if (abs(b.x - a.x)==1 && dama->mat[b.y][b.x]->id == 0){
         boxpawn * temporary = dama->mat[b.y][b.x];                    /*swap spostamento cella vuola*/
@@ -305,6 +309,24 @@ void move (tgame *dama, point a, point b){
     }
 
 }
+
+
+//Auxiliary
+
+int coin_toss(){
+}
+
+
+// Main Menu
+/*
+ *
+ */
+void main_menu(){
+
+}
+
+
+// Game
 
 int game(tgame *dama, int rows, int cols){
     point a,b;
