@@ -79,7 +79,7 @@ Version 1.0
 
 Esempio:
 * **Gianmaria** - *Head Project Manager* - [PayThePizzo](https://github.com/PayThePizzo)
-* **Aleksandra** - *Group Member* - [User Name di Github] (sitodigithub)
+* **Aleksandra** - *Group Member* - [aleksandragjorgievska](https://github.com/aleksandragjorgievska)
 
 
 ## License
