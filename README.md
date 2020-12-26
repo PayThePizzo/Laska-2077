@@ -1,15 +1,24 @@
 # C-Dama-Beginner
 
-One Paragraph of project description goes here
+This project was made for our Introduction to Programming Course. It represent the digital version of the famous tablegame, Laska.
+Check out the official site of the game, here: http://www.lasca.org/
+
 
 ## Credits
-Gianmaria Pizzo, Riccardo Peresin, Aleksandra Gjorgievska
+Gianmaria Pizzo, Aleksandra Gjorgievska
 
 
 ### Prerequisites
 
-- Unix erminal
+- Unix Terminal
 - Gcc compiler
+- CMake file
+
+Or
+
+Easy Version (Windows):
+- Visual Studio
+- CLion
 
 ### Installing
 Simply download the source code from this page and run it through the following commands:
@@ -50,7 +59,10 @@ Give an example
 
 ## Built With
 
-* Mezzi Utilizzati per scrivere il codice
+* CLion
+* ANSI C
+* Visual Studio
+* Doxygen
 
 
 ## Contributing
@@ -66,14 +78,14 @@ Version 1.0
 ## Authors
 
 Esempio:
-* **Gianmaria Pizzo** - *Head Project Manager* - [PayThePizzo](https://github.com/PayThePizzo)
-* **Riccardo** - *Cosa ha fatto Riccardo* - [User Name di Github] (sitodigithub)
-* **Aleksandra** - *Cosa ha fatto Aleksandra* - [User Name di Github] (sitodigithub)
+* **Gianmaria ** - *Head Project Manager* - [PayThePizzo](https://github.com/PayThePizzo)
+* **Aleksandra** - *Group Member* - [User Name di Github] (sitodigithub)
 
 
 ## License
 
-This project is to be used as an example of how anyone can build their own little game using only basic C.
+This project is to be taken as an example. 
+Anyone can build their own little game using only basic C.
 It is not to be distributed for plagiarizing purposes or sold.
 
 
