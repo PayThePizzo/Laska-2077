@@ -1,6 +1,6 @@
 # Laska 2077
 
-This project was made for our Introduction to Programming Course. It represent the digital version of the famous tablegame, Laska.
+This project was made for our Introduction to Programming Course. It represent the digital version of the famous tablegame, Lasca.
 Check out the official site of the game, here: http://www.lasca.org/
 
 
@@ -9,14 +9,14 @@ Gianmaria Pizzo, Aleksandra Gjorgievska
 
 
 ### Prerequisites
-
+Mac Os & Linux:
 - Unix Terminal
 - Gcc compiler
 - CMake file
 
 Or
 
-Easy Version (Windows):
+Windows:
 - Visual Studio
 - CLion
 
