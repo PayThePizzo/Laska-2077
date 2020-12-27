@@ -75,7 +75,7 @@ int main() {
     }
 
     /*Result Menu*/
-    if(winner==0){
+    if(winner == 0){
         printf("White gamer is the winner!!!");
     }else {
         printf("Black player is the winner!!!");
@@ -123,6 +123,8 @@ int main() {
 
     /*Free Memory*/
     freegame(dama,dama->rows,dama->cols);
+    printf("\n");
+    printf("See ya, pal!");
     return 0;
 }
 

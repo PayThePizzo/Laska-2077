@@ -1,7 +1,11 @@
 #ifndef MINI_LASCA_C_LASKA_H
 #define MINI_LASCA_C_LASKA_H
 #endif //MINI_LASCA_C_LASKA_H
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <math.h>
+#include <time.h>
 
 /*
 legenda id
@@ -60,7 +64,9 @@ typedef struct boxpawn {                /*se la cella è vuota rappresenta il co
 } boxpawn;
 
 
-/**
+/** \typedef
+ *
+ *  \struct
  *
  */
 typedef struct dama{
@@ -193,7 +199,7 @@ void promotion(tgame *dama, int turn);
 void move (tgame *dama, point a, point b);
 
 
-/********** Auxiliary **********/
+/********** Auxiliary General Functions **********/
 
 /**
  *
@@ -203,7 +209,7 @@ int coin_toss();
 
 
 
-/********** Menu & Games **********/
+/********** Menu & Auxiliary Game Functions **********/
 
 /** \brief Main Menu from which it is possible to choose players and game modes.
  *
@@ -219,6 +225,13 @@ void main_menu();
  */
 int game(tgame *dama, int rows, int cols);
 
+//dato il puntatore alla pedina, mi dice se la pedina e' troppo alta
+int check_limit();
+
+//dato il puntatore alla pedina e le coordinate in cui viene inserita, mi dice se la pedina cresce
+int check_grow();
+
+//date le regole del gioco, la scacchiera e le pedine rimaste, mi dice se una mossa fa vincere la partita
 /**
  *
  * @param dama
@@ -226,4 +239,16 @@ int game(tgame *dama, int rows, int cols);
  * @param cols
  * @return
  */
-int game_p(tgame *dama, int rows, int cols);
+int check_win(tgame *dama, int rows, int cols);
+
+
+/********** Game Flow **********/
+
+/**
+ *
+ * @param dama
+ * @param rows
+ * @param cols
+ * @return
+ */
+int game_flow(tgame *dama, int rows, int cols);
