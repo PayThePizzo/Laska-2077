@@ -1,6 +1,5 @@
 #include "laska.h"
 
-
 // Create and Free
 
 tgame* create(int cols,int rows){
@@ -50,10 +49,26 @@ tgame* create(int cols,int rows){
 
         }
     }
-
-
     return dama;
 }
+
+black_vet_create(tgame *dama, int rows, int cols){
+
+}
+
+void black_vet_free(){
+
+}
+
+white_vet_create(tgame *dama, int rows, int cols){
+
+}
+
+void white_vet_free(){
+
+}
+
+
 
 void freegame(tgame *dama, int rows, int cols) {
     int i , j;
@@ -172,7 +187,12 @@ int legal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
     }
 }
 
-int legal_choice(tgame *dama, point a, point b){
+
+//Posso scegliere solo le mie pedine
+//Controllo se la pedina scelta e' nello stesso indirizzo di quelle che ho dentro il mio vettore
+//
+int legal_choice(tgame *dama, point a, point b){\
+
 }
 
 int check_number(int dim){
@@ -431,21 +451,21 @@ int coin_toss(){
  *  2) Scegli Colore oppure Toss a Coin
  *
  */
-void main_menu(){
+int main_menu(){
     int input = -1;
-    int input_ok = 0;
+    int cond= 1;
     printf("\n");
     printf("Now, let's choose what game we shall play. Type the right code here:");
     printf("\n");
 
     do{
         scanf("%d", &input);
-        if(input<0 && input>3){
-            printf("Yoda says: Bugs here, you won't find");
+        if(input >= 0 && input <= 3){
+            cond = 0;
         } else{
-            input_ok = 0;
+            printf("Yoda says: Bugs here, you won't find");
         }
-    }while(input_ok);
+    }while(cond);
 
     switch (input) {
         case 0:
@@ -453,26 +473,28 @@ void main_menu(){
             printf("\n");
             printf("Man, if I were you, I'd make some new friends...");
             printf("\n");
-
-            break;
+            return input;
         case 1:
             printf("You chose: Player vs Player");
             printf("\n");
             printf("Finally, you got some friends to play with!");
             printf("\n");
-            break;
+            return input;
         case 2:
             printf("You chose: Player vs Pc");
             printf("\n");
             printf("I'm impressed you managed to lose your friends that fast, you really are a disaster at social life");
             printf("\n");
-            break;
+            return input;
         case 3:
             printf("You chose: Pc vs Pc");
             printf("\n");
             printf("I know you might not care, but watching two computers play against each other... is pretty lame");
             printf("\n");
-            break;
+            return input;
+        default:
+            printf("Error in main_menu");
+            EXIT_FAILURE;
     }
 }
 
@@ -620,50 +642,5 @@ int check_win(tgame *dama, int rows, int cols){
 
 
 int game_flow(tgame *dama, int rows, int cols){
-    point a,b;
-    int turn = 0;
-    int endgame = 0;
 
-    while(!endgame) {
-        private_print(*dama, rows, cols);
-        printf("\n");
-        printf("\n");
-        printf("Write the start coordinate or type 'Quit'/'Give Up' to leave the game\n");
-        if (turn == 0)
-            printf("It's white turn\n");
-        else
-            printf("It's black turn\n");
-        printf("Letter:");
-
-        a.x = convert();
-        if (a.x == -1)
-            return (turn == 0 ? 1 : 0);
-        else {
-            printf("Number:");
-            scanf("%d", &a.y);
-            --(a.y);
-            /* è una mia pedina?*/
-            if (dama->mat[a.y][a.x]->id == turn + 2 || dama->mat[a.y][a.x]->id == turn + 4) {
-                do {
-                    printf("Write the destination coordinate\n");
-                    printf("Letter:");
-                    b.x = convert();
-                    printf("Number:");
-                    scanf("%d", &b.y);
-                    --(b.y);
-                } while (!legal_move(dama, a, b));
-
-                move(dama, a, b);
-                /*private_print (*dama,dama->rows,dama->cols);  magari solo all'ultima mossa */
-                /* if vittoria (...) return 0/1 */
-
-                if (turn == 0)
-                    turn = 1;
-                else
-                    turn = 0;;
-            } else {
-                printf("Please select your pawn\n");
-            }
-        }
-    }
 }

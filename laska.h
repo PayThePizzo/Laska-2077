@@ -75,6 +75,18 @@ typedef struct dama{
     boxpawn ***mat;
 } tgame;
 
+//vettore delle pedine disponibili
+//Mi dice la posizione nella scacchiera di ogni pedina
+//Mi dice quanto alta e'
+//Mi da l'indirizzo di memoria di ciascuna pedina
+typedef struct pawnvect{
+    int cols;
+    int rows;
+    int height;
+
+} pawnvect_t;
+
+
 /********** Create & Free **********/
 
 /**
@@ -91,8 +103,16 @@ tgame* create(int cols,int rows);
  * @param rows
  * @param cols
  */
+
 void freegame(tgame *result, int rows, int cols);
 
+black_vet_create();
+
+void black_vet_free();
+
+white_vet_create();
+
+void white_vet_free();
 
 /********** Legal Choice & Move **********/
 
@@ -214,7 +234,7 @@ int coin_toss();
 /** \brief Main Menu from which it is possible to choose players and game modes.
  *
  */
-void main_menu();
+int main_menu();
 
 /** \brief Player vs Player Mode (can be a single or two human players).
  *

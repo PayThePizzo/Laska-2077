@@ -63,22 +63,43 @@ int main() {
     if (decision == 'Y' || decision == 'y'){
         printf("Very Well, let's go on\n");
         printf("\n");
-        main_menu();
-        winner = game (dama, dama->rows, dama->cols);
+
+        switch(main_menu()){
+            case 0:
+                winner = game (dama, dama->rows, dama->cols);
+                break;
+            case 1:
+                winner = game (dama, dama->rows, dama->cols);
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                printf("Error in Play or Not section of Main");
+                EXIT_FAILURE;
+        }
+
     } else if(decision == 'N' || decision == 'n'){
         printf("I guess you might not be ready to play this wonderful game\n");
         printf("Farewell!\n");
         return 0;
     } else{
         printf("Am I a joke to you?\n");
-        return 0;
+        EXIT_FAILURE;
     }
 
     /*Result Menu*/
     if(winner == 0){
-        printf("White gamer is the winner!!!");
+        printf("\n");
+        printf("White gamer is the winner!");
+        printf("\n");
+        printf("The game ends here...for now");
     }else {
-        printf("Black player is the winner!!!");
+        printf("\n");
+        printf("Black player is the winner!");
+        printf("\n");
+        printf("The game ends here...for now");
     }
     printf("\n");
     printf(" __    __            __                        __           \n"
@@ -124,7 +145,7 @@ int main() {
     /*Free Memory*/
     freegame(dama,dama->rows,dama->cols);
     printf("\n");
-    printf("See ya, pal!");
+    printf("Credits to: Gianmaria & Aleskandra");
     return 0;
 }
 
