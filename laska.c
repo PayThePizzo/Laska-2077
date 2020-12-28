@@ -1,7 +1,10 @@
 #include "laska.h"
 
 // Create, Free & Print - Dama
-
+/*  1) Create
+ *  2) Free
+ *  3) Print
+ */
 
 
 void official_print(tgame result, int rows , int cols){
@@ -159,6 +162,23 @@ point findmiddle(point a, point b){
 
 
 // Menu & Auxiliary Game Functions
+/*  Flow of the Game
+ *  1) Choose Players
+ *      - Coin Toss
+ *      - Choice
+ *
+ *  2) Let White play first
+ *      - Choose Pawn   -> legal_choice -> Yes  -> Choose Move
+ *                                      -> No   -> Error + Ask Again
+ *
+ *      - Choose Move   -> legal_move   -> Yes  -> check_win -> No  ->  check_grow -> Yes -> check_limit -> 3<=  -> Keep Playing + Change Player
+ *                                                                                                       -> >3   -> Remove First Pawn + Change Player
+ *                                                                                 -> No  -> Change Player
+ *                                                           -> Yes  ->  Stop the Game
+ *                                      -> No   -> Error + Ask Again
+ *
+*/
+
 int main_menu(){
     int input = -1;
     int cond= 1;
@@ -206,29 +226,7 @@ int main_menu(){
     }
 }
 
-//Data la pedina, la scacchiera, fai una mossa legale random
-
-
-/*  Flow of the Game
- *  1) Choose Players
- *      - Coin Toss
- *      - Choice
- *
- *  2) Let White play first
- *      - Choose Pawn   -> legal_choice -> Yes  -> Choose Move
- *                                      -> No   -> Error + Ask Again
- *
- *      - Choose Move   -> legal_move   -> Yes  -> check_win -> No  ->  check_grow -> Yes -> check_limit -> 3<=  -> Keep Playing + Change Player
- *                                                                                                       -> >3   -> Remove First Pawn + Change Player
- *                                                                                 -> No  -> Change Player
- *                                                           -> Yes  ->  Stop the Game
- *                                      -> No   -> Error + Ask Again
- *
-*/
-
-
 // Functions for the game
-
 /*  -2) Coin Toss
  *  -1) Legal Choice
  *   0) Legal Move
@@ -244,7 +242,6 @@ int main_menu(){
 
 
 // Games
-
 /*  1) Single Player    - Game
  *  2) 2 Players        - Game
  *  3) Player vs Pc     - Gamepc

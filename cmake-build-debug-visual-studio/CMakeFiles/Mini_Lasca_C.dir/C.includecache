@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/PayThePizzo/Sites/Mini-Lasca-C/laska.c
-laska.h
-C:/Users/PayThePizzo/Sites/Mini-Lasca-C/laska.h
-
 C:/Users/PayThePizzo/Sites/Mini-Lasca-C/laska.h
 stdio.h
 -
@@ -20,5 +16,11 @@ assert.h
 math.h
 -
 time.h
+-
+
+C:/Users/PayThePizzo/Sites/Mini-Lasca-C/main.c
+laska.h
+C:/Users/PayThePizzo/Sites/Mini-Lasca-C/laska.h
+stdio.h
 -
 
