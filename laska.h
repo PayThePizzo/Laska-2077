@@ -96,7 +96,7 @@ typedef struct vector {
 
 
 
-//Vectors for Pawns
+//Vectors for Pawns - Vector
 /* 1) Crea Vettore generico
  * 2) Libera Vettore
  * 3) Printa Vettore
