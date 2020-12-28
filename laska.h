@@ -7,134 +7,88 @@
 #include <math.h>
 #include <time.h>
 
-/*
-legenda id
-0-> cella bianca
-1-> cella nera
-2-> pedina bianca
-3-> pedina nera
-4-> pedina bianca promossa
-5-> pedina nera promossa
-*/
+// Enum & Struct for creation of Matrix and Vectors
 
-/** \typedef
+/** \brief Struct for coordinates
+ *  \struct i & j are the matrix coordinates
+ *  \typedef newpoint_t is the new type
+ */
+typedef struct newpoint{
+    int i;
+    int j;
+} newpoint_t;
+
+
+/** \brief New type that defines what we can find on the Laska table
+ *
+ * \typedef This type is to be used with every element of the board
  *
  *  \enum
  */
-typedef enum ide {
-    white_empty_box,
+typedef enum board_elem {
+    white_box,
     black_box,
     white_pawn,
     black_pawn,
-    w_dama_pawn,
-    b_dama_pawn
-} t_ide;
+} elem_t;
 
 
-/** \typedef
- *
- *  \enum
- */
-typedef enum gamemode {
-    one_p,
-    two_p,
-    p_pc_p,
-    pc_pc_p
-} t_gmode;
-
-
-/** \typedef
- *
- *  \enum
+/** \brief This struct is used to create a dynamic vector for each type of element we defined in elem_t.
  *
  */
-typedef struct point{
-    int x, y;
-} point;
-
-
-/** \typedef
- *
- *  \struct
- *
- */
-typedef struct boxpawn {                /*se la cella è vuota rappresenta il colore, sennè rappresenta la pedina (ovviamente la cella è bianca)*/
-    int id;
-    struct boxpawn *next;
-} boxpawn;
-
-
-/** \typedef
- *
- *  \struct
- *
- */
-typedef struct dama{
-    int cols;
-    int rows;
-    boxpawn ***mat;
-} tgame;
-
-//vettore delle pedine disponibili
-//Mi dice la posizione nella scacchiera di ogni pedina
-//Mi dice quanto alta e'
-//Mi da l'indirizzo di memoria di ciascuna pedina
-typedef struct pawnvect{
-    int cols;
-    int rows;
+typedef struct newbox{
+    newpoint_t loc;
+    elem_t type;
     int height;
+    int dim;
+    struct newbox *next;
+    struct newbox *prev;
+} piece_t;
 
-} pawnvect_t;
 
 
-/********** Create & Free **********/
-
-/**
- *
- * @param cols
- * @param rows
- * @return
- */
-tgame* create(int cols,int rows);
-
-/**
- *
- * @param result
- * @param rows
- * @param cols
+// Create & Free - Dama
+/*  1) Create
+ *  2) Free
+ *  3) Print
  */
 
-void freegame(tgame *result, int rows, int cols);
+//Inserisci qui
 
-black_vet_create();
 
-void black_vet_free();
 
-white_vet_create();
+//Vectors for Pawns
+/* 1) Crea Vettore generico
+ * 2) Libera Vettore
+ * 3) Printa Vettore
+ */
 
-void white_vet_free();
-
-/********** Legal Choice & Move **********/
-
-/**
+/** \brief Creates a vector of fixed dimension (7).
  *
  * @param dama
- * @param turn
- * @param a
- * @param b
- * @param have_to_capture
- * @return
+ * @param rows
+ * @param cols
+ * @param type
+ * @return vectors whose elements are all type "type"
  */
-int legal_move (tgame *dama, int turn, point a, point b, int have_to_capture);
+piece_t * create_vet(tgame * dama, int rows, int cols, elem_t type);
 
-/**
+/** \brief Frees memory of the vector
  *
- * @param dama
- * @param a
- * @param b
- * @return
+ * @param vet
  */
-int legal_choice(tgame *dama, point a, point b);
+void free_vet(piece_t *vet);
+
+/** \brief Prints all the elements of the vector
+ *
+ * @param vet
+ * @param dim
+ */
+void print_vet(piece_t *vet, int dim);
+
+
+
+//Auxiliary functions
 
 /**
  *
@@ -143,26 +97,6 @@ int legal_choice(tgame *dama, point a, point b);
  */
 int check_number(int dim);
 
-/********** Print **********/
-
-/**
- *
- * @param result
- * @param rows
- * @param cols
- */
-void official_print(tgame result, int rows , int cols);
-
-/**
- *
- * @param result
- * @param rows
- * @param cols
- */
-void private_print(tgame result, int rows , int cols);
-
-
-/********** Conversion **********/
 
 /**
  *
@@ -170,27 +104,6 @@ void private_print(tgame result, int rows , int cols);
  */
 int convert();
 
-/**
- *
- * @param dama
- * @param pedina
- * @param r
- * @param c
- */
-
-
-/********** Grow & Remove, Auxiliary **********/
-
-void add(tgame *dama, t_ide pedina, int r, int c);
-
-/**
- *
- * @param dama
- * @param r
- * @param c
- * @return
- */
-int remove_pawn(tgame *dama, int r, int c);
 
 /**
  *
@@ -200,41 +113,15 @@ int remove_pawn(tgame *dama, int r, int c);
  */
 point findmiddle(point a, point b);
 
-/**
- *
- * @param dama
- * @param turn
- */
-void promotion(tgame *dama, int turn);
 
 
-/********** Move Pawn **********/
-
-/**
- *
- * @param dama
- * @param a
- * @param b
- */
-void move (tgame *dama, point a, point b);
-
-
-/********** Auxiliary General Functions **********/
-
-/**
- *
- * @return
- */
-int coin_toss();
-
-
-
-/********** Menu & Auxiliary Game Functions **********/
+// Menu & Auxiliary Game Functions
 
 /** \brief Main Menu from which it is possible to choose players and game modes.
- *
+ *  @return A number 0-3 used to select the game mode.
  */
 int main_menu();
+
 
 /** \brief Player vs Player Mode (can be a single or two human players).
  *
@@ -243,32 +130,31 @@ int main_menu();
  * @param cols
  * @return
  */
-int game(tgame *dama, int rows, int cols);
 
-//dato il puntatore alla pedina, mi dice se la pedina e' troppo alta
-int check_limit();
 
-//dato il puntatore alla pedina e le coordinate in cui viene inserita, mi dice se la pedina cresce
-int check_grow();
 
-//date le regole del gioco, la scacchiera e le pedine rimaste, mi dice se una mossa fa vincere la partita
-/**
+// Functions for the game
+
+/*  -2) Coin Toss
+ *  -1) Legal Choice
+ *   0) Legal Move
  *
- * @param dama
- * @param rows
- * @param cols
- * @return
+ *  1) Check Limit -> dato il puntatore alla pedina, mi dice se la pedina e' troppo alta
+ *  2) Check Grow -> dato il puntatore alla pedina e le coordinate in cui viene inserita, mi dice se la pedina cresce
+ *  3) Move
+ *  4) Remove Pawn
+ *  5) Grow -> Aggiunge uno alla pedina, rimuove la pedina avversaria
+ *  6) Check Win -> date le regole del gioco, la scacchiera e le pedine rimaste, mi dice se una mossa fa vincere la partita
  */
-int check_win(tgame *dama, int rows, int cols);
 
 
-/********** Game Flow **********/
 
-/**
- *
- * @param dama
- * @param rows
- * @param cols
- * @return
+// Games
+
+/*  1) Single Player    - Game
+ *  2) 2 Players        - Game
+ *  3) Player vs Pc     - Gamepc
+ *  4) Pc vs Pc         - BotFight
  */
-int game_flow(tgame *dama, int rows, int cols);
+
+int game();
