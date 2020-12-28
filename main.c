@@ -4,10 +4,15 @@
 int main() {
     int winner = -1;
     hello();
+
+    debug_dama();
+    /*
     winner = decision_menu();
     result_menu(winner);
     goodbye();
+     */
     credits();
+
     return 0;
 }
 

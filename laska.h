@@ -62,7 +62,6 @@ typedef struct dama{
  *  3           Pedina livello 3 (top)
  */
 
-
 /**
  * @Struct This struct is used to create a dynamic vector for each type of element we defined in elem_t.
  */
@@ -83,7 +82,6 @@ typedef struct vector {
 
 
 // Create & Free - Dama
-
 
 /**
  *
@@ -110,6 +108,23 @@ void dama_initialize(dama_t **dama, int rows, int cols);
  */
 void dama_free (dama_t **dama, int rows, int cols);
 
+/**
+ *
+ * @param dama
+ * @param rows
+ * @param cols
+ */
+void print (dama_t **dama, int rows, int cols);
+
+/**
+ *
+ * @param dama
+ * @param black_vet
+ * @param white_vet
+ * @param w_box
+ * @param b_box
+ */
+void dama_print(dama_t **dama, vet_t* black_vet, vet_t* white_vet, vet_t * w_box, vet_t * b_box);
 
 
 //Vectors for Pawns - Vector
@@ -126,7 +141,7 @@ void dama_free (dama_t **dama, int rows, int cols);
  * @param type
  * @return vectors whose elements are all type "type"
  */
-dama_t ** create_vet(dama_t ** dama, int rows, int cols, elem_t type);
+vet_t * create_vet(dama_t ** dama, int rows, int cols, elem_t type);
 
 /** \brief Frees memory of the vector
  *
@@ -238,3 +253,8 @@ void goodbye();
  *
  */
 void credits();
+
+
+
+// Debug Dama
+void debug_dama();

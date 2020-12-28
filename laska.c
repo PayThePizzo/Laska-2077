@@ -6,6 +6,71 @@
  *  3) Print
  */
 
+dama_t** dama_create(int rows,int cols){
+    int k = 0;
+    dama_t **dama;
+
+    dama = (dama_t *) malloc (sizeof (dama_t) * rows);
+    assert (dama != NULL);
+
+    for(k = 0; k<rows; k++){
+        dama[k] = (dama_t *) malloc (sizeof (dama_t) * cols);
+        assert (dama[k] != NULL);
+    }
+
+    return dama;
+}
+
+void dama_initialize(dama_t **dama, int rows, int cols){
+    int r = 0, c = 0;
+
+    for(r=0; r<rows; r++){
+        for(c=0; c<cols; c++){
+            dama[r][c].loc.i = r;
+            dama[r][c].loc.j = c;
+            dama[r][c].type = empty;
+            dama[r][c].height = 0;
+        }
+    }
+}
+
+void dama_free (dama_t **dama, int rows, int cols){
+    int k = 0;
+
+    for(k=0;k<rows;k++){
+        free(dama[k]);
+    }
+    free (dama);
+}
+
+void print(dama_t **dama, int rows, int cols){
+    int r, c;
+    printf(" ");
+    printf("\t");
+    for (int r = 0; r < rows; r++) {
+        printf(" %c\t",65+r);
+    }
+    printf("\n");
+    for (r = 0; r < rows; r++){
+        printf("\n");
+        printf("%d",r+1);
+        for (c = 0; c <cols; c++){
+            if(dama[r][c].type == white_box)
+                printf("%c\t",219);
+            if(dama[r][c].type == black_box)
+                printf("%c\t",' ');
+            if(dama[r][c].type == white_pawn)
+                printf("%c\t",'w');
+            if(dama[r][c].type == black_pawn)
+                printf("%c\t",'b');
+        }
+        printf("\n");
+    }
+}
+
+void dama_print(dama_t **dama, vet_t* black_vet, vet_t* white_vet, vet_t * w_box, vet_t * b_box){
+
+}
 
 /*
 void official_print(tgame result, int rows , int cols){
@@ -104,46 +169,18 @@ void private_print(tgame result, int rows , int cols){
  * 3) Printa Vettore
  */
 
-dama_t** dama_create(int rows,int cols){
-    int k = 0;
-    dama_t **dama;
 
-    dama = (dama_t *) malloc (sizeof (dama_t) * rows);
-    assert (!dama);
-
-    for(k = 0; k<rows; k++){
-        dama[k] = (dama_t *) malloc (sizeof (dama_t) * cols);
-        assert (!dama[k]);
-    }
-
-    return dama;
+vet_t * create_vet(dama_t ** dama, int rows, int cols, elem_t type){
 }
 
-void dama_initialize(dama_t **dama, int rows, int cols){
-    int r = 0, c = 0;
 
-    for(r=0; r<rows; r++){
-        for(c=0; c<cols; c++){
-            dama[r][c].loc.i = r;
-            dama[r][c].loc.j = c;
-            dama[r][c].type = empty;
-            dama[r][c].height = 0;
-        }
-    }
+void free_vet(dama_t ** vet){
 }
 
-void dama_free (dama_t **dama, int rows, int cols){
-    int k = 0;
 
-    for(k=0;k<rows;k++){
-        free(dama[k]);
-    }
-    free (dama);
+void print_vet(dama_t ** vet, int dim){
 }
 
-void dama_print (dama_t **dama, int rows, int cols){
-
-}
 
 
 //Auxiliary Generic Functions
@@ -195,11 +232,10 @@ point findmiddle(point a, point b){
             middle.y = a.y+1;
         }
     }
-
     return middle;
-
 }
 */
+
 
 
 // Menu & Auxiliary Game Functions
@@ -304,10 +340,10 @@ void result_menu(int winner){
         printf("\n");
         printf("White gamer is the winner!");
         printf("\n");
-        printf("The game ends here...for now");
     }else if (winner == 1) {
         printf("\n");
         printf("Black player is the winner!");
+        printf("\n");
     } else{
         printf("Error in result_menu");
         EXIT_FAILURE;
@@ -453,4 +489,15 @@ void credits(){
     printf("\n");
     printf("Credits to: Gianmaria & Aleskandra");
     printf("\n");
+}
+
+
+
+// Debug Dama
+
+void debug_dama(){
+    dama_t ** dama = dama_create(7,7);
+    dama_initialize(dama, 7,7);
+    print(dama, 7, 7);
+    dama_free(dama, 7,7);
 }
