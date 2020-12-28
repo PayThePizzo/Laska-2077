@@ -7,11 +7,12 @@
 #include <math.h>
 #include <time.h>
 
+
 // Enum & Struct for creation of Matrix and Vectors
 
-/** \brief Struct for coordinates
- *  \struct i & j are the matrix coordinates
- *  \typedef newpoint_t is the new type
+/**
+ *  @struct Struct for coordinates, i & j are the matrix coordinates
+ *  @typedef location_t is the new type
  */
 typedef struct location{
     int i;
@@ -21,7 +22,7 @@ typedef struct location{
 
 /** \brief New type that defines what we can find on the Laska table
  *
- * \typedef This type is to be used with every element of the board
+ * \typedef This type is to be used with every element of the board and to debug Vectors
  *
  *  \enum
  */
@@ -32,6 +33,7 @@ typedef enum element {
     white_pawn,
     black_pawn,
 } elem_t;
+
 
 /** \brief Status defines whether a Pawn is free to move, conquered, or removed
  *
@@ -61,8 +63,8 @@ typedef struct dama{
  */
 
 
-/** \brief This struct is used to create a dynamic vector for each type of element we defined in elem_t.
- *
+/**
+ * @Struct This struct is used to create a dynamic vector for each type of element we defined in elem_t.
  */
 typedef struct vector {
     dama_t *vet; /* Every element has a pointer to where it is located inside the dama*/
@@ -81,18 +83,32 @@ typedef struct vector {
 
 
 // Create & Free - Dama
-/*  1) Create
- *      - Crea matrice dinamica di tipo piece_t
- *      - Collega i next ed i prev
- *      - Inizializza height a -1
- *      - Inizializza dim a MIN_INT
- *      - Inizializza type a empty
- *  2) Free
- *  3) Print
- *      - Design come l'altra volta
- */
 
-//Inserisci qui
+
+/**
+ *
+ * @param rows
+ * @param cols
+ * @return
+ */
+dama_t** dama_create(int rows,int cols);
+
+
+/**
+ *
+ * @param dama
+ * @param rows
+ * @param cols
+ */
+void dama_initialize(dama_t **dama, int rows, int cols);
+
+/**
+ *
+ * @param dama
+ * @param rows
+ * @param cols
+ */
+void dama_free (dama_t **dama, int rows, int cols);
 
 
 
@@ -110,20 +126,20 @@ typedef struct vector {
  * @param type
  * @return vectors whose elements are all type "type"
  */
-piece_t * create_vet(tgame * dama, int rows, int cols, elem_t type);
+dama_t ** create_vet(dama_t ** dama, int rows, int cols, elem_t type);
 
 /** \brief Frees memory of the vector
  *
  * @param vet
  */
-void free_vet(piece_t *vet);
+void free_vet(dama_t ** vet);
 
 /** \brief Prints all the elements of the vector
  *
  * @param vet
  * @param dim
  */
-void print_vet(piece_t *vet, int dim);
+void print_vet(dama_t ** vet, int dim);
 
 
 
@@ -150,7 +166,7 @@ int convert();
  * @param b
  * @return
  */
-point findmiddle(point a, point b);
+location_t findmiddle(location_t x, location_t y);
 
 
 
@@ -161,16 +177,17 @@ point findmiddle(point a, point b);
  */
 int main_menu();
 
-
-/** \brief Player vs Player Mode (can be a single or two human players).
+/**
  *
- * @param dama
- * @param rows
- * @param cols
  * @return
  */
+int decision_menu();
 
-
+/** @brief Displays the winner
+ *
+ * @param winner indicates who is the winner, either black or white.
+ */
+void result_menu(int winner);
 
 // Functions for the game
 
@@ -198,3 +215,26 @@ int main_menu();
  */
 
 int game();
+
+int gamepc();
+
+int botfight;
+
+
+
+// Messages
+
+/**
+ *
+ */
+void hello();
+
+/**
+ *
+ */
+void goodbye();
+
+/**
+ *
+ */
+void credits();

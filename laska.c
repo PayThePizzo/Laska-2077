@@ -6,6 +6,8 @@
  *  3) Print
  */
 
+
+/*
 void official_print(tgame result, int rows , int cols){
     printf("%32s","LASKA GAME\n");
     printf(" ");
@@ -57,7 +59,7 @@ void private_print(tgame result, int rows , int cols){
             }else if(result.mat[i][j]->id==3){
                 printf("%c ",'B');
             }
-            if(result.mat[i][j]->next!=NULL){ /*torre di 2 elementi*/
+            if(result.mat[i][j]->next!=NULL){
                 if(result.mat[i][j]->next->id==0){
                     printf("%c ",219);
                 }else if(result.mat[i][j]->next->id==1){
@@ -67,7 +69,7 @@ void private_print(tgame result, int rows , int cols){
                 }else if(result.mat[i][j]->next->id==3){
                 printf("%c ",'B');
                 }
-                if(result.mat[i][j]->next->next!=NULL){ /* torre di 3 elementi */
+                if(result.mat[i][j]->next->next!=NULL){
                     if(result.mat[i][j]->next->next->id==0){
                         printf("%c ",219);
                     }else if(result.mat[i][j]->next->next->id==1){
@@ -94,7 +96,7 @@ void private_print(tgame result, int rows , int cols){
     }
 }
 
-
+*/
 
 //Vectors for Pawns
 /* 1) Crea Vettore generico
@@ -102,7 +104,46 @@ void private_print(tgame result, int rows , int cols){
  * 3) Printa Vettore
  */
 
+dama_t** dama_create(int rows,int cols){
+    int k = 0;
+    dama_t **dama;
 
+    dama = (dama_t *) malloc (sizeof (dama_t) * rows);
+    assert (!dama);
+
+    for(k = 0; k<rows; k++){
+        dama[k] = (dama_t *) malloc (sizeof (dama_t) * cols);
+        assert (!dama[k]);
+    }
+
+    return dama;
+}
+
+void dama_initialize(dama_t **dama, int rows, int cols){
+    int r = 0, c = 0;
+
+    for(r=0; r<rows; r++){
+        for(c=0; c<cols; c++){
+            dama[r][c].loc.i = r;
+            dama[r][c].loc.j = c;
+            dama[r][c].type = empty;
+            dama[r][c].height = 0;
+        }
+    }
+}
+
+void dama_free (dama_t **dama, int rows, int cols){
+    int k = 0;
+
+    for(k=0;k<rows;k++){
+        free(dama[k]);
+    }
+    free (dama);
+}
+
+void dama_print (dama_t **dama, int rows, int cols){
+
+}
 
 
 //Auxiliary Generic Functions
@@ -131,25 +172,26 @@ int convert(){
     }
 }
 
+/*
 point findmiddle(point a, point b){
     point middle;
     if(a.y>b.y){
-        if(a.x>b.x){   /*alto a sinistra*/
+        if(a.x>b.x){
             middle.x = a.x-1;
             middle.y = a.y-1;
         }
-        else{           /*alto a destra*/
+        else{
             middle.x = a.x+1;
             middle.y = a.y-1;
         }
     }
     else{
-        if(a.x>b.x){        /*basso a sinistra*/
+        if(a.x>b.x){
             middle.x = a.x-1;
             middle.y = a.y+1;
         }
         else{
-            middle.x = a.x+1;   /*basso a destra*/
+            middle.x = a.x+1;
             middle.y = a.y+1;
         }
     }
@@ -157,7 +199,7 @@ point findmiddle(point a, point b){
     return middle;
 
 }
-
+*/
 
 
 // Menu & Auxiliary Game Functions
@@ -225,6 +267,53 @@ int main_menu(){
     }
 }
 
+int decision_menu(){
+    int winner = 0;
+    char decision = 'a';
+
+    scanf("%c", &decision);
+    if (decision == 'Y' || decision == 'y'){
+        printf("Very Well, let's go on\n");
+        printf("\n");
+
+        switch(main_menu()){
+            case 0:
+                return (winner = 1);
+            case 1:
+                return (winner = 0);
+            case 2:
+                return (winner = 2);
+            case 3:
+                return (winner = 3);
+            default:
+                printf("Error in Play or Not section of Main");
+                EXIT_FAILURE;
+        }
+    } else if(decision == 'N' || decision == 'n'){
+        printf("I guess you might not be ready to play this wonderful game\n");
+        printf("Farewell!\n");
+        return 0;
+    } else{
+        printf("Am I a joke to you?\n");
+        EXIT_FAILURE;
+    }
+}
+
+void result_menu(int winner){
+    if(winner == 0){
+        printf("\n");
+        printf("White gamer is the winner!");
+        printf("\n");
+        printf("The game ends here...for now");
+    }else if (winner == 1) {
+        printf("\n");
+        printf("Black player is the winner!");
+    } else{
+        printf("Error in result_menu");
+        EXIT_FAILURE;
+    }
+}
+
 // Functions for the game
 /*  -2) Coin Toss
  *  -1) Legal Choice
@@ -246,3 +335,122 @@ int main_menu(){
  *  3) Player vs Pc     - Gamepc
  *  4) Pc vs Pc         - BotFight
  */
+
+
+// Messages
+
+void hello(){
+    printf(" __       __            __                                                      __               \n"
+           "|  \\  _  |  \\          |  \\                                                    |  \\              \n"
+           "| $$ / \\ | $$  ______  | $$  _______   ______   ______ ____    ______         _| $$_     ______  \n"
+           "| $$/  $\\| $$ /      \\ | $$ /       \\ /      \\ |      \\    \\  /      \\       |   $$ \\   /      \\ \n"
+           "| $$  $$$\\ $$|  $$$$$$\\| $$|  $$$$$$$|  $$$$$$\\| $$$$$$\\$$$$\\|  $$$$$$\\       \\$$$$$$  |  $$$$$$\\\n"
+           "| $$ $$\\$$\\$$| $$    $$| $$| $$      | $$  | $$| $$ | $$ | $$| $$    $$        | $$ __ | $$  | $$\n"
+           "| $$$$  \\$$$$| $$$$$$$$| $$| $$_____ | $$__/ $$| $$ | $$ | $$| $$$$$$$$        | $$|  \\| $$__/ $$\n"
+           "| $$$    \\$$$ \\$$     \\| $$ \\$$     \\ \\$$    $$| $$ | $$ | $$ \\$$     \\         \\$$  $$ \\$$    $$\n"
+           " \\$$      \\$$  \\$$$$$$$ \\$$  \\$$$$$$$  \\$$$$$$  \\$$  \\$$  \\$$  \\$$$$$$$          \\$$$$   \\$$$$$$ \n"
+           "                                                                                                 \n"
+           "                                                                                                 \n"
+           "                                                                                                 \n"
+           " __                           __                        ______    ______   ________  ________    \n"
+           "|  \\                         |  \\                      /      \\  /      \\ |        \\|        \\   \n"
+           "| $$       ______    _______ | $$   __  ______        |  $$$$$$\\|  $$$$$$\\ \\$$$$$$$$ \\$$$$$$$$   \n"
+           "| $$      |      \\  /       \\| $$  /  \\|      \\        \\$$__| $$| $$$\\| $$    /  $$     /  $$    \n"
+           "| $$       \\$$$$$$\\|  $$$$$$$| $$_/  $$ \\$$$$$$\\       /      $$| $$$$\\ $$   /  $$     /  $$     \n"
+           "| $$      /      $$ \\$$    \\ | $$   $$ /      $$      |  $$$$$$ | $$\\$$\\$$  /  $$     /  $$      \n"
+           "| $$_____|  $$$$$$$ _\\$$$$$$\\| $$$$$$\\|  $$$$$$$      | $$_____ | $$_\\$$$$ /  $$     /  $$       \n"
+           "| $$     \\\\$$    $$|       $$| $$  \\$$\\\\$$    $$      | $$     \\ \\$$  \\$$$|  $$     |  $$        \n"
+           " \\$$$$$$$$ \\$$$$$$$ \\$$$$$$$  \\$$   \\$$ \\$$$$$$$       \\$$$$$$$$  \\$$$$$$  \\$$       \\$$         \n"
+           "                                                                                                 ");
+    printf("\n");
+    printf("\n");
+    printf("Hi there, welcome to Laska 2077!\n");
+    printf("Check out the official site of the game here: http://www.lasca.org/ \n");
+    printf("\n");
+    printf("Now, let me introduce you what modalities we built. Here you find the menu:\n");
+
+    printf("# //==================[]======\\\\\n"
+           "# ||    Game Mode     || Code ||\n"
+           "# |]==================[]======[|\n"
+           "# || Single Player    ||    0 ||\n"
+           "# || Player vs Player ||    1 ||\n"
+           "# || Player vs Pc     ||    2 ||\n"
+           "# || Pc vs Pc         ||    3 ||\n"
+           "# \\\\==================[]======//");
+    printf("\n");
+    printf("\n");
+    printf("\n");
+    printf("You can Quit or Give Up at any time, unless two PCs are playing.\n");
+    printf("Yeah, you do not want to see them angry... They really love the game\n");
+    printf("\n");
+    printf("Let's hear it then, have you made up your mind?(Y/N)");
+    printf("\n");
+    printf("\n");
+}
+
+void goodbye(){
+    printf("\n");
+    printf("The game ends here...for now");
+    printf("\n");
+    printf("KKKKKKKKKKKXXKKKKKKK00OOOkkkO00Odl;'...'','.....'......,,,'....:lc;;;;ldx0KXKKKK000000OOOOkkkkkxxxxx\n"
+           "KKKKKKKKKKKKKKKKKKK00OOkkkkkxo;.............';::::::::;;;::,...'....','..,:loxOOkkkxxdddooooollllccc\n"
+           "KKKKKKKKKKKK00000000OOOkOkd:.   ...........',,'..........,:;,...    .  ......':lolcc::cccccllllccc::\n"
+           "KKK00000000000OOOOOOOOOkx:.   .......                      .'...             ...,:::::clloooooooooll\n"
+           "0000000000OOOOOOOOOOOkxl'     .               ...''',,,'..........               .,cllloodddxxxxxddd\n"
+           "00000000000OOOOOOOOOkxc.                  ...':ldxkkxxxxdddddol:'.......           'cddddxxxxkkkkxxx\n"
+           "00000000OOOOOOOOkkkkx:.       .....      .,:odk0KKXXKKKXXXXXKKK0kdc:coxdc'.         .lxxxxxkkkkkkkkk\n"
+           "OOOOOOOOOkkkkkkkkkkd;.      ..   .     .':dk0KKXXXNNNNNNNNNNNNNNXK0OO0KXKkl'         'oxkkkkkkkkkkkk\n"
+           "kkkkkxxxxxxxxxxxxxo;.                 .,lxO0KXXXNNNNNNNNNNNNNNNNNNNNNNNNXX0x;.       .cdkkkkkkkkkkkk\n"
+           "ddddoooooooooddddc:,.              ...;oxO00KXXXXXXXNNNNNXNNNNNNNNNNNNNNXXK0k:        ,okOkkkkkkkkkk\n"
+           "lccc::::ccllooddc::.                .,lxO0KKKKXXXXXXXXXXKKKKXXXXXXXXXXXXXKKK0d'       .:xOOOOOOkkkkk\n"
+           ";;;;::cclloddxxl:c.                .';ldk0KKK0KKKKKKKK00000KK000KKKKKKKKKKK0OOl.      .,oOOOOOOkkkkk\n"
+           "cccclloooddxxkd;,,.                .':lxkO00000KKKK000000OOOOOOOOO000000000OOOd'     .'':kkkkkkkkkkk\n"
+           "ooddddddxxxkkxc,'.                 .,coxkO00000KKKKK00000OOOOkOOOOOOkOOOOOkOkkx;     .,',okxkxxxxxxk\n"
+           "xkkkkkkkkkkkxo;..                 ..:odkOO000KKKKKKKKKKK0000000OOOOkkOOOOkkkOOk;     .,;,:xxxxxxxxxx\n"
+           "OOOOOOOOOkkkoc,..                .'cdkOO0000KKXXXXXXXXXXXKKKKKK00OOO0000OO0OOkx;      ,:',dxdxxxxxxk\n"
+           "KKOkO0KKK00kl;'.                .,lxO0KKKKKKKKKK00000KKKKK000000000KKXXKKKK00Ox,      ';.'lddddddxxx\n"
+           "00kxk000000kl..                .;okO0KXXXK0Okxdlcc::;:clodxxxxxkkOOOOO000KKKK0x.      .'..:ccclllooo\n"
+           "loooxkOOkkko,                 .,lkO0KKKKK0kdolllc::;;,''''';:clodxxxxdxkOOOO00x'      .....''',,;;;;\n"
+           "',;:ldxkkkd;.                 .:dO00KKK0Okdlc:;,'.....''''',,;cdxxdoc:::;;;;::c.          ..........\n"
+           ".',;:cllodl.             ...  'cxO00KKKKK0Okxdoooc:;,:c;.',,;cdkOko;......',;;,.          .         \n"
+           ",,,,,,;;;c,              .....;ldkO0KKKXKKKKK0OOxdddoolc:cccldOKK0l...  ...';c,        . ..         \n"
+           ":cc:,',,,,.           .......,;ldxO00KKKXXXKKKK0Okxxxdooodxxk0KXNXk:;:::cl:,;c'        ....         \n"
+           "dxkxo:,','.           ..',,,,,:ldkkkOOO0KKKXXKKK000000OOO000KKXXNNKdcclloddddo,        .......      \n"
+           "OOkkxl:,:;.            .,;;:;:lodxkkOkkO000KKKKKKKKKKKKKKKKKKKXXNNXOddxdxxkkxd'        . ..... .    \n"
+           "00Okkxocc:.              ':::cooldkkkkxkkOO00KKKKKKXXXK0OOO000KXNNX0OOOOOOOkko.        ..........   \n"
+           "KKK00OOxl;.              .:cloloooxkkxxxxxkOO00000K00OkdxOKXKKKXNXXKOO000Okxx:.        ......... .  \n"
+           "XXXXKK0kl.               .cddllddlllllodddxkkkkOOOkkxdllkXXNNNXXXXX0xdkOOOkxc.         .............\n"
+           "XXXXKKOl'..        ..    .cddloxxl:;'',;ccldxkkkkxxdodddddooddxO0OOkxooxkkxc.         ..............\n"
+           "O00O0k:...         ...   .cdolloo:''....',;ldkkkxxdxkOOko:'...,cllcllcldxxc.          .,,'''''......\n"
+           "dxdol,..  .        ...   .;oxdc;;,........;odxxxxkOOOOOkdc,.......;do:lddc.          .:c,''''''''...\n"
+           ",,,'.    ..         ..    .:ddl;,'.....  .;dxxxxdooolll:,''........:llll;.           .;:'''''',,,'''\n"
+           "....    ...               .'cllc;,'''.   .;dOkd:,'...','............'cl,             .'''''',,,,,,;;\n"
+           "'.. ......                 .;clll:,'..  .,lxkd;......................;,              .''',,,,,;;;;::\n"
+           ",;'.',,..                   .;cll:;,.....,col;..,;:::;;,,,,,',,,,.  .,.             .',;;;;;;;:::ccc\n"
+           ",..'...                      .,::,'..,,...,;;',coodxdloooolllllll,..'.              .;::::::::ccclll\n"
+           ". ..                          .'''..':l;'',,'':ldxxdolll::c:;:cll;...             ..'clllcccccccllll\n"
+           ":,'..         ....             ..'..',;'...'',:lxOOkxol:;,,:;,;:;'.              .',cllooollccclllll\n"
+           "kdc::;,.   ........              ........ ...';lxO00Oxoc;,'';cc:'.              .,,;cllooollcclllllo\n"
+           "clollc'. ............                      ...':loodxdl:,',,,;:'.              .''',clooooollllllloo\n"
+           "...''''......''.......                       .',;;;;;;;:;..,'''.               .'',:loooooollllloooo\n"
+           ".',;;cc;,...'''''.......                     ..... ....',......                .:llooooooooolllooooo\n"
+           "cllccllc:;'....''...........                    .       ..       .,;;..,;.    ..cooooooodooolllooooo\n"
+           "ddoooodolc:;,'................     .                        .;c;',cc;:lk0x;...',cododdooddoolloooood\n"
+           "xxxdddddolcc:;'................     .                    'lodO00kdol:;cx0KOo::clllodxxddddoooloooodd\n"
+           "xxxxxxdollllc:,'................                    ...  ,0X00O000OkolloxOOOkdxdlcldxdddddoooooodddd\n"
+           "kxxxxdooooolcc:;,'...............                        .dOO0OOOkdl:;'.';lolc::;:ldxxxddddooooddddd\n"
+           "xxxdooooooollc::;,'..............                         .';cll:,..      ...   .'cdxxxddddooddddddd\n"
+           "xxdoodddooollcc:;;,'...............                                              .cdxxxddddddddddddd\n"
+           "xoodddddoolllcc:;;,,'...............      ...        .         ..                .:xkkxxxddddddddddx");
+    printf("\n");
+    printf("Keanu says goodbye!");
+    printf("\n");
+    printf("\n");
+
+}
+
+void credits(){
+    printf("\n");
+    printf("Credits to: Gianmaria & Aleskandra");
+    printf("\n");
+}
