@@ -6,7 +6,6 @@
  *  3) Print
  */
 
-
 void official_print(tgame result, int rows , int cols){
     printf("%32s","LASKA GAME\n");
     printf(" ");

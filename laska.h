@@ -13,10 +13,10 @@
  *  \struct i & j are the matrix coordinates
  *  \typedef newpoint_t is the new type
  */
-typedef struct newpoint{
+typedef struct location{
     int i;
     int j;
-} newpoint_t;
+} location_t;
 
 
 /** \brief New type that defines what we can find on the Laska table
@@ -25,32 +25,71 @@ typedef struct newpoint{
  *
  *  \enum
  */
-typedef enum board_elem {
+typedef enum element {
+    empty,
     white_box,
     black_box,
     white_pawn,
     black_pawn,
 } elem_t;
 
+/** \brief Status defines whether a Pawn is free to move, conquered, or removed
+ *
+ */
+typedef enum status{
+    free_to_move,
+    conquered,
+    removed,
+} status_t;
+
+
+/** \brief This struct is used to create the Laska Board
+ *
+ */
+typedef struct dama{
+    location_t loc;     /* Location inside the board [i][j]*/
+    elem_t type;        /* Type of Board Element */
+    status_t status;
+    int height;         /* Position inside the Stack of Pawn*/
+} dama_t;
+
+/* height
+ *
+ *  0           Casella
+ *  1           Pedina livello 1 (base)
+ *  2           Pedina livello 2
+ *  3           Pedina livello 3 (top)
+ */
+
 
 /** \brief This struct is used to create a dynamic vector for each type of element we defined in elem_t.
  *
  */
-typedef struct newbox{
-    newpoint_t loc;
-    elem_t type;
-    int height;
-    int dim;
+typedef struct vector {
+    dama_t *vet;            /* Every element has a pointer to where it is located inside the dama*/
+    int top;
+    int vet_dim;            /* Dimension of the vector of elements*/
     struct newbox *next;
     struct newbox *prev;
-} piece_t;
+} vet_t;
 
+/* top
+ *
+ * Top Pawn of the Stack    1
+ * Not Top Pawn             0
+ */
 
 
 // Create & Free - Dama
 /*  1) Create
+ *      - Crea matrice dinamica di tipo piece_t
+ *      - Collega i next ed i prev
+ *      - Inizializza height a -1
+ *      - Inizializza dim a MIN_INT
+ *      - Inizializza type a empty
  *  2) Free
  *  3) Print
+ *      - Design come l'altra volta
  */
 
 //Inserisci qui
@@ -137,6 +176,7 @@ int main_menu();
 
 /*  -2) Coin Toss
  *  -1) Legal Choice
+ *      - Pedina potrebbe non potersi muovere, troppe pedine bianche intorno
  *   0) Legal Move
  *
  *  1) Check Limit -> dato il puntatore alla pedina, mi dice se la pedina e' troppo alta
