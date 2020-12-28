@@ -49,7 +49,6 @@ typedef enum status{
 typedef struct dama{
     location_t loc;     /* Location inside the board [i][j]*/
     elem_t type;        /* Type of Board Element */
-    status_t status;
     int height;         /* Position inside the Stack of Pawn*/
 } dama_t;
 
@@ -66,7 +65,8 @@ typedef struct dama{
  *
  */
 typedef struct vector {
-    dama_t *vet;            /* Every element has a pointer to where it is located inside the dama*/
+    dama_t *vet; /* Every element has a pointer to where it is located inside the dama*/
+    status_t status;
     int top;
     int vet_dim;            /* Dimension of the vector of elements*/
     struct newbox *next;
