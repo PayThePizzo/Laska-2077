@@ -1,4 +1,7 @@
 #include "laska.h"
+#define ROWS (7)
+#define COLS (7)
+#define PAWN (11)
 
 // Create, Free & Print - Dama
 /*  1) Create
@@ -6,45 +9,62 @@
  *  3) Print
  */
 
-dama_t** dama_create(int rows,int cols){
-    int k = 0;
-    dama_t **dama;
-
-    dama = (dama_t *) malloc (sizeof (dama_t) * rows);
-    assert (dama != NULL);
-
-    for(k = 0; k<rows; k++){
-        dama[k] = (dama_t *) malloc (sizeof (dama_t) * cols);
-        assert (dama[k] != NULL);
-    }
-
-    return dama;
-}
-
-void dama_initialize(dama_t **dama, int rows, int cols){
+dama_t* dama_create(int rows, int cols){
     int r = 0, c = 0;
 
-    for(r=0; r<rows; r++){
-        for(c=0; c<cols; c++){
-            dama[r][c].loc.i = r;
-            dama[r][c].loc.j = c;
-            dama[r][c].type = empty;
-            dama[r][c].height = 0;
+    //allocation of Lasca Board
+    dama_t* damap = (dama_t *) malloc (sizeof (dama_t) * rows * cols);
+    assert (damap != NULL);
+    dama_t *mem = damap;
+
+    //initialization
+    for(r = 0; r<rows; r++){
+        for(c = 0; c<cols; c++) {
+            if ((r==0 && c%2 ==0)||(r==1 && c%2 != 0)|| r==2 && c%2==0){
+                mem[r * cols + c].type = black_pawn;
+                mem[r * cols + c].height = 1;
+                mem[r * cols + c].loc.i = r;
+                mem[r * cols + c].loc.j = c;
+            }else if(((r==4 && c%2 ==0)||(r==5 && c%2 != 0)|| r==6 && c%2==0)){
+                mem[r * cols + c].type = white_pawn;
+                mem[r * cols + c].height = 1;
+                mem[r * cols + c].loc.i = r;
+                mem[r * cols + c].loc.j = c;
+            }else if(r==3 && c%2 !=0){
+                mem[r * cols + c].type = empty;
+                mem[r * cols + c].height = 0;
+                mem[r * cols + c].loc.i = r;
+                mem[r * cols + c].loc.j = c;
+            }
+            else{
+                mem[r * cols + c].type = excluded;
+                mem[r * cols + c].height = 0;
+                mem[r * cols + c].loc.i = r;
+                mem[r * cols + c].loc.j = c;
+            }
         }
     }
+
+    return damap;
 }
 
-void dama_free (dama_t **dama, int rows, int cols){
-    int k = 0;
 
-    for(k=0;k<rows;k++){
-        free(dama[k]);
+void dama_free (dama_t *damap, int rows, int cols){
+    free(damap);
+}
+
+
+int check_memory(dama_t *dama, int rows, int cols){
+    if (dama == NULL){
+        return 1;
+    }else{
+        return 0;
     }
-    free (dama);
 }
 
-void print(dama_t **dama, int rows, int cols){
-    int r, c;
+
+void print(dama_t *dama, int rows, int cols){
+    int r = 0, c = 0;
     printf(" ");
     printf("\t");
     for (int r = 0; r < rows; r++) {
@@ -54,15 +74,20 @@ void print(dama_t **dama, int rows, int cols){
     for (r = 0; r < rows; r++){
         printf("\n");
         printf("%d",r+1);
+        printf("\t ");
         for (c = 0; c <cols; c++){
-            if(dama[r][c].type == white_box)
-                printf("%c\t",219);
-            if(dama[r][c].type == black_box)
-                printf("%c\t",' ');
-            if(dama[r][c].type == white_pawn)
-                printf("%c\t",'w');
-            if(dama[r][c].type == black_pawn)
-                printf("%c\t",'b');
+            if(dama[r * cols + c].type == white_box)
+                printf("%c\t ",219);
+            if(dama[r * cols + c].type == black_box)
+                printf("%c\t ",' ');
+            if(dama[r * cols + c].type == white_pawn)
+                printf("%c\t ",'W');
+            if(dama[r * cols + c].type == black_pawn)
+                printf("%c\t ",'B');
+            if(dama[r * cols + c].type == empty)
+                printf("%c\t ",'__');
+            if(dama[r * cols + c].type == excluded)
+                printf("%c\t ",' ');
         }
         printf("\n");
     }
@@ -370,6 +395,14 @@ void result_menu(int winner){
  *  2) 2 Players        - Game
  *  3) Player vs Pc     - Gamepc
  *  4) Pc vs Pc         - BotFight
+ *
+ * Features
+ * - Give Up
+ * - Quit
+ * - Reset the game
+ * - Undo move
+ * - Pass turn
+ *
  */
 
 
@@ -496,8 +529,15 @@ void credits(){
 // Debug Dama
 
 void debug_dama(){
-    dama_t ** dama = dama_create(7,7);
-    dama_initialize(dama, 7,7);
-    print(dama, 7, 7);
-    dama_free(dama, 7,7);
+    dama_t * dama = dama_create(ROWS,COLS);
+    print(dama, ROWS, COLS);
+    dama_free(dama, ROWS,COLS);
+
+    /*
+    if(check_memory(dama, ROWS, COLS)) {
+        printf("Memory is now free");
+    }else{
+        printf("Memory Leak in debug_dama");
+    }
+     */
 }

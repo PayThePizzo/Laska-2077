@@ -27,6 +27,7 @@ typedef struct location{
  *  \enum
  */
 typedef enum element {
+    excluded,
     empty,
     white_box,
     black_box,
@@ -89,7 +90,7 @@ typedef struct vector {
  * @param cols
  * @return
  */
-dama_t** dama_create(int rows,int cols);
+dama_t* dama_create(int rows,int cols);
 
 
 /**
@@ -98,7 +99,7 @@ dama_t** dama_create(int rows,int cols);
  * @param rows
  * @param cols
  */
-void dama_initialize(dama_t **dama, int rows, int cols);
+void dama_initialize(dama_t *dama, int rows, int cols);
 
 /**
  *
@@ -106,7 +107,16 @@ void dama_initialize(dama_t **dama, int rows, int cols);
  * @param rows
  * @param cols
  */
-void dama_free (dama_t **dama, int rows, int cols);
+void dama_free (dama_t *dama, int rows, int cols);
+
+/**
+ *
+ * @param dama
+ * @param rows
+ * @param cols
+ * @return
+ */
+int check_memory(dama_t *dama, int rows, int cols);
 
 /**
  *
@@ -114,7 +124,7 @@ void dama_free (dama_t **dama, int rows, int cols);
  * @param rows
  * @param cols
  */
-void print (dama_t **dama, int rows, int cols);
+void print (dama_t *dama, int rows, int cols);
 
 /**
  *

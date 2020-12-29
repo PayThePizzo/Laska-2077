@@ -3,10 +3,9 @@
 
 int main() {
     int winner = -1;
-    hello();
-
     debug_dama();
     /*
+    hello();
     winner = decision_menu();
     result_menu(winner);
     goodbye();
