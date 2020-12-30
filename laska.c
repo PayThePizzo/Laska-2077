@@ -35,8 +35,7 @@ dama_t* dama_create(int rows, int cols){
                 mem[r * cols + c].height = 0;
                 mem[r * cols + c].loc.i = r;
                 mem[r * cols + c].loc.j = c;
-            }
-            else{
+            }else{
                 mem[r * cols + c].type = excluded;
                 mem[r * cols + c].height = 0;
                 mem[r * cols + c].loc.i = r;
@@ -44,31 +43,20 @@ dama_t* dama_create(int rows, int cols){
             }
         }
     }
-
     return damap;
 }
 
-
-void dama_free (dama_t *damap, int rows, int cols){
+void dama_free (dama_t *damap){
     free(damap);
 }
 
-
-int check_memory(dama_t *dama, int rows, int cols){
-    if (dama == NULL){
-        return 1;
-    }else{
-        return 0;
-    }
-}
-
-
 void print(dama_t *dama, int rows, int cols){
     int r = 0, c = 0;
-    printf(" ");
     printf("\t");
-    for (int r = 0; r < rows; r++) {
-        printf(" %c\t",65+r);
+    printf(" ");
+    for (int r = 0; r < rows; r++){
+        printf("%c\t",65+r);
+
     }
     printf("\n");
     for (r = 0; r < rows; r++){
@@ -76,117 +64,28 @@ void print(dama_t *dama, int rows, int cols){
         printf("%d",r+1);
         printf("\t ");
         for (c = 0; c <cols; c++){
-            if(dama[r * cols + c].type == white_box)
-                printf("%c\t ",219);
-            if(dama[r * cols + c].type == black_box)
-                printf("%c\t ",' ');
-            if(dama[r * cols + c].type == white_pawn)
-                printf("%c\t ",'W');
-            if(dama[r * cols + c].type == black_pawn)
-                printf("%c\t ",'B');
-            if(dama[r * cols + c].type == empty)
-                printf("%c\t ",'__');
-            if(dama[r * cols + c].type == excluded)
-                printf("%c\t ",' ');
+            if(dama[r * cols + c].type == white_pawn) {
+                printf("%c\t", 'W');
+            }
+            if(dama[r * cols + c].type == black_pawn){
+                printf("%c\t",'B');
+            }
+            if(dama[r * cols + c].type == empty) {
+                printf("%c\t ", 223);
+            }
+            if(dama[r * cols + c].type == excluded) {
+                printf("%c\t", ' ');
+            }
+
         }
         printf("\n");
-    }
-}
-
-void dama_print(dama_t **dama, vet_t* black_vet, vet_t* white_vet, vet_t * w_box, vet_t * b_box){
-
-}
-
-/*
-void official_print(tgame result, int rows , int cols){
-    printf("%32s","LASKA GAME\n");
-    printf(" ");
-    int i , j;
-    for (int i = 0; i < rows; ++i) {
-        printf(" %c   ",65+i);
-    }
-
-    printf("\n");
-    for (i = 0; i < rows; ++i) {
-        printf("%d ",i+1);
-        for (j = 0; j <cols; ++j) {
-            if(result.mat[i][j]->id==0){
-                printf("%c ",219);
-            }else if(result.mat[i][j]->id==1){
-                printf("%c ",' ');
-            }else if(result.mat[i][j]->id==2){
-                printf("%c ",'w');
-            }else if(result.mat[i][j]->id==3){
-                printf("%c ",'b');
-            }else if(result.mat[i][j]->id==4){
-                printf("%c ",'W');
-            }else if(result.mat[i][j]->id==5){
-                printf("%c ",'B');
-            }
-        }
-        printf("\n");
-    }
-}
-
-void private_print(tgame result, int rows , int cols){
-    printf("%25s","LASKA GAME\n");
-    printf(" ");
-    int i , j;
-    for (int i = 0; i < rows; ++i) {
-        printf(" %c    ",65+i);
-    }
-
-    printf("\n");
-    for (i = 0; i < rows; ++i) {
-        printf("%d ",i+1);
-        for (j = 0; j <cols; ++j) {
-            if(result.mat[i][j]->id==0){
-                printf("%c ",219);
-            }else if(result.mat[i][j]->id==1){
-                printf("%c ",' ');
-            }else if(result.mat[i][j]->id==2){
-                printf("%c ",'W');
-            }else if(result.mat[i][j]->id==3){
-                printf("%c ",'B');
-            }
-            if(result.mat[i][j]->next!=NULL){
-                if(result.mat[i][j]->next->id==0){
-                    printf("%c ",219);
-                }else if(result.mat[i][j]->next->id==1){
-                    printf("%c ",' ');
-                }else if(result.mat[i][j]->next->id==2){
-                    printf("%c ",'W');
-                }else if(result.mat[i][j]->next->id==3){
-                printf("%c ",'B');
-                }
-                if(result.mat[i][j]->next->next!=NULL){
-                    if(result.mat[i][j]->next->next->id==0){
-                        printf("%c ",219);
-                    }else if(result.mat[i][j]->next->next->id==1){
-                        printf("%c ",' ');
-                    }else if(result.mat[i][j]->next->next->id==2){
-                        printf("%c ",'W');
-                    }else if(result.mat[i][j]->next->next->id==3){
-                        printf("%c ",'B');
-                    }
-                }
-                else{
-                    printf(" ");
-                }
-
-            }
-            else{
-                printf("   ");
-            }
-            printf("|");
-        }
-        printf("\n  __________________________________________");
+        printf("___________________________________________________________");
         printf("\n");
 
     }
 }
 
-*/
+
 
 //Vectors for Pawns
 /* 1) Crea Vettore generico
@@ -195,15 +94,48 @@ void private_print(tgame result, int rows , int cols){
  */
 
 
-vet_t * create_vet(dama_t ** dama, int rows, int cols, elem_t type){
+vet_t * create_vet(dama_t * dama, int rows, int cols, elem_t type, int dim){
+    vet_t * newvet = (vet_t *) malloc (sizeof(vet_t)* dim);
+    assert (newvet != NULL);
+    vet_t * sup = newvet;
+
+    int i = 0, j = 0, k = 0;
+    for(i=0; i<rows; i++){
+        for(j=0; j<cols; j++){
+            if(dama[i*cols+j].type == type){
+                sup[k].vet = (dama_t *)malloc(sizeof(dama_t));
+                assert(sup[k].vet);
+                sup[k].vet->loc = dama[i*cols+j].loc;
+                sup[k].vet->type = dama[i*cols+j].type;
+                sup[k].vet->height = dama[i*cols+j].height;
+
+                sup[k].status = free_to_move;
+                sup[k].vet_dim = dim;
+                sup[k].top = 1;
+                k++;
+            }
+        }
+    }
+    return newvet;
 }
 
+void free_vet(vet_t * newvet, int dim, int pos){
 
-void free_vet(dama_t ** vet){
+    while(pos < dim){
+        free(newvet[dim].vet);
+        free_vet(newvet, dim, (pos+1));
+    }
+    free(newvet);
 }
 
-
-void print_vet(dama_t ** vet, int dim){
+void print_vet(vet_t * newvet, int dim, int pos){
+    while (pos < dim){
+        vet_t * sup = newvet;
+        printf("%d,", sup[pos].vet->loc.i);
+        printf("%d", sup[pos].vet->loc.j);
+        printf("\t");
+        pos++;
+    }
 }
 
 
@@ -221,15 +153,16 @@ int coin_toss(){
 
 int convert(){
     char a;
-    int i = 0;
+
     scanf("%c",&a);
-    if(a>='A' && a<='G')
-        return i=a-65;
-    else if(a>='a' && a<='g')
-        return i=a-97;
-    else if (a=='x'||a=='X')
+
+    if(a>='A' && a<='G') {
+        return (a - 65);
+    }else if(a>='a' && a<='g'){
+        return (a-97);
+    }else if (a=='x'||a=='X'){
         return -1;
-    else{
+    }else{
         convert();
     }
 }
@@ -323,6 +256,7 @@ int main_menu(){
             printf("\n");
             return input;
         default:
+            printf("You chose to be a funny guy, but I can't take a joke, sorry");
             printf("Error in main_menu");
             EXIT_FAILURE;
     }
@@ -339,7 +273,7 @@ int decision_menu(){
 
         switch(main_menu()){
             case 0:
-                return (winner = 1);
+                return (winner = 1); //SOSTITUISCI CON winner = game();
             case 1:
                 return (winner = 0);
             case 2:
@@ -375,6 +309,8 @@ void result_menu(int winner){
     }
 }
 
+
+
 // Functions for the game
 /*  -2) Coin Toss
  *  -1) Legal Choice
@@ -404,6 +340,7 @@ void result_menu(int winner){
  * - Pass turn
  *
  */
+
 
 
 // Messages
@@ -529,15 +466,20 @@ void credits(){
 // Debug Dama
 
 void debug_dama(){
-    dama_t * dama = dama_create(ROWS,COLS);
-    print(dama, ROWS, COLS);
-    dama_free(dama, ROWS,COLS);
+    int dimvet = 11;
 
-    /*
-    if(check_memory(dama, ROWS, COLS)) {
-        printf("Memory is now free");
-    }else{
-        printf("Memory Leak in debug_dama");
-    }
-     */
+    dama_t * dama = dama_create(ROWS,COLS);
+
+    print(dama, ROWS, COLS);
+    printf("\n");
+
+    vet_t * blackv = create_vet(dama, ROWS, COLS, black_pawn, dimvet);
+    print_vet(blackv, dimvet, 0);
+    free_vet(blackv,dimvet, 0);
+
+    vet_t * whitev = create_vet(dama, ROWS, COLS, white_pawn, dimvet);
+    print_vet(whitev, dimvet, 0);
+    free_vet(whitev, dimvet, 0);
+
+    dama_free(dama);
 }

@@ -29,8 +29,6 @@ typedef struct location{
 typedef enum element {
     excluded,
     empty,
-    white_box,
-    black_box,
     white_pawn,
     black_pawn,
 } elem_t;
@@ -71,8 +69,6 @@ typedef struct vector {
     status_t status;
     int top;
     int vet_dim;            /* Dimension of the vector of elements*/
-    struct newbox *next;
-    struct newbox *prev;
 } vet_t;
 
 /* top
@@ -88,7 +84,7 @@ typedef struct vector {
  *
  * @param rows
  * @param cols
- * @return
+ * @return a vector where are stored information about the black and white pawns
  */
 dama_t* dama_create(int rows,int cols);
 
@@ -107,7 +103,7 @@ void dama_initialize(dama_t *dama, int rows, int cols);
  * @param rows
  * @param cols
  */
-void dama_free (dama_t *dama, int rows, int cols);
+void dama_free (dama_t *dama);
 
 /**
  *
@@ -116,7 +112,7 @@ void dama_free (dama_t *dama, int rows, int cols);
  * @param cols
  * @return
  */
-int check_memory(dama_t *dama, int rows, int cols);
+int check_memory(dama_t *dama);
 
 /**
  *
@@ -125,16 +121,6 @@ int check_memory(dama_t *dama, int rows, int cols);
  * @param cols
  */
 void print (dama_t *dama, int rows, int cols);
-
-/**
- *
- * @param dama
- * @param black_vet
- * @param white_vet
- * @param w_box
- * @param b_box
- */
-void dama_print(dama_t **dama, vet_t* black_vet, vet_t* white_vet, vet_t * w_box, vet_t * b_box);
 
 
 //Vectors for Pawns - Vector
@@ -151,20 +137,20 @@ void dama_print(dama_t **dama, vet_t* black_vet, vet_t* white_vet, vet_t * w_box
  * @param type
  * @return vectors whose elements are all type "type"
  */
-vet_t * create_vet(dama_t ** dama, int rows, int cols, elem_t type);
+vet_t * create_vet(dama_t * dama, int rows, int cols, elem_t type, int dim);
 
 /** \brief Frees memory of the vector
  *
  * @param vet
  */
-void free_vet(dama_t ** vet);
+void free_vet(vet_t * vet, int dim, int pos);
 
 /** \brief Prints all the elements of the vector
  *
  * @param vet
  * @param dim
  */
-void print_vet(dama_t ** vet, int dim);
+void print_vet(vet_t * vet, int dim, int pos);
 
 
 

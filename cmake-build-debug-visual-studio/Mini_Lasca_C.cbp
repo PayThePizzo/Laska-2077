@@ -61,6 +61,26 @@
 					<DistClean command="nmake /NOLOGO /f C:\Users\PayThePizzo\Sites\Mini-Lasca-C\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="package">
+				<Option working_dir="C:/Users/PayThePizzo/Sites/Mini-Lasca-C/cmake-build-debug-visual-studio"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\PayThePizzo\Sites\Mini-Lasca-C\cmake-build-debug-visual-studio\Makefile VERBOSE=1 package"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\PayThePizzo\Sites\Mini-Lasca-C\cmake-build-debug-visual-studio\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\PayThePizzo\Sites\Mini-Lasca-C\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\PayThePizzo\Sites\Mini-Lasca-C\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="package_source">
+				<Option working_dir="C:/Users/PayThePizzo/Sites/Mini-Lasca-C/cmake-build-debug-visual-studio"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\PayThePizzo\Sites\Mini-Lasca-C\cmake-build-debug-visual-studio\Makefile VERBOSE=1 package_source"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\PayThePizzo\Sites\Mini-Lasca-C\cmake-build-debug-visual-studio\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\PayThePizzo\Sites\Mini-Lasca-C\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\PayThePizzo\Sites\Mini-Lasca-C\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="edit_cache">
 				<Option working_dir="C:/Users/PayThePizzo/Sites/Mini-Lasca-C/cmake-build-debug-visual-studio"/>
 				<Option type="4"/>
