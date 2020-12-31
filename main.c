@@ -3,10 +3,10 @@
 
 int main() {
     int winner;
-    hello();
+
     tgame *dama = create(7,7);
     initialize(dama,dama->cols,dama->rows);
-    winner = game (dama, dama->rows, dama->cols);
+    winner = botfight(dama, dama->rows, dama->cols);
 
     if(winner==0){
         printf("White gamer is the winner!!!");
@@ -15,9 +15,6 @@ int main() {
     }
     printf("\n");
     freegame(dama,dama->rows,dama->cols);
-
-    goodbye();
-    credits();
 
     return 0;
 }
