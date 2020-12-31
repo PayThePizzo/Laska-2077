@@ -116,7 +116,7 @@ int check_number(int dim){
     }
 }
 
-void print(tgame result, int rows , int cols){
+void print(tgame dama, int rows , int cols){
     printf("%32s","LASKA GAME\n");
     printf("\t");
     printf(" ");
@@ -130,17 +130,17 @@ void print(tgame result, int rows , int cols){
         printf("%d ",i+1);
         printf("\t ");
         for (j = 0; j <cols; ++j) {
-            if(result.mat[i][j]->id==0){
+            if(dama.mat[i][j]->id==0){
                 printf("%c\t",219);
-            }else if(result.mat[i][j]->id==1){
+            }else if(dama.mat[i][j]->id==1){
                 printf("%c\t",' ');
-            }else if(result.mat[i][j]->id==2){
+            }else if(dama.mat[i][j]->id==2){
                 printf("%c\t",'w');
-            }else if(result.mat[i][j]->id==3){
+            }else if(dama.mat[i][j]->id==3){
                 printf("%c\t",'b');
-            }else if(result.mat[i][j]->id==4){
+            }else if(dama.mat[i][j]->id==4){
                 printf("%c\t",'W');
-            }else if(result.mat[i][j]->id==5){
+            }else if(dama.mat[i][j]->id==5){
                 printf("%c\t",'B');
             }
         }
