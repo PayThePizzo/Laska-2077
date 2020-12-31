@@ -89,7 +89,7 @@ int coin_toss(){
 }
 
 int convert(int dim){
-    char a ;
+    char a;
     int i = 0;
     while (1){
         scanf(" %c",&a);
@@ -105,10 +105,6 @@ int convert(int dim){
     }
 }
 
-/*  Errore quando non si mette giusto
- *
- *
- */
 int check_number(int dim){
     int i;
     while (1){
@@ -121,27 +117,7 @@ int check_number(int dim){
     }
 }
 
-int random_x(int upper, int lower, int precision){
-    int i = 0;
-    int x = 0;
-    for(i=0; i<precision; i++) {
-        x = ((rand()%upper)+lower);
-    }
-
-    return x;
-}
-
-char random_y(int upper, int lower, int precision){
-    int i = 0;
-    char y = 0;
-
-    for(i=0; i<precision; i++) {
-        y = (char)(97+((rand()%upper)));
-    }
-    return y;
-}
-
-void print(tgame result, int rows , int cols){
+void print(tgame dama, int rows , int cols){
     printf("%32s","LASKA GAME\n");
     printf("\t");
     printf(" ");
@@ -155,17 +131,17 @@ void print(tgame result, int rows , int cols){
         printf("%d ",i+1);
         printf("\t ");
         for (j = 0; j <cols; ++j) {
-            if(result.mat[i][j]->id==0){
+            if(dama.mat[i][j]->id==0){
                 printf("%c\t",219);
-            }else if(result.mat[i][j]->id==1){
+            }else if(dama.mat[i][j]->id==1){
                 printf("%c\t",' ');
-            }else if(result.mat[i][j]->id==2){
+            }else if(dama.mat[i][j]->id==2){
                 printf("%c\t",'w');
-            }else if(result.mat[i][j]->id==3){
+            }else if(dama.mat[i][j]->id==3){
                 printf("%c\t",'b');
-            }else if(result.mat[i][j]->id==4){
+            }else if(dama.mat[i][j]->id==4){
                 printf("%c\t",'W');
-            }else if(result.mat[i][j]->id==5){
+            }else if(dama.mat[i][j]->id==5){
                 printf("%c\t",'B');
             }
         }
@@ -174,6 +150,8 @@ void print(tgame result, int rows , int cols){
         printf("\n");
     }
 }
+
+
 
 void add(tgame *dama, int pawn, int r, int c){
 
@@ -236,7 +214,6 @@ int white_move_check(tgame *dama, point a){
             return 0;
     }
 }
-
 int black_move_check(tgame *dama, point a){
     if(a.i == dama->rows-1)
         return 0;
@@ -405,7 +382,6 @@ int legal_choice(tgame *dama, int turn, point a){
         }
     }
 }
-
 int legal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
     if(dama->mat[b.i][b.j]->id == 0){
         if(have_to_capture == 1){
@@ -525,7 +501,6 @@ void promotion(tgame *dama, int turn){
     }
 }
 /*returns 0 if no winner, 1 if white player is the winner, 2 if vlack player is the winner*/
-
 int victory(tgame *dama, int turn){
     if(!player_can_capture(dama,enemy(turn)) && !player_can_move(dama,enemy(turn)))
         return turn+1;
@@ -586,64 +561,6 @@ int game(tgame *dama, int rows, int cols){
         }
     }
 }
-
-int botfight(tgame *dama, int rows, int cols){
-    point a,b;
-    int turn = 0;
-    int endgame = 0;
-    srand(time(NULL));
-
-
-    while(!endgame){
-        int precision = (rand()%100+1);
-        print (*dama, rows, cols);
-        printf("Write the start coordinate or Press x to give up\n");
-        if(turn ==0)
-            printf("It's white turn\n");
-        else
-            printf("It's black turn\n");
-        printf("Letter:");
-        a.j = convert(dama->cols);
-        if(a.j == -1)
-            return (turn == 0 ? 1 : 0);
-        else{
-            printf("Number:");
-            a.i = random_x(7,1, precision);
-            (a.i) --;
-            if(dama->mat[a.i][a.j]->id== turn+2 || dama->mat[a.i][a.j]->id== turn+4){
-                if(legal_choice(dama, turn, a)){
-                    do
-                    {
-                        printf("Write the destination coordinate\n");
-                        printf("Letter:");
-                        b.j = convert(dama->rows);
-                        printf("Number:");
-                        b.i = random_x(7,1, precision);
-                        (b.i) --;
-                    } while (!legal_move (dama, turn, a, b, legal_choice(dama, turn, a)));
-
-                    move(dama, a, b);
-                    promotion(dama, turn);
-                    if(victory(dama, turn)){
-                        endgame=1;
-                        print (*dama,dama->rows,dama->cols);
-                        return turn;
-                    }
-                    turn = enemy(turn);
-                }
-                else {
-                    printf("the selected move is not valid beacause you have to capture enemy's pawn or select a pawn that can be moved\n");
-                }
-            }
-            else{
-                printf("Please select your pawn\n");
-
-            }
-        }
-    }
-}
-
-
 
 //Menu
 
