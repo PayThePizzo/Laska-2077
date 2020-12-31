@@ -311,6 +311,7 @@ int game(tgame *dama, int rows, int cols);
 //Menu
 
 /**
+ * Removes the top piece of the tower in the given position and returns it in output.
  *
  *
  * @return

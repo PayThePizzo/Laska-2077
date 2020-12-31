@@ -105,7 +105,6 @@ int convert(int dim){
     }
 }
 
-
 /*  Errore quando non si mette giusto
  *
  *
@@ -121,8 +120,6 @@ int check_number(int dim){
         }
     }
 }
-
-
 
 int random_x(int upper, int lower, int precision){
     int i = 0;
@@ -143,9 +140,6 @@ char random_y(int upper, int lower, int precision){
     }
     return y;
 }
-
-
-
 
 void print(tgame result, int rows , int cols){
     printf("%32s","LASKA GAME\n");
@@ -592,7 +586,6 @@ int game(tgame *dama, int rows, int cols){
         }
     }
 }
-
 
 int botfight(tgame *dama, int rows, int cols){
     point a,b;

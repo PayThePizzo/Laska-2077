@@ -6,7 +6,7 @@ int main() {
 
     tgame *dama = create(7,7);
     initialize(dama,dama->cols,dama->rows);
-    winner = botfight(dama, dama->rows, dama->cols);
+    winner = game (dama, dama->rows, dama->cols);
 
     if(winner==0){
         printf("White gamer is the winner!!!");
