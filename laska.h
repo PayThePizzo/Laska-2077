@@ -9,7 +9,7 @@
 
 /** \mainpage Laska
  *
- *  This library implements the Mini-Laska Project of Gianmaria Pizzo and Aleksandra G.
+ *  This library implements the Mini-Laska Project of Gianmaria Pizzo and Aleksandra Gjorgievska
  *
  */
 
