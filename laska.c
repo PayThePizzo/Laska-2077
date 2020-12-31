@@ -706,6 +706,8 @@ void hello(){
     printf("Hi there, welcome to Laska 2077!\n");
     printf("Check out the official site of the game here: http://www.lasca.org/ \n");
     printf("\n");
+
+    /*
     printf("Now, let me introduce you what modalities we built. Here you find the menu:\n");
 
     printf("# //==================[]======\\\\\n"
@@ -725,6 +727,7 @@ void hello(){
     printf("Let's hear it then, have you made up your mind?(Y/N)");
     printf("\n");
     printf("\n");
+     */
 }
 
 void goodbye(){

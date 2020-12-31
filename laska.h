@@ -15,7 +15,6 @@
 
 /**
  *
- *
  * @struct Laska board coordinates
  */
 typedef struct point{

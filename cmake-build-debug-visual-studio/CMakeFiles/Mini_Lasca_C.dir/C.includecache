@@ -17,8 +17,14 @@ stdlib.h
 -
 assert.h
 -
-math.h
--
 time.h
 -
+math.h
+-
+
+C:/Users/PayThePizzo/Sites/Mini-Lasca-C/main.c
+stdio.h
+-
+laska.h
+C:/Users/PayThePizzo/Sites/Mini-Lasca-C/laska.h
 

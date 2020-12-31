@@ -3,7 +3,7 @@
 
 int main() {
     int winner;
-
+    hello();
     tgame *dama = create(7,7);
     initialize(dama,dama->cols,dama->rows);
     winner = game (dama, dama->rows, dama->cols);
@@ -14,8 +14,11 @@ int main() {
         printf("Black player is the winner!!!");
     }
     printf("\n");
-
     freegame(dama,dama->rows,dama->cols);
+
+    goodbye();
+    credits();
+
     return 0;
 }
 
