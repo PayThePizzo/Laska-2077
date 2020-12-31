@@ -1,146 +1,82 @@
 #include "laska.h"
-#define ROWS (7)
-#define COLS (7)
-#define PAWN (11)
 
-// Create, Free & Print - Dama
-/*  1) Create
- *  2) Free
- *  3) Print
- */
+tgame* create(int cols,int rows){
+    tgame *dama;
+    int i, j;
 
-dama_t* dama_create(int rows, int cols){
-    int r = 0, c = 0;
-
-    //allocation of Lasca Board
-    dama_t* damap = (dama_t *) malloc (sizeof (dama_t) * rows * cols);
-    assert (damap != NULL);
-    dama_t *mem = damap;
-
-    //initialization
-    for(r = 0; r<rows; r++){
-        for(c = 0; c<cols; c++) {
-            if ((r==0 && c%2 ==0)||(r==1 && c%2 != 0)|| r==2 && c%2==0){
-                mem[r * cols + c].type = black_pawn;
-                mem[r * cols + c].height = 1;
-                mem[r * cols + c].loc.i = r;
-                mem[r * cols + c].loc.j = c;
-            }else if(((r==4 && c%2 ==0)||(r==5 && c%2 != 0)|| r==6 && c%2==0)){
-                mem[r * cols + c].type = white_pawn;
-                mem[r * cols + c].height = 1;
-                mem[r * cols + c].loc.i = r;
-                mem[r * cols + c].loc.j = c;
-            }else if(r==3 && c%2 !=0){
-                mem[r * cols + c].type = empty;
-                mem[r * cols + c].height = 0;
-                mem[r * cols + c].loc.i = r;
-                mem[r * cols + c].loc.j = c;
-            }else{
-                mem[r * cols + c].type = excluded;
-                mem[r * cols + c].height = 0;
-                mem[r * cols + c].loc.i = r;
-                mem[r * cols + c].loc.j = c;
+/*allocates space to struct*/
+    dama=(tgame*)malloc(sizeof(tgame));
+    assert(dama!=NULL);
+/*save dimensions*/
+    dama->rows=rows;
+    dama->cols=cols;
+/* allocate vector rows pointers */
+    dama->mat=(boxpawn***)malloc(sizeof(boxpawn**)*rows);
+    assert(dama->mat!=NULL);
+/*allocate pawns pointers and boxes*/
+    for(i=0;i<rows;i++){
+        dama->mat[i]=(boxpawn**)malloc(sizeof(boxpawn*)*cols);
+        assert(dama->mat[i]!=NULL);
+        for(j=0;j<cols;j++){
+            dama->mat[i][j]=(boxpawn*)malloc(sizeof(boxpawn));
+            assert(dama->mat[i][j]!=NULL);
+            dama->mat[i][j]->next=NULL;
+        }
+    }
+    return dama;
+}
+void initialize(tgame * dama, int cols, int rows){
+    int i, j;
+/*chessboard creation*/
+    for(i = 0;i<rows;i++){
+        for(j=0;j<cols;j++) {
+            if (i % 2 == 0 && j % 2 == 0) {
+                dama->mat[i][j]->id = 0;
+            } else if (i % 2 != 0 && j % 2 != 0) {
+                dama->mat[i][j]->id = 0;
+            } else {
+                dama->mat[i][j]->id = 1;
             }
         }
     }
-    return damap;
-}
-
-void dama_free (dama_t *damap){
-    free(damap);
-}
-
-void print(dama_t *dama, int rows, int cols){
-    int r = 0, c = 0;
-    printf("\t");
-    printf(" ");
-    for (int r = 0; r < rows; r++){
-        printf("%c\t",65+r);
-
-    }
-    printf("\n");
-    for (r = 0; r < rows; r++){
-        printf("\n");
-        printf("%d",r+1);
-        printf("\t ");
-        for (c = 0; c <cols; c++){
-            if(dama[r * cols + c].type == white_pawn) {
-                printf("%c\t", 'W');
-            }
-            if(dama[r * cols + c].type == black_pawn){
-                printf("%c\t",'B');
-            }
-            if(dama[r * cols + c].type == empty) {
-                printf("%c\t ", 223);
-            }
-            if(dama[r * cols + c].type == excluded) {
-                printf("%c\t", ' ');
+/*pawn placement*/
+    for (i = 0; i <rows ; i++) {
+        for (j = 0; j < cols; j++) {
+            if (dama->mat[i][j]->id == 0) {
+                if (i > rows / 2 && i <= rows) {
+                    dama->mat[i][j]->id = 2;
+                } else if (i >= 0 && i < rows / 2) {
+                    dama->mat[i][j]->id = 3;
+                }
             }
 
         }
-        printf("\n");
-        printf("___________________________________________________________");
-        printf("\n");
-
     }
 }
 
+void freegame(tgame *dama, int rows, int cols) {
+    int i , j;
 
-
-//Vectors for Pawns
-/* 1) Crea Vettore generico
- * 2) Libera Vettore
- * 3) Printa Vettore
- */
-
-
-vet_t * create_vet(dama_t * dama, int rows, int cols, elem_t type, int dim){
-    vet_t * newvet = (vet_t *) malloc (sizeof(vet_t)* dim);
-    assert (newvet != NULL);
-    vet_t * sup = newvet;
-
-    int i = 0, j = 0, k = 0;
-    for(i=0; i<rows; i++){
-        for(j=0; j<cols; j++){
-            if(dama[i*cols+j].type == type){
-                sup[k].vet = (dama_t *)malloc(sizeof(dama_t));
-                assert(sup[k].vet);
-                sup[k].vet->loc = dama[i*cols+j].loc;
-                sup[k].vet->type = dama[i*cols+j].type;
-                sup[k].vet->height = dama[i*cols+j].height;
-
-                sup[k].status = free_to_move;
-                sup[k].vet_dim = dim;
-                sup[k].top = 1;
-                k++;
+    for(i = 0; i<rows; i++){
+        for (j=0; j<cols; j++){
+            if(dama->mat[i][j]->next==NULL)
+                free(dama->mat[i][j]);
+            else if(dama->mat[i][j]->next->next==NULL){
+                free(dama->mat[i][j]->next);
+                free(dama->mat[i][j]);
+            }
+            else{
+                free(dama->mat[i][j]->next->next);
+                free(dama->mat[i][j]->next);
+                free(dama->mat[i][j]);
             }
         }
+        free(dama->mat[i]);
     }
-    return newvet;
+
+    free(dama->mat);
+    free(dama);
 }
-
-void free_vet(vet_t * newvet, int dim, int pos){
-
-    while(pos < dim){
-        free(newvet[dim].vet);
-        free_vet(newvet, dim, (pos+1));
-    }
-    free(newvet);
-}
-
-void print_vet(vet_t * newvet, int dim, int pos){
-    while (pos < dim){
-        vet_t * sup = newvet;
-        printf("%d,", sup[pos].vet->loc.i);
-        printf("%d", sup[pos].vet->loc.j);
-        printf("\t");
-        pos++;
-    }
-}
-
-
-
-//Auxiliary Generic Functions
 
 int coin_toss(){
     double flip = (double)rand()/(double)RAND_MAX;
@@ -151,52 +87,482 @@ int coin_toss(){
     }
 }
 
-int convert(){
+int convert(int dim){
     char a;
-
-    scanf("%c",&a);
-
-    if(a>='A' && a<='G') {
-        return (a - 65);
-    }else if(a>='a' && a<='g'){
-        return (a-97);
-    }else if (a=='x'||a=='X'){
-        return -1;
-    }else{
-        convert();
+    int i = 0;
+    while (1){
+        scanf(" %c",&a);
+        if(a>='A' && a<=('A'+dim-1))
+            return a-65;
+        else if(a>='a' && a<=('a'+dim-1))
+            return a-97;
+        else if (a=='x'||a=='X')
+            return -1;
+        else{
+            printf("The selected box doesn't exist. Please select a letter from %c to %c\n", 65, 65+dim-1);
+        }
     }
 }
 
-/*
-point findmiddle(point a, point b){
-    point middle;
-    if(a.y>b.y){
-        if(a.x>b.x){
-            middle.x = a.x-1;
-            middle.y = a.y-1;
+int check_number(int dim){
+    int i;
+    while (1){
+        scanf(" %d",&i);
+        if(i>=1 && i<=dim)
+            return i;
+        else {
+            printf("The selected box doesn't exist. Please select a number from %d to %d\n", 1, dim);
+        }
+    }
+}
+
+void print(tgame result, int rows , int cols){
+    printf("%32s","LASKA GAME\n");
+    printf("\t");
+    printf(" ");
+    int i = 0 , j = 0;
+    for (int i = 0; i < rows; ++i) {
+        printf("%c\t",65+i);
+    }
+    printf("\n");
+    for (i = 0; i < rows; ++i) {
+        printf("\n");
+        printf("%d ",i+1);
+        printf("\t ");
+        for (j = 0; j <cols; ++j) {
+            if(result.mat[i][j]->id==0){
+                printf("%c\t",219);
+            }else if(result.mat[i][j]->id==1){
+                printf("%c\t",' ');
+            }else if(result.mat[i][j]->id==2){
+                printf("%c\t",'w');
+            }else if(result.mat[i][j]->id==3){
+                printf("%c\t",'b');
+            }else if(result.mat[i][j]->id==4){
+                printf("%c\t",'W');
+            }else if(result.mat[i][j]->id==5){
+                printf("%c\t",'B');
+            }
+        }
+        printf("\n");
+        printf("___________________________________________________________");
+        printf("\n");
+    }
+}
+
+
+
+void add(tgame *dama, int pawn, int r, int c){
+
+    if (dama->mat[r][c]->id==0){
+        dama->mat[r][c]->id = pawn;
+    }
+    else{
+        boxpawn *n= (boxpawn *) malloc(sizeof(boxpawn));
+        n->next = NULL;
+        n->id = pawn;
+        if (dama->mat[r][c]->next==NULL){
+            dama->mat[r][c]->next=n;
+        }
+        else if(dama->mat[r][c]->next==NULL){
+            dama->mat[r][c]->next->next=n;
         }
         else{
-            middle.x = a.x+1;
-            middle.y = a.y-1;
+            free(dama->mat[r][c]->next->next);
+            dama->mat[r][c]->next->next = n;
+        }
+    }
+}
+
+int remove_pawn(tgame *dama, int r, int c){
+    int estract;
+
+    if(dama->mat[r][c]->next==NULL){
+        estract = dama->mat[r][c]->id;
+        dama->mat[r][c]->id= 0;
+        return estract;
+    }
+    else{
+        boxpawn *element = dama->mat[r][c];
+        estract = dama->mat[r][c]->id;
+        dama->mat[r][c] = dama->mat[r][c]->next;
+        free(element);
+        return estract;
+    }
+}
+
+int white_move_check(tgame *dama, point a){
+    if(a.i == 0)
+        return 0;
+    else if (a.j==0){
+        if(dama->mat[a.i-1][a.j+1]->id == 0)
+            return 1;
+        else
+            return 0;
+    }
+    else if(a.j==dama->cols-1){
+        if (dama->mat[a.i-1][a.j-1]->id == 0)
+            return 1;
+        else
+            return 0;
+    }
+    else{
+        if(dama->mat[a.i-1][a.j+1]->id == 0 || dama->mat[a.i-1][a.j-1]->id == 0)
+            return 1;
+        else
+            return 0;
+    }
+}
+int black_move_check(tgame *dama, point a){
+    if(a.i == dama->rows-1)
+        return 0;
+    else if (a.j==0){
+        if(dama->mat[a.i+1][a.j+1]->id == 0)
+            return 1;
+        else
+            return 0;
+    }
+    else if(a.j==dama->cols-1){
+        if (dama->mat[a.i+1][a.j-1]->id == 0)
+            return 1;
+        else
+            return 0;
+    }
+    else{
+        if(dama->mat[a.i+1][a.j+1]->id == 0 || dama->mat[a.i+1][a.j-1]->id == 0)
+            return 1;
+        else
+            return 0;
+    }
+}
+
+int dama_move_check(tgame *dama, point a){
+    return (white_move_check(dama, a) || black_move_check(dama, a));
+}
+
+int white_capture_check(tgame *dama, point a, int turn){
+    int e = enemy(turn);
+    if(a.i<2)
+        return 0;
+    else if(a.j==0 || a.j==1){
+        if((dama->mat[a.i-1][a.j+1]->id == e+2 || dama->mat[a.i-1][a.j+1]->id == e+4) && dama->mat[a.i-2][a.j+2]->id == 0)
+            return 1;
+        else
+            return 0;
+    }
+    else if (a.j==dama->cols-1 || a.j==dama->cols-2){
+        if((dama->mat[a.i-1][a.j-1]->id == e+2 || dama->mat[a.i-1][a.j-1]->id == e+4) && dama->mat[a.i-2][a.j-2]->id == 0)
+            return 1;
+        else
+            return 0;
+    }
+    else{
+        if(((dama->mat[a.i-1][a.j+1]->id == e+2 || dama->mat[a.i-1][a.j+1]->id == e+4) && dama->mat[a.i-2][a.j+2]->id == 0)||
+           ((dama->mat[a.i-1][a.j-1]->id == e+2 || dama->mat[a.i-1][a.j-1]->id == e+4) && dama->mat[a.i-2][a.j-2]->id == 0))
+            return 1;
+        else
+            return 0;
+    }
+}
+
+int black_capture_check(tgame *dama, point a, int turn){
+    int e = enemy(turn);
+    if(a.i > (dama->rows-3))
+        return 0;
+    else if(a.j==0 || a.j==1){
+        if((dama->mat[a.i+1][a.j+1]->id == e+2 || dama->mat[a.i+1][a.j+1]->id == e+4) && dama->mat[a.i+2][a.j+2]->id == 0)
+            return 1;
+        else
+            return 0;
+    }
+    else if (a.j==dama->cols-1 || a.j==dama->cols-2){
+        if((dama->mat[a.i+1][a.j-1]->id == e+2 || dama->mat[a.i+1][a.j-1]->id == e+4) && dama->mat[a.i+2][a.j-2]->id == 0)
+            return 1;
+        else
+            return 0;
+    }
+    else{
+        if(((dama->mat[a.i+1][a.j+1]->id == e+2 || dama->mat[a.i+1][a.j+1]->id == e+4) && dama->mat[a.i+2][a.j+2]->id == 0)||
+           ((dama->mat[a.i+1][a.j-1]->id == e+2 || dama->mat[a.i+1][a.j-1]->id == e+4) && dama->mat[a.i+2][a.j-2]->id == 0))
+            return 1;
+        else
+            return 0;
+    }
+}
+
+int dama_capture_check(tgame *dama, point a, int turn){
+    return white_capture_check(dama, a, turn) || black_capture_check(dama, a, turn);
+}
+
+int player_can_capture(tgame *dama, int turn){
+    int i, j;
+    int flag = 0;
+
+    for (i=0; i<dama->rows && flag == 0; i++){
+        for(j=0; j<dama->cols && flag == 0; j++){
+            point p;
+            p.i = i;
+            p.j = j;
+            if(dama->mat[i][j]->id == turn+2 ){
+                if(turn==0 && white_capture_check(dama, p, turn))
+                    flag = 1;
+                else if(turn==1 && black_capture_check(dama, p, turn))
+                    flag = 1;
+            }
+            else if(dama->mat[i][j]->id == turn+4 ){
+                if(dama_capture_check(dama, p, turn))
+                    flag = 1;
+            }
+        }
+    }
+    return flag;
+}
+
+int player_can_move(tgame *dama, int turn){
+    int i, j;
+    int flag = 0;
+
+    for (i=0; i<dama->rows && flag == 0; i++){
+        for(j=0; j<dama->cols && flag == 0; j++){
+            point p;
+            p.i = i;
+            p.j = j;
+            if(dama->mat[i][j]->id == turn+2 ){
+                if(turn==0 && white_move_check(dama, p))
+                    flag = 1;
+                else if(turn==1 && black_move_check(dama, p))
+                    flag = 1;
+            }
+            else if(dama->mat[i][j]->id == turn+4 ){
+                if(dama_move_check(dama, p))
+                    flag = 1;
+            }
+        }
+    }
+    return flag;
+}
+
+int legal_choice(tgame *dama, int turn, point a){
+    if (player_can_capture(dama,turn)){
+        if(is_promoted (dama,a,turn)){
+            if (dama_capture_check(dama, a, turn))
+                return 1;
+            else
+                return 0;
+        }
+        else{
+            if(turn == 0){
+                if(white_capture_check(dama, a, turn))
+                    return 1;
+                else
+                    return 0;
+            }
+            else{
+                if(black_capture_check(dama, a, turn))
+                    return 1;
+                else
+                    return 0;
+            }
+        }
+    }
+    else if(is_promoted (dama,a,turn)){
+        if(dama_move_check(dama, a))
+            return 2;
+        else
+            return 0;
+    }
+    else{
+        if (turn == 0 && white_move_check(dama, a))
+            return 2;
+        else if (turn == 1 && black_move_check(dama, a))
+            return 2;
+        else{
+            return 0;
+        }
+    }
+}
+int legal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
+    if(dama->mat[b.i][b.j]->id == 0){
+        if(have_to_capture == 1){
+            point p = findmiddle(a, b);
+            if(dama->mat[p.i][p.j]->id == enemy(turn)+2 || dama->mat[p.i][p.j]->id == enemy(turn)+4){
+                if(is_promoted (dama,a,turn)){
+                    if ( abs(b.i - a.i)==2)
+                        return 1;
+                    else
+                        return 0;
+                }
+                else if(turn == 0){
+                    if(a.i == (b.i)+2 && (a.j == (b.j)+2 || a.j == (b.j)-2))
+                        return 1;
+                    else
+                        return 0;
+                }
+                else if(turn == 1){
+                    if (a.i == b.i-2 && (a.j == b.j+2 || a.j == b.j-2))
+                        return 1;
+                    else
+                        return 0;
+                }
+            }
+            else{
+                return 0;
+            }
+        }
+        else if(is_promoted (dama,a,turn)){
+            if(abs(b.i - a.i)==1)
+                return 1;
+        }
+        else if (turn == 0 && (((b.i==(a.i)-1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)-1)&& (b.j==(a.j)+1)))){
+            return 1;
+        }
+        else if (turn == 1 && (((b.i==(a.i)+1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)+1)&& (b.j==(a.j)+1)))){
+            return 1;
+        }
+        else{
+            return 0;
         }
     }
     else{
-        if(a.x>b.x){
-            middle.x = a.x-1;
-            middle.y = a.y+1;
+        return 0;
+    }
+}
+
+point findmiddle(point a, point b){
+    point middle;
+    if(a.i>b.i){
+        if(a.j>b.j){
+            middle.j = a.j-1;
+            middle.i = a.i-1;
         }
         else{
-            middle.x = a.x+1;
-            middle.y = a.y+1;
+            middle.j = a.j+1;
+            middle.i = a.i-1;
+        }
+    }
+    else{
+        if(a.j>b.j){
+            middle.j = a.j-1;
+            middle.i = a.i+1;
+        }
+        else{
+            middle.j = a.j+1;
+            middle.i = a.i+1;
         }
     }
     return middle;
 }
-*/
 
+void move (tgame *dama, point a, point b){
+    if (abs(b.j - a.j)==1){
+        boxpawn * temporary = dama->mat[b.i][b.j];
+        dama->mat[b.i][b.j]= dama->mat[a.i][a.j];
+        dama->mat[a.i][a.j]= temporary;
+    }
+    else if(abs(b.i - a.i)==2){
+        int conquered;
+        boxpawn * temporary = dama->mat[b.i][b.j];
+        point middle = findmiddle( a, b);
 
+        conquered = remove_pawn(dama, middle.i, middle.j);
+        add(dama, conquered, a.i, a.j);
+        dama->mat[b.i][b.j] = dama->mat[a.i][a.j];
+        dama->mat[a.i][a.j]= temporary;
+    }
+    else {
+        printf("Error move function");
+    }
+}
 
-// Menu & Auxiliary Game Functions
+int enemy(int turn){
+    if(turn == 0)
+        return 1;
+    else{
+        return 0;
+    }
+}
+
+int is_promoted (tgame *dama, point a, int turn){
+    if(dama->mat[a.i][a.j]->id == turn+4)
+        return 1;
+    else{
+        return 0;
+    }
+}
+
+void promotion(tgame *dama, int turn){
+    int i, j;
+    turn == 0? i=0 : (i=((dama->rows)-1));
+
+    for (j=0; j<dama->cols; j++){
+        if (dama->mat[i][j]->id == turn+2)
+            dama->mat[i][j]->id +=2;
+    }
+}
+/*returns 0 if no winner, 1 if white player is the winner, 2 if vlack player is the winner*/
+int victory(tgame *dama, int turn){
+    if(!player_can_capture(dama,enemy(turn)) && !player_can_move(dama,enemy(turn)))
+        return turn+1;
+    else{
+        return 0;
+    }
+}
+
+int game(tgame *dama, int rows, int cols){
+    point a,b;
+    int turn = 0;
+    int endgame = 0;
+
+    while(!endgame){
+        print (*dama, rows, cols);
+        printf("Write the start coordinate or Press x to give up\n");
+        if(turn ==0)
+            printf("It's white turn\n");
+        else
+            printf("It's black turn\n");
+        printf("Letter:");
+        a.j = convert(dama->cols);
+        if(a.j == -1)
+            return (turn == 0 ? 1 : 0);
+        else{
+            printf("Number:");
+            a.i = check_number(dama->cols);
+            (a.i) --;
+            if(dama->mat[a.i][a.j]->id== turn+2 || dama->mat[a.i][a.j]->id== turn+4){
+                if(legal_choice(dama, turn, a)){
+                    do
+                    {
+                        printf("Write the destination coordinate\n");
+                        printf("Letter:");
+                        b.j = convert(dama->rows);
+                        printf("Number:");
+                        b.i = check_number(dama->rows);
+                        (b.i) --;
+                    } while (!legal_move (dama, turn, a, b, legal_choice(dama, turn, a)));
+
+                    move(dama, a, b);
+                    promotion(dama, turn);
+                    if(victory(dama, turn)){
+                        endgame=1;
+                        print (*dama,dama->rows,dama->cols);
+                        return turn;
+                    }
+                    turn = enemy(turn);
+                }
+                else {
+                    printf("the selected move is not valid beacause you have to capture enemy's pawn or select a pawn that can be moved\n");
+                }
+            }
+            else{
+                printf("Please select your pawn\n");
+
+            }
+        }
+    }
+}
+
+//Menu
+
 /*  Flow of the Game
  *  1) Choose Players
  *      - Coin Toss
@@ -310,40 +676,7 @@ void result_menu(int winner){
 }
 
 
-
-// Functions for the game
-/*  -2) Coin Toss
- *  -1) Legal Choice
- *   0) Legal Move
- *
- *  1) Check Limit -> dato il puntatore alla pedina, mi dice se la pedina e' troppo alta
- *  2) Check Grow -> dato il puntatore alla pedina e le coordinate in cui viene inserita, mi dice se la pedina cresce
- *  3) Move
- *  4) Remove Pawn
- *  5) Grow -> Aggiunge uno alla pedina, rimuove la pedina avversaria
- *  6) Check Win -> date le regole del gioco, la scacchiera e le pedine rimaste, mi dice se una mossa fa vincere la partita
- */
-
-
-
-// Games
-/*  1) Single Player    - Game
- *  2) 2 Players        - Game
- *  3) Player vs Pc     - Gamepc
- *  4) Pc vs Pc         - BotFight
- *
- * Features
- * - Give Up
- * - Quit
- * - Reset the game
- * - Undo move
- * - Pass turn
- *
- */
-
-
-
-// Messages
+//Messages
 
 void hello(){
     printf(" __       __            __                                                      __               \n"
@@ -461,25 +794,3 @@ void credits(){
     printf("\n");
 }
 
-
-
-// Debug Dama
-
-void debug_dama(){
-    int dimvet = 11;
-
-    dama_t * dama = dama_create(ROWS,COLS);
-
-    print(dama, ROWS, COLS);
-    printf("\n");
-
-    vet_t * blackv = create_vet(dama, ROWS, COLS, black_pawn, dimvet);
-    print_vet(blackv, dimvet, 0);
-    free_vet(blackv,dimvet, 0);
-
-    vet_t * whitev = create_vet(dama, ROWS, COLS, white_pawn, dimvet);
-    print_vet(whitev, dimvet, 0);
-    free_vet(whitev, dimvet, 0);
-
-    dama_free(dama);
-}

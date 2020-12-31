@@ -1,256 +1,355 @@
-#ifndef MINI_LASCA_C_LASKA_H
-#define MINI_LASCA_C_LASKA_H
-#endif //MINI_LASCA_C_LASKA_H
+#ifndef LASKA_LASKA_H
+#define LASKA_LASKA_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <math.h>
 #include <time.h>
+#include <math.h>
 
-
-// Enum & Struct for creation of Matrix and Vectors
+/** \mainpage Laska
+ *
+ *  This library implements the Mini-Laska Project of Gianmaria Pizzo and Aleksandra G.
+ *
+ */
 
 /**
- *  @struct Struct for coordinates, i & j are the matrix coordinates
- *  @typedef location_t is the new type
+ *
+ *
+ * @struct Laska board coordinates
  */
-typedef struct location{
-    int i;
-    int j;
-} location_t;
+typedef struct point{
+    int j, i;
+} point;
 
+/*
+ * Id
+ * 0-> white box
+ * 1-> black box
+ * 2-> white pawn
+ * 3-> black pawn
+ * 4-> white dama
+ * 5-> black dama
+*/
 
-/** \brief New type that defines what we can find on the Laska table
+/**
+ * If the cell is empty it represents the color, otherwise it represents the pawn (obviously the cell is white).
  *
- * \typedef This type is to be used with every element of the board and to debug Vectors
- *
- *  \enum
+ * @struct Box of Laska board
  */
-typedef enum element {
-    excluded,
-    empty,
-    white_pawn,
-    black_pawn,
-} elem_t;
+typedef struct boxpawn {
+    int id;
+    struct boxpawn *next;
+} boxpawn;
 
 
-/** \brief Status defines whether a Pawn is free to move, conquered, or removed
+/**
  *
- */
-typedef enum status{
-    free_to_move,
-    conquered,
-    removed,
-} status_t;
-
-
-/** \brief This struct is used to create the Laska Board
  *
+ * @struct Laska board
  */
 typedef struct dama{
-    location_t loc;     /* Location inside the board [i][j]*/
-    elem_t type;        /* Type of Board Element */
-    int height;         /* Position inside the Stack of Pawn*/
-} dama_t;
+    int cols;
+    int rows;
+    boxpawn ***mat;
+} tgame;
 
-/* height
- *
- *  0           Casella
- *  1           Pedina livello 1 (base)
- *  2           Pedina livello 2
- *  3           Pedina livello 3 (top)
- */
 
+
+// Create, Initialize & Free
 /**
- * @Struct This struct is used to create a dynamic vector for each type of element we defined in elem_t.
- */
-typedef struct vector {
-    dama_t *vet; /* Every element has a pointer to where it is located inside the dama*/
-    status_t status;
-    int top;
-    int vet_dim;            /* Dimension of the vector of elements*/
-} vet_t;
-
-/* top
+ * Creates a new Laska Board
  *
- * Top Pawn of the Stack    1
- * Not Top Pawn             0
- */
-
-
-// Create & Free - Dama
-
-/**
- *
- * @param rows
  * @param cols
- * @return a vector where are stored information about the black and white pawns
- */
-dama_t* dama_create(int rows,int cols);
-
-
-/**
- *
- * @param dama
  * @param rows
- * @param cols
- */
-void dama_initialize(dama_t *dama, int rows, int cols);
-
-/**
- *
- * @param dama
- * @param rows
- * @param cols
- */
-void dama_free (dama_t *dama);
-
-/**
- *
- * @param dama
- * @param rows
- * @param cols
  * @return
  */
-int check_memory(dama_t *dama);
+tgame* create(int cols,int rows);
 
 /**
  *
  * @param dama
+ * @param cols
+ * @param rows
+ */
+void initialize(tgame * dama, int cols, int rows);
+
+/**
+ *
+ * @param result
  * @param rows
  * @param cols
  */
-void print (dama_t *dama, int rows, int cols);
+void freegame(tgame *result, int rows, int cols);
 
 
-//Vectors for Pawns - Vector
-/* 1) Crea Vettore generico
- * 2) Libera Vettore
- * 3) Printa Vettore
- */
 
-/** \brief Creates a vector of fixed dimension (7).
+// Auxiliary Functions
+
+/**
  *
- * @param dama
- * @param rows
- * @param cols
- * @param type
- * @return vectors whose elements are all type "type"
+ * @return
  */
-vet_t * create_vet(dama_t * dama, int rows, int cols, elem_t type, int dim);
+int coin_toss();
 
-/** \brief Frees memory of the vector
+/**
  *
- * @param vet
- */
-void free_vet(vet_t * vet, int dim, int pos);
-
-/** \brief Prints all the elements of the vector
  *
- * @param vet
  * @param dim
+ * @return
  */
-void print_vet(vet_t * vet, int dim, int pos);
-
-
-
-//Auxiliary functions
+int convert(int dim);
 
 /**
+ * Checks the number
  *
  * @param dim
  * @return
  */
 int check_number(int dim);
 
+/**
+ *
+ *
+ * @param result
+ * @param rows
+ * @param cols
+ */
+void print(tgame result, int rows , int cols);
+
+
+
+// Core Functions
 
 /**
  *
- * @return
+ *
+ * @param dama
+ * @param pedina
+ * @param r
+ * @param c
  */
-int convert();
-
+void add(tgame *dama, int pedina, int r, int c);
 
 /**
+ *
+ *
+ * @param dama
+ * @param r
+ * @param c
+ * @return
+ */
+int remove_pawn(tgame *dama, int r, int c);
+
+/**
+ *
+ *
+ * @param dama
+ * @param a
+ * @return
+ */
+int white_move_check(tgame *dama, point a);
+
+/**
+ *
+ *
+ * @param dama
+ * @param a
+ * @return
+ */
+int black_move_check(tgame *dama, point a);
+
+/**
+ *
+ *
+ * @param dama
+ * @param a
+ * @return
+ */
+int dama_move_check(tgame *dama, point a);
+
+/**
+ *
+ *
+ * @param dama
+ * @param a
+ * @param turn
+ * @return
+ */
+int white_capture_check(tgame *dama, point a, int turn);
+
+/**
+ *
+ *
+ * @param dama
+ * @param a
+ * @param turn
+ * @return
+ */
+int black_capture_check(tgame *dama, point a, int turn);
+
+/**
+ *
+ *
+ * @param dama
+ * @param a
+ * @param turn
+ * @return
+ */
+int dama_capture_check(tgame *dama, point a, int turn);
+
+/**
+ *
+ *
+ * @param dama
+ * @param turn
+ * @return
+ */
+int player_can_capture(tgame *dama,int turn);
+
+/**
+ *
+ *
+ * @param dama
+ * @param turn
+ * @return
+ */
+int player_can_move(tgame *dama, int turn);
+
+/**
+ *
+ *
+ * @param dama
+ * @param turn
+ * @param a
+ * @return
+ */
+int legal_choice(tgame *dama, int turn, point a);
+
+/**
+ *
+ *
+ * @param dama
+ * @param turn
+ * @param a
+ * @param b
+ * @param have_to_capture
+ * @return
+ */
+int legal_move (tgame *dama, int turn, point a, point b, int have_to_capture);
+
+/**
+ *
  *
  * @param a
  * @param b
  * @return
  */
-location_t findmiddle(location_t x, location_t y);
+point findmiddle(point a, point b);
+
+/**
+ *
+ *
+ * @param dama
+ * @param a
+ * @param b
+ */
+void move (tgame *dama, point a, point b);
+
+/**
+ *
+ *
+ * @param turn
+ * @return
+ */
+int enemy(int turn);
+
+/**
+ *
+ *
+ * @param dama
+ * @param a
+ * @param turn
+ * @return
+ */
+int is_promoted (tgame *dama, point a, int turn);
+
+/**
+ *
+ *
+ * @param dama
+ * @param turn
+ */
+void promotion(tgame *dama, int turn);
+
+/**
+ *
+ *
+ * @param dama
+ * @param turn
+ * @return
+ */
+int victory(tgame *dama, int turn);
+
+/**
+ *
+ *
+ * @param dama
+ * @param rows
+ * @param cols
+ * @return
+ */
+int game(tgame *dama, int rows, int cols);
 
 
 
-// Menu & Auxiliary Game Functions
+//Menu
 
-/** \brief Main Menu from which it is possible to choose players and game modes.
- *  @return A number 0-3 used to select the game mode.
+/**
+ *
+ *
+ * @return
  */
 int main_menu();
 
 /**
  *
+ *
  * @return
  */
 int decision_menu();
 
-/** @brief Displays the winner
+/**
  *
- * @param winner indicates who is the winner, either black or white.
+ *
+ * @param winner
+ * @return
  */
 void result_menu(int winner);
 
-// Functions for the game
-
-/*  -2) Coin Toss
- *  -1) Legal Choice
- *      - Pedina potrebbe non potersi muovere, troppe pedine bianche intorno
- *   0) Legal Move
- *
- *  1) Check Limit -> dato il puntatore alla pedina, mi dice se la pedina e' troppo alta
- *  2) Check Grow -> dato il puntatore alla pedina e le coordinate in cui viene inserita, mi dice se la pedina cresce
- *  3) Move
- *  4) Remove Pawn
- *  5) Grow -> Aggiunge uno alla pedina, rimuove la pedina avversaria
- *  6) Check Win -> date le regole del gioco, la scacchiera e le pedine rimaste, mi dice se una mossa fa vincere la partita
- */
 
 
-
-// Games
-
-/*  1) Single Player    - Game
- *  2) 2 Players        - Game
- *  3) Player vs Pc     - Gamepc
- *  4) Pc vs Pc         - BotFight
- */
-
-int game();
-
-int gamepc();
-
-int botfight;
-
-
-
-// Messages
-
+//Messages
 /**
+ *
+ *
  *
  */
 void hello();
 
 /**
  *
+ *
+ *
  */
 void goodbye();
 
 /**
  *
+ *
+ *
  */
 void credits();
 
 
-
-// Debug Dama
-void debug_dama();
+#endif //LASKA_LASKA_H
