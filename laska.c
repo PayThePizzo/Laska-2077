@@ -10,91 +10,6 @@ legend id
 5-> black dama
 */
 
-/* chessboard coordinates */
-typedef struct point{
-    int j, i;
-} point;
-
-/* point node */
-typedef struct point_cell{
-    point p;
-    point * next;
-} point_cell;
-
-/* list of points */
-typedef struct point_list{
-    int dim;
-    point * list;
-} point_list;
-
-/* if the cell is empty it represents the color, otherwise it represents the pawn (obviously the cell is white)*/
-typedef struct boxpawn {
-    int id;
-    struct boxpawn *next;
-} boxpawn;
-/*chessboard*/
-typedef struct dama{
-    int cols;
-    int rows;
-    boxpawn ***mat;
-} tgame;
-
-tgame* create(int cols,int rows);
-void initialize(tgame * dama, int cols, int rows);
-
-void freegame(tgame *result, int rows, int cols);
-
-int convert(int dim);
-int check_number(int dim);
-
-void print(tgame result, int rows , int cols);
-
-void add(tgame *dama, int pedina, int r, int c);
-int remove_pawn(tgame *dama, int r, int c);
-
-int white_move_check(tgame *dama, point a);
-int black_move_check(tgame *dama, point a);
-int dama_move_check(tgame *dama, point a);
-int white_capture_check(tgame *dama, point a, int turn);
-int black_capture_check(tgame *dama, point a, int turn);
-int dama_capture_check(tgame *dama, point a, int turn);
-
-int player_can_capture(tgame *dama,int turn);
-int player_can_move(tgame *dama, int turn);
-int legal_choice(tgame *dama, int turn, point a);
-int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture);
-
-point findmiddle(point a, point b);
-void move (tgame *dama, point a, point b);
-
-int enemy(int turn);
-int is_promoted (tgame *dama, point a, int turn);
-void promotion(tgame *dama, int turn);
-int victory(tgame *dama, int turn);
-int game(tgame *dama, int rows, int cols);
-
-int main() {
-    tgame *dama;
-    point a,b;
-    int winner;
-
-    dama = create(7,7);
-    initialize(dama,dama->cols,dama->rows);
-    winner = game (dama, dama->rows, dama->cols);
-
-    if(winner==0){
-        printf("White gamer is the winner!!!");
-    }else {
-        printf("Black player is the winner!!!");
-    }
-    printf("\n");
-
-    freegame(dama,dama->rows,dama->cols);
-    return 0;
-}
-
-
-
 
 tgame* create(int cols,int rows){
     tgame *dama;
@@ -665,23 +580,6 @@ int game(tgame *dama, int rows, int cols){
 }
 
 //Menu
-
-/*  Flow of the Game
- *  1) Choose Players
- *      - Coin Toss
- *      - Choice
- *
- *  2) Let White play first
- *      - Choose Pawn   -> legal_choice -> Yes  -> Choose Move
- *                                      -> No   -> Error + Ask Again
- *
- *      - Choose Move   -> legal_move   -> Yes  -> check_win -> No  ->  check_grow -> Yes -> check_limit -> 3<=  -> Keep Playing + Change Player
- *                                                                                                       -> >3   -> Remove First Pawn + Change Player
- *                                                                                 -> No  -> Change Player
- *                                                           -> Yes  ->  Stop the Game
- *                                      -> No   -> Error + Ask Again
- *
-*/
 
 int main_menu(){
     int input = -1;
