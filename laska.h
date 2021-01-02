@@ -227,7 +227,7 @@ int player_can_move(tgame *dama, int turn);
  * @param dama Laska board
  * @param turn current game turn
  * @param a the row and column coordinates of the selected box
- * @return  0 if you can't select that box because i's not your pawn, 1 if the player can choose that box but now you must capture foe's pawn, 2 if you can move, 3 if you can't choose that one because you can capture if select another pawn
+ * @return  0 if you can't select that box because i's not your pawn, 1 if the player can choose that box but now you must capture foe's pawn, 2 if you can move, 3 if the selected pawn is not free to move ,4 if you are forced to capture so you have to choose an other pawn
  */
 int legal_choice(tgame *dama, int turn, point a);
 
@@ -238,10 +238,13 @@ int legal_choice(tgame *dama, int turn, point a);
  * @param turn current game turn
  * @param a the row and column coordinates of the origin box
  * @param b the row and column coordinates of the destination box
- * @param have_to_capture the parameter returned by legal_ chice
- * @return 1 if it doesn't violate the rules, 0 if it violates at least one rule.
+ * @param have_to_capture the parameter returned by legal_chice
+ * @return 0 if it doesn't violate the rules, code_error(1) if you are forced to capture foe's pawn but you are moving somewhere else,
+ *         code_error(2) if dama is trying to capture in a wrong way, code_error(3) if a pawn is trying to capture in a wrong way,
+ *         code_error(4) if dama is not moving on one of the 4 free nearby diagonals, code_error(5) id a pawn is not moving on one of the 2 forward diagonals,
+ *         code_error(6) it's not possible to move in boxes that aren't white and empty
  */
-int legal_move (tgame *dama, int turn, point a, point b, int have_to_capture);
+int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture);
 
 /**
  * Takes 2 points and returns the point in between.
@@ -311,7 +314,6 @@ int game(tgame *dama, int rows, int cols);
 //Menu
 
 /**
- * Removes the top piece of the tower in the given position and returns it in output.
  *
  *
  * @return

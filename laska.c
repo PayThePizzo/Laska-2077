@@ -1,5 +1,101 @@
 #include "laska.h"
 
+/*
+legend id
+0-> white box
+1-> black box
+2-> white pawn
+3-> black pawn
+4-> white dama
+5-> black dama
+*/
+
+/* chessboard coordinates */
+typedef struct point{
+    int j, i;
+} point;
+
+/* point node */
+typedef struct point_cell{
+    point p;
+    point * next;
+} point_cell;
+
+/* list of points */
+typedef struct point_list{
+    int dim;
+    point * list;
+} point_list;
+
+/* if the cell is empty it represents the color, otherwise it represents the pawn (obviously the cell is white)*/
+typedef struct boxpawn {
+    int id;
+    struct boxpawn *next;
+} boxpawn;
+/*chessboard*/
+typedef struct dama{
+    int cols;
+    int rows;
+    boxpawn ***mat;
+} tgame;
+
+tgame* create(int cols,int rows);
+void initialize(tgame * dama, int cols, int rows);
+
+void freegame(tgame *result, int rows, int cols);
+
+int convert(int dim);
+int check_number(int dim);
+
+void print(tgame result, int rows , int cols);
+
+void add(tgame *dama, int pedina, int r, int c);
+int remove_pawn(tgame *dama, int r, int c);
+
+int white_move_check(tgame *dama, point a);
+int black_move_check(tgame *dama, point a);
+int dama_move_check(tgame *dama, point a);
+int white_capture_check(tgame *dama, point a, int turn);
+int black_capture_check(tgame *dama, point a, int turn);
+int dama_capture_check(tgame *dama, point a, int turn);
+
+int player_can_capture(tgame *dama,int turn);
+int player_can_move(tgame *dama, int turn);
+int legal_choice(tgame *dama, int turn, point a);
+int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture);
+
+point findmiddle(point a, point b);
+void move (tgame *dama, point a, point b);
+
+int enemy(int turn);
+int is_promoted (tgame *dama, point a, int turn);
+void promotion(tgame *dama, int turn);
+int victory(tgame *dama, int turn);
+int game(tgame *dama, int rows, int cols);
+
+int main() {
+    tgame *dama;
+    point a,b;
+    int winner;
+
+    dama = create(7,7);
+    initialize(dama,dama->cols,dama->rows);
+    winner = game (dama, dama->rows, dama->cols);
+
+    if(winner==0){
+        printf("White gamer is the winner!!!");
+    }else {
+        printf("Black player is the winner!!!");
+    }
+    printf("\n");
+
+    freegame(dama,dama->rows,dama->cols);
+    return 0;
+}
+
+
+
+
 tgame* create(int cols,int rows){
     tgame *dama;
     int i, j;
@@ -25,7 +121,6 @@ tgame* create(int cols,int rows){
     }
     return dama;
 }
-
 void initialize(tgame * dama, int cols, int rows){
     int i, j;
 /*chessboard creation*/
@@ -78,16 +173,6 @@ void freegame(tgame *dama, int rows, int cols) {
     free(dama->mat);
     free(dama);
 }
-
-int coin_toss(){
-    double flip = (double)rand()/(double)RAND_MAX;
-    if(flip >= 0.5){
-        return 1;
-    }else{
-        return 0;
-    }
-}
-
 int convert(int dim){
     char a;
     int i = 0;
@@ -97,18 +182,17 @@ int convert(int dim){
             return a-65;
         else if(a>='a' && a<=('a'+dim-1))
             return a-97;
-        else if (a=='x'||a=='X')
-            return -1;
         else{
             printf("The selected box doesn't exist. Please select a letter from %c to %c\n", 65, 65+dim-1);
         }
     }
 }
 
+
 int check_number(int dim){
     int i;
     while (1){
-        scanf(" %d",&i);
+        scanf("%d",&i);
         if(i>=1 && i<=dim)
             return i;
         else {
@@ -117,41 +201,34 @@ int check_number(int dim){
     }
 }
 
-void print(tgame dama, int rows , int cols){
+void print(tgame result, int rows , int cols){
     printf("%32s","LASKA GAME\n");
-    printf("\t");
     printf(" ");
-    int i = 0 , j = 0;
+    int i , j;
     for (int i = 0; i < rows; ++i) {
-        printf("%c\t",65+i);
+        printf(" %c",65+i);
     }
     printf("\n");
     for (i = 0; i < rows; ++i) {
-        printf("\n");
         printf("%d ",i+1);
-        printf("\t ");
         for (j = 0; j <cols; ++j) {
-            if(dama.mat[i][j]->id==0){
-                printf("%c\t",219);
-            }else if(dama.mat[i][j]->id==1){
-                printf("%c\t",' ');
-            }else if(dama.mat[i][j]->id==2){
-                printf("%c\t",'w');
-            }else if(dama.mat[i][j]->id==3){
-                printf("%c\t",'b');
-            }else if(dama.mat[i][j]->id==4){
-                printf("%c\t",'W');
-            }else if(dama.mat[i][j]->id==5){
-                printf("%c\t",'B');
+            if(result.mat[i][j]->id==0){
+                printf("%c ",219);
+            }else if(result.mat[i][j]->id==1){
+                printf("%c ",' ');
+            }else if(result.mat[i][j]->id==2){
+                printf("%c ",'w');
+            }else if(result.mat[i][j]->id==3){
+                printf("%c ",'b');
+            }else if(result.mat[i][j]->id==4){
+                printf("%c ",'W');
+            }else if(result.mat[i][j]->id==5){
+                printf("%c ",'B');
             }
         }
         printf("\n");
-        printf("___________________________________________________________");
-        printf("\n");
     }
 }
-
-
 
 void add(tgame *dama, int pawn, int r, int c){
 
@@ -236,7 +313,6 @@ int black_move_check(tgame *dama, point a){
             return 0;
     }
 }
-
 int dama_move_check(tgame *dama, point a){
     return (white_move_check(dama, a) || black_move_check(dama, a));
 }
@@ -265,7 +341,6 @@ int white_capture_check(tgame *dama, point a, int turn){
             return 0;
     }
 }
-
 int black_capture_check(tgame *dama, point a, int turn){
     int e = enemy(turn);
     if(a.i > (dama->rows-3))
@@ -290,7 +365,6 @@ int black_capture_check(tgame *dama, point a, int turn){
             return 0;
     }
 }
-
 int dama_capture_check(tgame *dama, point a, int turn){
     return white_capture_check(dama, a, turn) || black_capture_check(dama, a, turn);
 }
@@ -344,88 +418,95 @@ int player_can_move(tgame *dama, int turn){
 }
 
 int legal_choice(tgame *dama, int turn, point a){
-    if (player_can_capture(dama,turn)){
-        if(is_promoted (dama,a,turn)){
-            if (dama_capture_check(dama, a, turn))
-                return 1;
-            else
-                return 0;
-        }
-        else{
-            if(turn == 0){
-                if(white_capture_check(dama, a, turn))
+    if(dama->mat[a.i][a.j]->id== turn+2 || dama->mat[a.i][a.j]->id== turn+4){
+        if (player_can_capture(dama,turn)){
+            if(is_promoted (dama,a,turn)){
+                if (dama_capture_check(dama, a, turn))
                     return 1;
                 else
-                    return 0;
+                    return 4;
             }
             else{
-                if(black_capture_check(dama, a, turn))
-                    return 1;
-                else
-                    return 0;
+                if(turn == 0){
+                    if(white_capture_check(dama, a, turn))
+                        return 1;
+                    else
+                        return 4;
+                }
+                else{
+                    if(black_capture_check(dama, a, turn))
+                        return 1;
+                    else
+                        return 4;
+                }
+            }
+        }
+        else if(is_promoted (dama,a,turn)){
+            if(dama_move_check(dama, a))
+                return 2;
+            else
+                return 3;
+        }
+        else{
+            if (turn == 0 && white_move_check(dama, a))
+                return 2;
+            else if (turn == 1 && black_move_check(dama, a))
+                return 2;
+            else{
+                return 3;
             }
         }
     }
-    else if(is_promoted (dama,a,turn)){
-        if(dama_move_check(dama, a))
-            return 2;
-        else
-            return 0;
-    }
     else{
-        if (turn == 0 && white_move_check(dama, a))
-            return 2;
-        else if (turn == 1 && black_move_check(dama, a))
-            return 2;
-        else{
-            return 0;
-        }
+        return 0;
     }
 }
-int legal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
+int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
     if(dama->mat[b.i][b.j]->id == 0){
         if(have_to_capture == 1){
             point p = findmiddle(a, b);
             if(dama->mat[p.i][p.j]->id == enemy(turn)+2 || dama->mat[p.i][p.j]->id == enemy(turn)+4){
                 if(is_promoted (dama,a,turn)){
                     if ( abs(b.i - a.i)==2)
-                        return 1;
-                    else
                         return 0;
+                    else
+                        return 2;
                 }
                 else if(turn == 0){
                     if(a.i == (b.i)+2 && (a.j == (b.j)+2 || a.j == (b.j)-2))
-                        return 1;
-                    else
                         return 0;
+                    else
+                        return 3;
                 }
                 else if(turn == 1){
                     if (a.i == b.i-2 && (a.j == b.j+2 || a.j == b.j-2))
-                        return 1;
-                    else
                         return 0;
+                    else
+                        return 3;
                 }
             }
             else{
-                return 0;
+                return 1;
             }
         }
         else if(is_promoted (dama,a,turn)){
             if(abs(b.i - a.i)==1)
-                return 1;
+                return 0;
+            else
+                return 4;
         }
         else if (turn == 0 && (((b.i==(a.i)-1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)-1)&& (b.j==(a.j)+1)))){
-            return 1;
+            return 0;
         }
         else if (turn == 1 && (((b.i==(a.i)+1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)+1)&& (b.j==(a.j)+1)))){
-            return 1;
+            return 0;
         }
         else{
-            return 0;
+            return 5;
         }
     }
     else{
-        return 0;
+        return 6;
     }
 }
 
@@ -512,53 +593,74 @@ int victory(tgame *dama, int turn){
 int game(tgame *dama, int rows, int cols){
     point a,b;
     int turn = 0;
+    int legal, code_error;
     int endgame = 0;
+    int moves =0;
 
     while(!endgame){
         print (*dama, rows, cols);
-        printf("Write the start coordinate or Press x to give up\n");
+        printf("Write the start coordinate\n");
         if(turn ==0)
             printf("It's white turn\n");
         else
             printf("It's black turn\n");
         printf("Letter:");
         a.j = convert(dama->cols);
-        if(a.j == -1)
-            return (turn == 0 ? 1 : 0);
-        else{
-            printf("Number:");
-            a.i = check_number(dama->cols);
-            (a.i) --;
-            if(dama->mat[a.i][a.j]->id== turn+2 || dama->mat[a.i][a.j]->id== turn+4){
-                if(legal_choice(dama, turn, a)){
-                    do
-                    {
-                        printf("Write the destination coordinate\n");
-                        printf("Letter:");
-                        b.j = convert(dama->rows);
-                        printf("Number:");
-                        b.i = check_number(dama->rows);
-                        (b.i) --;
-                    } while (!legal_move (dama, turn, a, b, legal_choice(dama, turn, a)));
-
-                    move(dama, a, b);
-                    promotion(dama, turn);
-                    if(victory(dama, turn)){
-                        endgame=1;
-                        print (*dama,dama->rows,dama->cols);
-                        return turn;
+        printf("Number:");
+        a.i = check_number(dama->cols);
+        (a.i) --;
+        legal = legal_choice(dama, turn, a);
+        if( legal == 1 || legal == 2){
+            do{
+                printf("Write the destination coordinate\n");
+                printf("Letter:");
+                b.j = convert(dama->rows);
+                printf("Number:");
+                b.i = check_number(dama->rows);
+                (b.i) --;
+                code_error= (illegal_move (dama, turn, a, b, legal_choice(dama, turn, a)));
+                if(code_error){
+                    if (code_error ==1){
+                        printf("Unfortunately, you have are forced to capture\n");
                     }
-                    turn = enemy(turn);
+                    else if(code_error ==2){
+                        printf("The Dama (promoted pawn) may capture only in the 4 diagonals if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
+                    }
+                    else if(code_error ==3){
+                        printf("The pawn may capture only in the 2 diagonals forward if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
+                    }
+                    else if(code_error ==4){
+                        printf("The Dama (promoted pawn) may move only in the 4 diagonals if it's free.\n");
+                    }
+                    else if(code_error ==5){
+                        printf("The pawn may move only in the 2 diagonals forward if it's free.\n");
+                    }
+                    else if(code_error ==6){
+                        printf("You can move only into free white empty bowes\n");
+                    }
                 }
-                else {
-                    printf("the selected move is not valid beacause you have to capture enemy's pawn or select a pawn that can be moved\n");
-                }
-            }
-            else{
-                printf("Please select your pawn\n");
+            } while (code_error);
 
+            move(dama, a, b);
+            moves++;
+            promotion(dama, turn);
+            if(victory(dama, turn)){
+                endgame=1;
+                print (*dama,dama->rows,dama->cols);
+                printf("total moves = %d\n", moves);
+                return turn;
             }
+            turn = enemy(turn);
         }
+        else {
+            if (legal == 0)
+                printf("The selected box have to contain your pawn\n");
+            else if(legal == 3)
+                printf("The pawn you choosed can not be moved\n");
+            else if(legal == 4)
+                printf("Unfortunately, you can't choose this pawn because you care forced to capture foe's pawns, so you have to choose an other pawn.\n");
+        }
+
     }
 }
 
