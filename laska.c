@@ -510,7 +510,6 @@ int game(tgame *dama, int rows, int cols){
     int turn = 0;
     int legal, code_error;
     int endgame = 0;
-    int moves =0;
 
     while(!endgame){
         print (*dama, rows, cols);
@@ -557,12 +556,10 @@ int game(tgame *dama, int rows, int cols){
             } while (code_error);
 
             move(dama, a, b);
-            moves++;
             promotion(dama, turn);
             if(victory(dama, turn)){
                 endgame=1;
                 print (*dama,dama->rows,dama->cols);
-                printf("total moves = %d\n", moves);
                 return turn;
             }
             turn = enemy(turn);
@@ -577,6 +574,7 @@ int game(tgame *dama, int rows, int cols){
         }
 
     }
+    return 10;
 }
 
 //Menu
