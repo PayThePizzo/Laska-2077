@@ -103,13 +103,12 @@ int convert(int dim){
         }
     }
 }
-
 int check_number(int dim){
-    int i;
+    char i;
     while (1){
-        scanf("%d",&i);
-        if(i>=1 && i<=dim)
-            return i;
+        scanf(" %c",&i);
+        if(i>='1' && i<='1'+dim)
+            return ((int) i-'0');
         else {
             printf("The selected box doesn't exist. Please select a number from %d to %d\n", 1, dim);
         }
