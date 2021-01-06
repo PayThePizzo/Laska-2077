@@ -116,7 +116,7 @@ int check_number(int dim){
     }
 }
 
-void print(tgame result, int rows , int cols){
+void print(tgame dama, int rows , int cols){
     printf("%25s","LASKA GAME\n");
     printf(" ");
     int i , j;
@@ -128,45 +128,45 @@ void print(tgame result, int rows , int cols){
     for (i = 0; i < rows; ++i) {
         printf("%d ",i+1);
         for (j = 0; j <cols; ++j) {
-            if(result.mat[i][j]->id==0){
+            if(dama.mat[i][j]->id==0){
                 printf("%c ",219);
-            }else if(result.mat[i][j]->id==1){
+            }else if(dama.mat[i][j]->id==1){
                 printf("%c ",' ');
-            }else if(result.mat[i][j]->id==2){
+            }else if(dama.mat[i][j]->id==2){
                 printf("%c ",'w');
-            }else if(result.mat[i][j]->id==3){
+            }else if(dama.mat[i][j]->id==3){
                 printf("%c ",'b');
-            }else if(result.mat[i][j]->id==4){
+            }else if(dama.mat[i][j]->id==4){
                 printf("%c ",'W');
-            }else if(result.mat[i][j]->id==5){
+            }else if(dama.mat[i][j]->id==5){
                 printf("%c ",'B');
             }
-            if(result.mat[i][j]->next!=NULL){ /*torre di 2 elementi*/
-                if(result.mat[i][j]->next->id==0){
+            if(dama.mat[i][j]->next!=NULL){ /*torre di 2 elementi*/
+                if(dama.mat[i][j]->next->id==0){
                     printf("%c ",219);
-                }else if(result.mat[i][j]->next->id==1){
+                }else if(dama.mat[i][j]->next->id==1){
                     printf("%c ",' ');
-                }else if(result.mat[i][j]->next->id==2){
+                }else if(dama.mat[i][j]->next->id==2){
                 printf("%c ",'w');
-                }else if(result.mat[i][j]->next->id==3){
+                }else if(dama.mat[i][j]->next->id==3){
                     printf("%c ",'b');
-                }else if(result.mat[i][j]->next->id==4){
+                }else if(dama.mat[i][j]->next->id==4){
                     printf("%c ",'W');
-                }else if(result.mat[i][j]->next->id==5){
+                }else if(dama.mat[i][j]->next->id==5){
                     printf("%c ",'B');
                 }
-                if(result.mat[i][j]->next->next!=NULL){ /* torre di 3 elementi */
-                    if(result.mat[i][j]->next->next->id==0){
+                if(dama.mat[i][j]->next->next!=NULL){ /* torre di 3 elementi */
+                    if(dama.mat[i][j]->next->next->id==0){
                         printf("%c ",219);
-                    }else if(result.mat[i][j]->next->next->id==1){
+                    }else if(dama.mat[i][j]->next->next->id==1){
                         printf("%c ",' ');
-                    }else if(result.mat[i][j]->next->next->id==2){
+                    }else if(dama.mat[i][j]->next->next->id==2){
                         printf("%c ",'w');
-                    }else if(result.mat[i][j]->next->next->id==3){
+                    }else if(dama.mat[i][j]->next->next->id==3){
                         printf("%c ",'b');
-                    }else if(result.mat[i][j]->next->next->id==4){
+                    }else if(dama.mat[i][j]->next->next->id==4){
                         printf("%c ",'W');
-                    }else if(result.mat[i][j]->next->next->id==5){
+                    }else if(dama.mat[i][j]->next->next->id==5){
                         printf("%c ",'B');
                     }
                 }
