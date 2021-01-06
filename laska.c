@@ -124,7 +124,7 @@ void print(tgame dama, int rows , int cols){
     for (int i = 0; i < rows; ++i) {
         printf(" %c\t",65+i);
     }
-    printf("\n");
+    printf("\n        _________________________________________________________\n");
     for (i = 0; i < rows; ++i) {
         t = &(dama.mat[i])[j];
         printf("      %d\t",i+1);
