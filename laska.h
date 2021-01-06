@@ -110,7 +110,7 @@ int convert(int dim);
 int check_number(int dim);
 
 /**
- * Prints the laska board at the moment.
+ * Prints the laska board at the moment, full board.
  *
  * @param dama Laska board
  * @param rows rows size
@@ -118,7 +118,14 @@ int check_number(int dim);
  */
 void print(tgame dama, int rows , int cols);
 
-
+/**
+ * Prints the laska board at the moment, top-view.
+ *
+ * @param dama Laska board
+ * @param rows rows size
+ * @param cols columns size
+ */
+void top_print(tgame dama, int rows , int cols);
 
 // Core Functions
 
@@ -227,7 +234,7 @@ int player_can_move(tgame *dama, int turn);
  * @param dama Laska board
  * @param turn current game turn
  * @param a the row and column coordinates of the selected box
- * @return  0 if you can't select that box because i's not your pawn, 1 if the player can choose that box but now you must capture foe's pawn, 2 if you can move, 3 if the selected pawn is not free to move ,4 if you are forced to capture so you have to choose an other pawn
+ * @return  7 if you can't select that box because i's not your pawn, 8 if the player can choose that box but now you must capture foe's pawn, 9 if you can move, 10 if the selected pawn is not free to move ,11 if you are forced to capture so you have to choose an other pawn
  */
 int legal_choice(tgame *dama, int turn, point a);
 
@@ -238,7 +245,7 @@ int legal_choice(tgame *dama, int turn, point a);
  * @param turn current game turn
  * @param a the row and column coordinates of the origin box
  * @param b the row and column coordinates of the destination box
- * @param have_to_capture the parameter returned by legal_chice
+ * @param have_to_capture the parameter returned by legal_chice, if the value is 8, it means that the choosed pawn is correct but now the player is forced to capture
  * @return 0 if it doesn't violate the rules, code_error(1) if you are forced to capture foe's pawn but you are moving somewhere else,
  *         code_error(2) if dama is trying to capture in a wrong way, code_error(3) if a pawn is trying to capture in a wrong way,
  *         code_error(4) if dama is not moving on one of the 4 free nearby diagonals, code_error(5) id a pawn is not moving on one of the 2 forward diagonals,
@@ -305,9 +312,10 @@ int victory(tgame *dama, int turn);
  * @param dama Laska board
  * @param rows rows size
  * @param cols columns size
+ * @param print_version the gamer choose which view he/she prefers, front or top
  * @return 0 if white won, 1 if black won
  */
-int game(tgame *dama, int rows, int cols);
+int game(tgame *dama, int rows, int cols, int print_version);
 
 
 
