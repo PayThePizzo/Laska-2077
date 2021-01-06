@@ -574,7 +574,7 @@ int game(tgame *dama, int rows, int cols){
                     }
                     else if(code_error ==6){
                         printf("Laska-Bot Says:\n");
-                        printf("You can move only into free white empty bowes\n");
+                        printf("You can move only into free white empty boxes\n");
                     }
                 }
             } while (code_error);
