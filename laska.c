@@ -526,91 +526,69 @@ int victory(tgame *dama, int turn){
     }
 }
 
-int game(tgame *dama, int rows, int cols){
+int game(tgame *dama, int rows, int cols, int print_version){
     point a,b;
     int turn = 0;
-    int legal, code_error;
+    int code_error;
     int endgame = 0;
+    int moves =0;
 
     while(!endgame){
-        print (*dama, rows, cols);
-        if(turn ==0) {
-            printf("\n");
-            printf("It's white turn\n");
-            printf("\n");
-        }else{
-            printf("\n");
-            printf("It's black turn\n");
-            printf("\n");
-        }
-        printf("Write the start coordinate\n");
-        printf("Letter:");
-        printf("\n");
-        a.j = convert(dama->cols);
-        printf("Number:");
-        printf("\n");
-        a.i = check_number(dama->cols);
-        (a.i) --;
-        legal = legal_choice(dama, turn, a);
-        if( legal == 1 || legal == 2){
-            do{
-                printf("Write the destination coordinate\n");
-                printf("Letter:");
-                b.j = convert(dama->rows);
-                printf("Number:");
-                b.i = check_number(dama->rows);
-                (b.i) --;
+        do{
+            if(print_version==0)
+                print (*dama, rows, cols);
+            else
+                top_print(*dama, rows, cols);
+            if(turn ==0)
+                printf("\nIt's white turn\n\n");
+            else
+                printf("\nIt's black turn\n\n");
+            printf("Write the start and the destination coordinate without spaces, for example a5b4\n");
+            a.j = convert(dama->cols);
+            a.i = check_number(dama->cols);
+            (a.i) --;
+            code_error = legal_choice(dama, turn, a);
+            b.j = convert(dama->rows);
+            b.i = check_number(dama->rows);
+            (b.i) --;
+            if (code_error!=7&&code_error!=10&&code_error!=11)
                 code_error= (illegal_move (dama, turn, a, b, legal_choice(dama, turn, a)));
-                if(code_error){
-                    if (code_error ==1){
-                        printf("Laska-Bot Says:\n");
-                        printf("FORCING CAPTURE - Pieces must capture if in a position to do so.\n");
-                    }
-                    else if(code_error ==2){
-                        printf("Laska-Bot Says:\n");
-                        printf("The Dama (promoted pawn) may capture only in the 4 diagonals if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
-                    }
-                    else if(code_error ==3){
-                        printf("Laska-Bot Says:\n");
-                        printf("The pawn may capture only in the 2 diagonals forward if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
-                    }
-                    else if(code_error ==4){
-                        printf("Laska-Bot Says:\n");
-                        printf("The Dama (promoted pawn) may move only in the 4 diagonals if it's free.\n");
-                    }
-                    else if(code_error ==5){
-                        printf("Laska-Bot Says:\n");
-                        printf("The pawn may move only in the 2 diagonals forward if it's free.\n");
-                    }
-                    else if(code_error ==6){
-                        printf("Laska-Bot Says:\n");
-                        printf("You can move only into free white empty boxes\n");
-                    }
-                }
-            } while (code_error);
-
-            move(dama, a, b);
-            promotion(dama, turn);
-            if(victory(dama, turn)){
-                endgame=1;
-                print (*dama,dama->rows,dama->cols);
-                return turn;
+            if(code_error){
+                printf("Laska-Bot Says:\n");
+                if (code_error ==1)
+                    printf("FORCING CAPTURE - Pieces must capture if in a position to do so.\n");
+                else if(code_error ==2)
+                    printf("The Dama (promoted pawn) may capture only in the 4 diagonals if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
+                else if(code_error ==3)
+                    printf("The pawn may capture only in the 2 diagonals forward if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
+                else if(code_error ==4)
+                    printf("The Dama (promoted pawn) may move only in the 4 diagonals if it's free.\n");
+                else if(code_error ==5)
+                    printf("The pawn may move only in the 2 diagonals forward if it's free.\n");
+                else if(code_error ==6)
+                    printf("You can move only into free white empty bowes\n");
+                else if(code_error == 7)
+                    printf("The selected box have to contain your pawn\n");
+                else if(code_error == 10)
+                    printf("The pawn you choosed can not be moved\n");
+                else if(code_error == 11)
+                    printf("Unfortunately, you can't choose this pawn because you care forced to capture foe's pawns, so you have to choose an other pawn.\n");
             }
-            turn = enemy(turn);
-        }
-        else {
-            if (legal == 0) {
-                printf("Laska-Bot Says:\n");
-                printf("The selected box have to contain your pawn\n");
-            }else if(legal == 3) {
-                printf("Laska-Bot Says:\n");
-                printf("The pawn you choosed can not be moved\n");
-            }else if(legal == 4) {
-                printf("Laska-Bot Says:\n");
-                printf("Unfortunately, you can't choose this pawn because you are forced to capture foe's pawns, so you have to choose an other pawn.\n");
-            }
-        }
+        } while (code_error);  
 
+        move(dama, a, b);
+        moves++;
+        promotion(dama, turn);
+        if(victory(dama, turn)){
+            endgame=1;                                          
+            if(print_version==0)
+                print (*dama, rows, cols);
+            else
+                top_print(*dama, rows, cols);
+            printf("total moves = %d\n", moves);
+            return turn;
+        }
+        turn = enemy(turn);
     }
     return 10;
 }
