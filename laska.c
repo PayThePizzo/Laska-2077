@@ -10,7 +10,6 @@ legend id
 5-> black dama
 */
 
-
 tgame* create(int cols,int rows){
     tgame *dama;
     int i, j;
@@ -36,6 +35,7 @@ tgame* create(int cols,int rows){
     }
     return dama;
 }
+
 void initialize(tgame * dama, int cols, int rows){
     int i, j;
 /*chessboard creation*/
@@ -88,6 +88,7 @@ void freegame(tgame *dama, int rows, int cols) {
     free(dama->mat);
     free(dama);
 }
+
 int convert(int dim){
     char a;
     int i = 0;
@@ -103,7 +104,6 @@ int convert(int dim){
     }
 }
 
-
 int check_number(int dim){
     int i;
     while (1){
@@ -117,6 +117,8 @@ int check_number(int dim){
 }
 
 void print(tgame result, int rows , int cols){
+
+    printf("\n");
     printf("%32s","LASKA GAME\n");
     printf(" ");
     int i , j;
@@ -206,6 +208,7 @@ int white_move_check(tgame *dama, point a){
             return 0;
     }
 }
+
 int black_move_check(tgame *dama, point a){
     if(a.i == dama->rows-1)
         return 0;
@@ -228,6 +231,7 @@ int black_move_check(tgame *dama, point a){
             return 0;
     }
 }
+
 int dama_move_check(tgame *dama, point a){
     return (white_move_check(dama, a) || black_move_check(dama, a));
 }
@@ -256,6 +260,7 @@ int white_capture_check(tgame *dama, point a, int turn){
             return 0;
     }
 }
+
 int black_capture_check(tgame *dama, point a, int turn){
     int e = enemy(turn);
     if(a.i > (dama->rows-3))
@@ -280,6 +285,7 @@ int black_capture_check(tgame *dama, point a, int turn){
             return 0;
     }
 }
+
 int dama_capture_check(tgame *dama, point a, int turn){
     return white_capture_check(dama, a, turn) || black_capture_check(dama, a, turn);
 }
@@ -376,6 +382,7 @@ int legal_choice(tgame *dama, int turn, point a){
         return 0;
     }
 }
+
 int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
     if(dama->mat[b.i][b.j]->id == 0){
         if(have_to_capture == 1){
@@ -427,6 +434,9 @@ int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
 
 point findmiddle(point a, point b){
     point middle;
+    middle.i = 0;
+    middle.j = 0;
+
     if(a.i>b.i){
         if(a.j>b.j){
             middle.j = a.j-1;
@@ -496,6 +506,7 @@ void promotion(tgame *dama, int turn){
             dama->mat[i][j]->id +=2;
     }
 }
+
 /*returns 0 if no winner, 1 if white player is the winner, 2 if vlack player is the winner*/
 int victory(tgame *dama, int turn){
     if(!player_can_capture(dama,enemy(turn)) && !player_can_move(dama,enemy(turn)))
@@ -513,14 +524,21 @@ int game(tgame *dama, int rows, int cols){
 
     while(!endgame){
         print (*dama, rows, cols);
-        printf("Write the start coordinate\n");
-        if(turn ==0)
+        if(turn ==0) {
+            printf("\n");
             printf("It's white turn\n");
-        else
+            printf("\n");
+        }else{
+            printf("\n");
             printf("It's black turn\n");
+            printf("\n");
+        }
+        printf("Write the start coordinate\n");
         printf("Letter:");
+        printf("\n");
         a.j = convert(dama->cols);
         printf("Number:");
+        printf("\n");
         a.i = check_number(dama->cols);
         (a.i) --;
         legal = legal_choice(dama, turn, a);
@@ -535,21 +553,27 @@ int game(tgame *dama, int rows, int cols){
                 code_error= (illegal_move (dama, turn, a, b, legal_choice(dama, turn, a)));
                 if(code_error){
                     if (code_error ==1){
-                        printf("Unfortunately, you have are forced to capture\n");
+                        printf("Laska-Bot Says:\n");
+                        printf("FORCING CAPTURE - Pieces must capture if in a position to do so.\n");
                     }
                     else if(code_error ==2){
+                        printf("Laska-Bot Says:\n");
                         printf("The Dama (promoted pawn) may capture only in the 4 diagonals if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
                     }
                     else if(code_error ==3){
+                        printf("Laska-Bot Says:\n");
                         printf("The pawn may capture only in the 2 diagonals forward if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
                     }
                     else if(code_error ==4){
+                        printf("Laska-Bot Says:\n");
                         printf("The Dama (promoted pawn) may move only in the 4 diagonals if it's free.\n");
                     }
                     else if(code_error ==5){
+                        printf("Laska-Bot Says:\n");
                         printf("The pawn may move only in the 2 diagonals forward if it's free.\n");
                     }
                     else if(code_error ==6){
+                        printf("Laska-Bot Says:\n");
                         printf("You can move only into free white empty bowes\n");
                     }
                 }
@@ -565,12 +589,16 @@ int game(tgame *dama, int rows, int cols){
             turn = enemy(turn);
         }
         else {
-            if (legal == 0)
+            if (legal == 0) {
+                printf("Laska-Bot Says:\n");
                 printf("The selected box have to contain your pawn\n");
-            else if(legal == 3)
+            }else if(legal == 3) {
+                printf("Laska-Bot Says:\n");
                 printf("The pawn you choosed can not be moved\n");
-            else if(legal == 4)
-                printf("Unfortunately, you can't choose this pawn because you care forced to capture foe's pawns, so you have to choose an other pawn.\n");
+            }else if(legal == 4) {
+                printf("Laska-Bot Says:\n");
+                printf("Unfortunately, you can't choose this pawn because you are forced to capture foe's pawns, so you have to choose an other pawn.\n");
+            }
         }
 
     }
@@ -583,7 +611,24 @@ int main_menu(){
     int input = -1;
     int cond= 1;
     printf("\n");
-    printf("Now, let's choose what game we shall play. Type the right code here:");
+    printf("Now, let me introduce you what modalities we built. Here you find the menu:\n");
+
+    printf("# //==================[]======\\\\\n"
+           "# ||    Game Mode     || Code ||\n"
+           "# |]==================[]======[|\n"
+           "# || Single Player    ||    0 ||\n"
+           "# || Player vs Player ||    1 ||\n"
+           "# || Player vs Pc     ||    2 ||\n"
+           "# || Pc vs Pc         ||    3 ||\n"
+           "# \\\\==================[]======//");
+    printf("\n");
+    printf("\n");
+    printf("\n");
+    printf("You can Quit or Give Up at any time by typing 'x', unless two PCs are playing.\n");
+    printf("Yeah, you do not want to see them angry... They really love the game\n");
+    printf("\n");
+    printf("Let's hear it then, have you made up your mind? Type the code of the game to play");
+    printf("\n");
     printf("\n");
 
     do{
@@ -591,7 +636,8 @@ int main_menu(){
         if(input >= 0 && input <= 3){
             cond = 0;
         } else{
-            printf("Yoda says: Bugs here, you won't find");
+            printf("Yoda says: Bugs here, you won't find. Again you must try.\n");
+            printf("\n");
         }
     }while(cond);
 
@@ -601,11 +647,13 @@ int main_menu(){
             printf("\n");
             printf("Man, if I were you, I'd make some new friends...");
             printf("\n");
+            printf("\n");
             return input;
         case 1:
             printf("You chose: Player vs Player");
             printf("\n");
             printf("Finally, you got some friends to play with!");
+            printf("\n");
             printf("\n");
             return input;
         case 2:
@@ -613,11 +661,13 @@ int main_menu(){
             printf("\n");
             printf("I'm impressed you managed to lose your friends that fast, you really are a disaster at social life");
             printf("\n");
+            printf("\n");
             return input;
         case 3:
             printf("You chose: Pc vs Pc");
             printf("\n");
             printf("I know you might not care, but watching two computers play against each other... is pretty lame");
+            printf("\n");
             printf("\n");
             return input;
         default:
@@ -627,35 +677,28 @@ int main_menu(){
     }
 }
 
-int decision_menu(){
-    int winner = 0;
+int decision_menu() {
+    int winner = 0, cond = 1;
     char decision = 'a';
 
-    scanf("%c", &decision);
-    if (decision == 'Y' || decision == 'y'){
-        printf("Very Well, let's go on\n");
-        printf("\n");
+    printf("Are you ready to play?(Y/N)\n");
 
-        switch(main_menu()){
-            case 0:
-                return (winner = 1); //SOSTITUISCI CON winner = game();
-            case 1:
-                return (winner = 0);
-            case 2:
-                return (winner = 2);
-            case 3:
-                return (winner = 3);
-            default:
-                printf("Error in Play or Not section of Main");
-                EXIT_FAILURE;
+    while (cond){
+        scanf("%c", &decision);
+
+        if (decision == 'Y' || decision == 'y') {
+            printf("Very Well, let's go on\n");
+            printf("\n");
+            return 1;
+
+        } else if (decision == 'N' || decision == 'n') {
+            printf("I guess you might not be ready to play this wonderful game\n");
+            printf("Farewell!\n");
+            return 0;
+
+        } else {
+            printf("Am I a joke to you? You can only type either 'Y' or 'N'\n");
         }
-    } else if(decision == 'N' || decision == 'n'){
-        printf("I guess you might not be ready to play this wonderful game\n");
-        printf("Farewell!\n");
-        return 0;
-    } else{
-        printf("Am I a joke to you?\n");
-        EXIT_FAILURE;
     }
 }
 
@@ -675,9 +718,13 @@ void result_menu(int winner){
 }
 
 
+
 //Messages
 
 void hello(){
+    int answer = 1;
+    char decision = 'a';
+
     printf(" __       __            __                                                      __               \n"
            "|  \\  _  |  \\          |  \\                                                    |  \\              \n"
            "| $$ / \\ | $$  ______  | $$  _______   ______   ______ ____    ______         _| $$_     ______  \n"
@@ -705,28 +752,41 @@ void hello(){
     printf("Hi there, welcome to Laska 2077!\n");
     printf("Check out the official site of the game here: http://www.lasca.org/ \n");
     printf("\n");
+    printf("Now, let's welcome Lask-Bot from the year 2077. It will give you and brief insight of the game.");
+    printf("\n");
+    printf("\n");
+    printf("Laska-Bot says: Here I am fellow player, would you like me to explain the game to you?(Y/N)\n");
+    printf("\n");
 
-    /*
-    printf("Now, let me introduce you what modalities we built. Here you find the menu:\n");
+    while (answer){
+        scanf("%c", &decision);
+        if (decision == 'Y' || decision == 'y') {
+            printf("Awesome\n");
+            printf("\n");
+            printf(" - - - - - The Equipment - - - - -\n");
+            printf(" - Why is it 7x7?\n");
+            printf(" - - - - - The Pawns - - - - -\n");
+            printf(" - Who moves first?\n");
+            printf(" - - - - - The Moves - - - - -\n");
+            printf(" - How to move a pawn\n");
+            printf(" - The Capture\n");
+            printf(" - Forcing Capture\n");
+            printf(" - - - - - The Promotion - - - - -\n");
+            printf(" - - - - - Extra Rules for THIS GAME ONLY - - - - -\n");
+            printf(" - - - - - The End of the Game - - - - -\n");
 
-    printf("# //==================[]======\\\\\n"
-           "# ||    Game Mode     || Code ||\n"
-           "# |]==================[]======[|\n"
-           "# || Single Player    ||    0 ||\n"
-           "# || Player vs Player ||    1 ||\n"
-           "# || Player vs Pc     ||    2 ||\n"
-           "# || Pc vs Pc         ||    3 ||\n"
-           "# \\\\==================[]======//");
-    printf("\n");
-    printf("\n");
-    printf("\n");
-    printf("You can Quit or Give Up at any time, unless two PCs are playing.\n");
-    printf("Yeah, you do not want to see them angry... They really love the game\n");
-    printf("\n");
-    printf("Let's hear it then, have you made up your mind?(Y/N)");
-    printf("\n");
-    printf("\n");
-     */
+            printf("\n");
+            answer = 0;
+
+        } else if (decision == 'N' || decision == 'n') {
+            printf("You sure are an expert then. I'll keep an eye on you, anyway.\n");
+            printf("Don't make any silly mistake!\n");
+            printf("\n");
+            answer = 0;
+        } else {
+            printf("Bro, can you even read? You can only type either 'Y' or 'N'\n");
+        }
+    }
 }
 
 void goodbye(){

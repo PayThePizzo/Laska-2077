@@ -2,19 +2,34 @@
 #include "laska.h"
 
 int main() {
-    int winner;
-
+    int winner = INT_MIN, sup = INT_MIN;
     tgame *dama = create(7,7);
     initialize(dama,dama->cols,dama->rows);
-    winner = game (dama, dama->rows, dama->cols);
 
-    if(winner==0){
-        printf("White gamer is the winner!!!");
-    }else {
-        printf("Black player is the winner!!!");
+    hello();
+    sup = decision_menu();
+
+    if(sup){
+        switch (main_menu()) {
+            case 0:
+                winner = game(dama, dama->rows, dama->cols);
+            case 1:
+                winner = game(dama, dama->rows, dama->cols);
+            case 2:
+                winner = 2;
+            case 3:
+                winner = 3;
+            default:
+                printf("Error in Play or Not section of Main");
+                EXIT_FAILURE;
+        }
     }
-    printf("\n");
+    result_menu(winner);
+
     freegame(dama,dama->rows,dama->cols);
+
+    goodbye();
+    credits();
 
     return 0;
 }
@@ -64,4 +79,8 @@ int main() {
  *  - Suggerimenti del computer.
  *  -
  *
+ *
+ *  warning C4715: 'illegal_move': not all control paths return a value
+    warning C4715: 'main_menu': not all control paths return a value
+    warning C4715: 'decision_menu': not all control paths return a value
  */
