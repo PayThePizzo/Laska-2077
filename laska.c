@@ -125,18 +125,15 @@ void print(tgame dama, int rows , int cols){
     for (int i = 0; i < rows; ++i) {
         printf(" %c\t",65+i);
     }
-
     printf("\n");
     for (i = 0; i < rows; ++i) {
         t = &(dama.mat[i])[j];
         printf("      %d\t",i+1);
-        for (j = 0; j <cols; ++j) {
+        for (j = 0; j <cols; ++j) {    
             t = &(dama.mat[i])[j];
             for(z=0; z<3 && !empty ;z++){
                 if((*t)->id==0){
                     printf("%c%c%c%c%c%c",219,219,219,219,219,219);
-                }else if((*t)->id==1){
-                    printf("%c ",' ');
                 }else if((*t)->id==2){
                     printf("%c ",'w');
                 }else if((*t)->id==3){
@@ -145,9 +142,6 @@ void print(tgame dama, int rows , int cols){
                     printf("%c ",'W');
                 }else if((*t)->id==5){
                     printf("%c ",'B');
-                }
-                else{
-                    printf("\t");
                 }
                 if((*t)->next!=NULL)
                     t = &(dama.mat[i][j]->next);
@@ -161,7 +155,7 @@ void print(tgame dama, int rows , int cols){
         printf("\n        _________________________________________________________");
         printf("\n");
 
-    }
+    }        
 }
 
 void add(tgame *dama, int pawn, int r, int c){
