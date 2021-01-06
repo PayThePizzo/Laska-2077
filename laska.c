@@ -117,14 +117,13 @@ int check_number(int dim){
 }
 
 void print(tgame result, int rows , int cols){
-
-    printf("\n");
-    printf("%32s","LASKA GAME\n");
+    printf("%25s","LASKA GAME\n");
     printf(" ");
     int i , j;
     for (int i = 0; i < rows; ++i) {
-        printf(" %c",65+i);
+        printf(" %c    ",65+i);
     }
+
     printf("\n");
     for (i = 0; i < rows; ++i) {
         printf("%d ",i+1);
@@ -142,8 +141,48 @@ void print(tgame result, int rows , int cols){
             }else if(result.mat[i][j]->id==5){
                 printf("%c ",'B');
             }
+            if(result.mat[i][j]->next!=NULL){ /*torre di 2 elementi*/
+                if(result.mat[i][j]->next->id==0){
+                    printf("%c ",219);
+                }else if(result.mat[i][j]->next->id==1){
+                    printf("%c ",' ');
+                }else if(result.mat[i][j]->next->id==2){
+                printf("%c ",'w');
+                }else if(result.mat[i][j]->next->id==3){
+                    printf("%c ",'b');
+                }else if(result.mat[i][j]->next->id==4){
+                    printf("%c ",'W');
+                }else if(result.mat[i][j]->next->id==5){
+                    printf("%c ",'B');
+                }
+                if(result.mat[i][j]->next->next!=NULL){ /* torre di 3 elementi */
+                    if(result.mat[i][j]->next->next->id==0){
+                        printf("%c ",219);
+                    }else if(result.mat[i][j]->next->next->id==1){
+                        printf("%c ",' ');
+                    }else if(result.mat[i][j]->next->next->id==2){
+                        printf("%c ",'w');
+                    }else if(result.mat[i][j]->next->next->id==3){
+                        printf("%c ",'b');
+                    }else if(result.mat[i][j]->next->next->id==4){
+                        printf("%c ",'W');
+                    }else if(result.mat[i][j]->next->next->id==5){
+                        printf("%c ",'B');
+                    }
+                }
+                else{
+                    printf(" ");
+                }
+
+            }
+            else{
+                printf("   ");
+            }
+            printf("|");
         }
+        printf("\n  __________________________________________");
         printf("\n");
+
     }
 }
 
