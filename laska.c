@@ -158,6 +158,36 @@ void print(tgame dama, int rows , int cols){
     }        
 }
 
+void top_print(tgame dama, int rows , int cols){
+    int i , j, z;
+    printf("%43s","LASKA GAME\n");
+    printf("\t");
+    for (int i = 0; i < rows; ++i) {
+        printf("    %c\t",65+i);
+    }
+    printf("\n        _________________________________________________________\n");;
+    for (i = 0; i < rows; ++i) {
+        printf("      %d\t",i+1);
+        for (j = 0; j <cols; ++j) {    
+                if(dama.mat[i][j]->id==0){
+                    printf("%c%c%c%c%c%c",219,219,219,219,219,219);
+                }else if(dama.mat[i][j]->id==2){
+                    printf("   %c ",'w');
+                }else if(dama.mat[i][j]->id==3){
+                    printf("   %c ",'b');
+                }else if(dama.mat[i][j]->id==4){
+                    printf("   %c ",'W');
+                }else if(dama.mat[i][j]->id==5){
+                    printf("   %c ",'B');
+                }
+        printf("\t|");
+        }
+        printf("\n        _________________________________________________________");
+        printf("\n");
+
+    }        
+}
+
 void add(tgame *dama, int pawn, int r, int c){
 
     if (dama->mat[r][c]->id==0){
