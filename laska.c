@@ -103,6 +103,7 @@ int convert(int dim){
         }
     }
 }
+
 int check_number(int dim){
     char i;
     while (1){
@@ -667,7 +668,7 @@ int main_menu(){
 
 int decision_menu() {
     int winner = 0, cond = 1;
-    char decision = 'a';
+    char decision;
 
     printf("Are you ready to play?(Y/N)\n");
 
@@ -684,8 +685,6 @@ int decision_menu() {
             printf("Farewell!\n");
             return 0;
 
-        } else {
-            printf("Am I a joke to you? You can only type either 'Y' or 'N'\n");
         }
     }
 }
@@ -700,8 +699,8 @@ void result_menu(int winner){
         printf("Black player is the winner!");
         printf("\n");
     } else{
-        printf("Error in result_menu");
-        EXIT_FAILURE;
+        printf("No Pain, No Gain.");
+        printf("\n");
     }
 }
 
@@ -740,7 +739,7 @@ void hello(){
     printf("Hi there, welcome to Laska 2077!\n");
     printf("Check out the official site of the game here: http://www.lasca.org/ \n");
     printf("\n");
-    printf("Now, let's welcome Lask-Bot from the year 2077. It will give you and brief insight of the game.");
+    printf("Now, let's welcome Lask-Bot from the year 2077. It will give you a brief insight of the game.");
     printf("\n");
     printf("\n");
     printf("Laska-Bot says: Here I am fellow player, would you like me to explain the game to you?(Y/N)\n");
