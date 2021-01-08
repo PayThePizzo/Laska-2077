@@ -339,7 +339,7 @@ int decision_menu();
  *
  *
  * @param winner
- * @return
+ *
  */
 void result_menu(int winner);
 
@@ -347,23 +347,17 @@ void result_menu(int winner);
 
 //Messages
 /**
- *
- *
- *
+ * Greetings menu for player. It is used to show some basic rules to the player if they want to.
  */
 void hello();
 
 /**
- *
- *
- *
+ *  Funny goodbye menu with easter eggs from the infamous game: Cyberpunk 2077.
  */
 void goodbye();
 
 /**
- *
- *
- *
+ *  Credits for creation of this game.
  */
 void credits();
 
