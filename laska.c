@@ -478,29 +478,8 @@ int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
 
 point findmiddle(point a, point b){
     point middle;
-    middle.i = 0;
-    middle.j = 0;
-
-    if(a.i>b.i){
-        if(a.j>b.j){
-            middle.j = a.j-1;
-            middle.i = a.i-1;
-        }
-        else{
-            middle.j = a.j+1;
-            middle.i = a.i-1;
-        }
-    }
-    else{
-        if(a.j>b.j){
-            middle.j = a.j-1;
-            middle.i = a.i+1;
-        }
-        else{
-            middle.j = a.j+1;
-            middle.i = a.i+1;
-        }
-    }
+        middle.i = (a.i+b.i)/2;
+        middle.j = (a.j+b.j)/2;
     return middle;
 }
 
