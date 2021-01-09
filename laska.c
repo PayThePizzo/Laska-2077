@@ -436,11 +436,11 @@ int legal_choice(tgame *dama, int turn, point a){
 
 int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
     if(dama->mat[b.i][b.j]->id == 0){
-        if(have_to_capture == 1){
+        if(have_to_capture == 8){
             point p = findmiddle(a, b);
             if(dama->mat[p.i][p.j]->id == enemy(turn)+2 || dama->mat[p.i][p.j]->id == enemy(turn)+4){
                 if(is_promoted (dama,a,turn)){
-                    if ( abs(b.i - a.i)==2)
+                    if ( abs(b.i - a.i)==2 && abs(b.j - a.j)==2)
                         return 0;
                     else
                         return 2;
@@ -463,21 +463,24 @@ int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
             }
         }
         else if(is_promoted (dama,a,turn)){
-            if(abs(b.i - a.i)==1)
+            if(abs(b.i - a.i)==1 && abs(b.j - a.j)==1)
                 return 0;
             else
                 return 4;
         }
-        else if((turn == 0 && (((b.i==(a.i)-1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)-1)&&(b.j==(a.j)+1)))) || (turn == 1 && (((b.i==(a.i)+1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)+1)&& (b.j==(a.j)+1))))){
+        else if (turn == 0 && (((b.i==(a.i)-1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)-1)&& (b.j==(a.j)+1)))){
+            return 0;
+        }
+        else if (turn == 1 && (((b.i==(a.i)+1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)+1)&& (b.j==(a.j)+1)))){
             return 0;
         }
         else{
             return 5;
         }
-    }
+    } 
     else{
         return 6;
-    }
+    }                   
 }
 
 point findmiddle(point a, point b){
