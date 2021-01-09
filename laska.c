@@ -12,7 +12,7 @@ legend id
 
 tgame* create(int cols,int rows){
     tgame *dama;
-    int i, j;
+    int i = 0, j = 0;
 
 /*allocates space to struct*/
     dama=(tgame*)malloc(sizeof(tgame));
@@ -37,7 +37,7 @@ tgame* create(int cols,int rows){
 }
 
 void initialize(tgame * dama, int cols, int rows){
-    int i, j;
+    int i = 0, j = 0;
 /*chessboard creation*/
     for(i = 0;i<rows;i++){
         for(j=0;j<cols;j++) {
@@ -66,7 +66,7 @@ void initialize(tgame * dama, int cols, int rows){
 }
 
 void freegame(tgame *dama, int rows, int cols) {
-    int i , j;
+    int i = 0, j = 0;
 
     for(i = 0; i<rows; i++){
         for (j=0; j<cols; j++){
@@ -90,22 +90,25 @@ void freegame(tgame *dama, int rows, int cols) {
 }
 
 int convert(int dim){
-    char a;
-    int i = 0;
-    while (1){
+    char a = 'a';
+    int i = 1;
+
+    while (i){
         scanf(" %c",&a);
-        if(a>='A' && a<=('A'+dim-1))
-            return a-65;
-        else if(a>='a' && a<=('a'+dim-1))
+        if(a>='A' && a<=('A'+dim-1)) {
+            return a - 65;
+            i = 0;
+        }else if(a>='a' && a<=('a'+dim-1)){
             return a-97;
-        else{
-            printf("The selected box doesn't exist. Please select a letter from %c to %c\n", 65, 65+dim-1);
+            i = 0;
+        }else if (a == 'X' || a == 'x'){
+            printf("Quitting this session.");   /* Da Includere*/
         }
     }
 }
 
 int check_number(int dim){
-    char i;
+    char i = 'a';
     while (1){
         scanf(" %c",&i);
         if(i>='1' && i<='1'+dim)
@@ -117,11 +120,12 @@ int check_number(int dim){
 }
 
 void print(tgame dama, int rows , int cols){
-    int i , j, z;
-    int empty=0;
+    int i = 0, j = 0, z = 0, empty=0;
     boxpawn **t;
+
     printf("%43s","LASKA GAME\n");
     printf("\t");
+
     for (int i = 0; i < rows; ++i) {
         printf(" %c\t",65+i);
     }
@@ -159,13 +163,17 @@ void print(tgame dama, int rows , int cols){
 }
 
 void top_print(tgame dama, int rows , int cols){
-    int i , j, z;
+    int i = 0, j = 0, z = 0
+            ;
     printf("%43s","LASKA GAME\n");
     printf("\t");
+
     for (int i = 0; i < rows; ++i) {
         printf("    %c\t",65+i);
     }
+
     printf("\n        _________________________________________________________\n");;
+
     for (i = 0; i < rows; ++i) {
         printf("      %d\t",i+1);
         for (j = 0; j <cols; ++j) {    
@@ -211,7 +219,7 @@ void add(tgame *dama, int pawn, int r, int c){
 }
 
 int remove_pawn(tgame *dama, int r, int c){
-    int estract;
+    int estract = 0;
 
     if(dama->mat[r][c]->next==NULL){
         estract = dama->mat[r][c]->id;
@@ -332,8 +340,7 @@ int dama_capture_check(tgame *dama, point a, int turn){
 }
 
 int player_can_capture(tgame *dama, int turn){
-    int i, j;
-    int flag = 0;
+    int i = 0, j = 0, flag = 0;
 
     for (i=0; i<dama->rows && flag == 0; i++){
         for(j=0; j<dama->cols && flag == 0; j++){
@@ -356,8 +363,7 @@ int player_can_capture(tgame *dama, int turn){
 }
 
 int player_can_move(tgame *dama, int turn){
-    int i, j;
-    int flag = 0;
+    int i = 0, j = 0, flag = 0;
 
     for (i=0; i<dama->rows && flag == 0; i++){
         for(j=0; j<dama->cols && flag == 0; j++){
@@ -539,8 +545,8 @@ int is_promoted (tgame *dama, point a, int turn){
 }
 
 void promotion(tgame *dama, int turn){
-    int i, j;
-    turn == 0? i=0 : (i=((dama->rows)-1));
+    int i = 0, j = 0;
+    turn == 0 ? i=0 : (i=((dama->rows)-1));
 
     for (j=0; j<dama->cols; j++){
         if (dama->mat[i][j]->id == turn+2)
@@ -560,7 +566,7 @@ int victory(tgame *dama, int turn){
 int game(tgame *dama, int rows, int cols, int print_version){
     point a,b;
     int turn = 0;
-    int code_error;
+    int code_error = 0; /*Modifica*/
     int endgame = 0;
     int moves =0;
 
@@ -571,9 +577,9 @@ int game(tgame *dama, int rows, int cols, int print_version){
             else
                 top_print(*dama, rows, cols);
             if(turn ==0)
-                printf("\nIt's white turn\n\n");
+                printf("\nWhite's turn\n\n");
             else
-                printf("\nIt's black turn\n\n");
+                printf("\nBlack's turn\n\n");
             printf("Write the start and the destination coordinate without spaces, for example a5b4\n");
             a.j = convert(dama->cols);
             a.i = check_number(dama->cols);
@@ -629,6 +635,7 @@ int game(tgame *dama, int rows, int cols, int print_version){
 int main_menu(){
     int input = -1;
     int cond= 1;
+
     printf("\n");
     printf("Now, let me introduce you what modalities we built. Here you find the menu:\n");
 
@@ -644,7 +651,7 @@ int main_menu(){
     printf("\n");
     printf("\n");
     printf("You can Quit or Give Up at any time by typing 'x', unless two PCs are playing.\n");
-    printf("Yeah, you do not want to see them angry... They really love the game\n");
+    printf("Yeah, Super-Fast\n");
     printf("\n");
     printf("Let's hear it then, have you made up your mind? Type the code of the game to play");
     printf("\n");
@@ -654,9 +661,6 @@ int main_menu(){
         scanf("%d", &input);
         if(input >= 0 && input <= 3){
             cond = 0;
-        } else{
-            printf("Yoda says: Bugs here, you won't find. Again you must try.\n");
-            printf("\n");
         }
     }while(cond);
 
@@ -698,7 +702,7 @@ int main_menu(){
 
 int decision_menu() {
     int winner = 0, cond = 1;
-    char decision;
+    char decision = 'a';
 
     printf("Are you ready to play?(Y/N)\n");
 
@@ -706,15 +710,13 @@ int decision_menu() {
         scanf("%c", &decision);
 
         if (decision == 'Y' || decision == 'y') {
+            printf("\n");
+            printf("\n");
             printf("Very Well, let's go on\n");
             printf("\n");
             return 1;
-
         } else if (decision == 'N' || decision == 'n') {
-            printf("I guess you might not be ready to play this wonderful game\n");
-            printf("Farewell!\n");
             return 0;
-
         }
     }
 }
@@ -769,8 +771,8 @@ void hello(){
     printf("Hi there, welcome to Laska 2077!\n");
     printf("Check out the official site of the game here: http://www.lasca.org/ \n");
     printf("\n");
-    printf("Now, let's welcome Lask-Bot from the year 2077. It will give you a brief insight of the game.");
     printf("\n");
+    printf("Now, let's welcome Lask-Bot from the year 2077. It will give you a brief insight of the game.");
     printf("\n");
     printf("Laska-Bot says: Here I am fellow player, would you like me to explain the game to you?(Y/N)\n");
     printf("\n");
@@ -800,15 +802,11 @@ void hello(){
             printf("Don't make any silly mistake!\n");
             printf("\n");
             answer = 0;
-        } else {
-            printf("Bro, can you even read? You can only type either 'Y' or 'N'\n");
         }
     }
 }
 
 void goodbye(){
-    printf("\n");
-    printf("The game ends here...for now");
     printf("\n");
     printf("KKKKKKKKKKKXXKKKKKKK00OOOkkkO00Odl;'...'','.....'......,,,'....:lc;;;;ldx0KXKKKK000000OOOOkkkkkxxxxx\n"
            "KKKKKKKKKKKKKKKKKKK00OOkkkkkxo;.............';::::::::;;;::,...'....','..,:loxOOkkkxxdddooooollllccc\n"
@@ -860,6 +858,7 @@ void goodbye(){
            "xxxdooooooollc::;,'..............                         .';cll:,..      ...   .'cdxxxddddooddddddd\n"
            "xxdoodddooollcc:;;,'...............                                              .cdxxxddddddddddddd\n"
            "xoodddddoolllcc:;;,,'...............      ...        .         ..                .:xkkxxxddddddddddx");
+    printf("\n");
     printf("\n");
     printf("Keanu says goodbye!");
     printf("\n");
