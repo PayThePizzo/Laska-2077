@@ -864,7 +864,7 @@ void goodbye(){
 
 void credits(){
     printf("\n");
-    printf("Credits to: Gianmaria & Aleskandra");
+    printf("Credits to: Gianmaria & Aleksandra");
     printf("\n");
 }
 
