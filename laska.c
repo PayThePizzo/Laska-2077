@@ -41,7 +41,7 @@ void initialize(tgame * dama, int cols, int rows){
 /*chessboard creation*/
     for(i = 0;i<rows;i++){
         for(j=0;j<cols;j++) {
-            if ((i % 2 == 0 && j % 2 == 0)|| (i % 2 != 0 && j % 2 != 0)){
+            if ((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)){
                 dama->mat[i][j]->id = 0;
             } else {
                 dama->mat[i][j]->id = 1;
@@ -92,17 +92,18 @@ int convert(int dim){
     int i = 1, res = 0;
 
     while (i){
-        scanf(" %c",&a);
+        a = getchar();
         if(a>='A' && a<=('A'+dim-1)) {
-            res = a - 65;
-            i = 0;
+            return res = a - 65;
+            break;
+
         }else if(a>='a' && a<=('a'+dim-1)){
-            res = a-97;
-            i = 0;
+            return res = a-97;
+            break;
+
         }else if (a == 'X' || a == 'x'){
             printf("Quitting this session.");   /* Da Includere*/
-            res = 0;
-            i = 0;
+            EXIT_FAILURE;
         }
     }
     return res;
@@ -110,11 +111,14 @@ int convert(int dim){
 
 int check_number(int dim){
     char i = 'a';
-    while (1){
-        scanf(" %c",&i);
-        if(i>='1' && i<='1'+dim)
-            return ((int) i-'0');
-        else {
+    int a = 1;
+
+    while (a){
+        i = getchar();
+        if(i>='1' && i<='1'+dim) {
+            a = 0;
+            return ((int) i - '0');
+        }else {
             printf("The selected box doesn't exist. Please select a number from %d to %d\n", 1, dim);
         }
     }
@@ -704,8 +708,7 @@ int decision_menu() {
     printf("Are you ready to play?(Y/N)\n");
 
     while (cond){
-        scanf("%c", &decision);
-
+        decision = getchar();
         if (decision == 'Y' || decision == 'y') {
             printf("\n");
             printf("\n");
@@ -770,34 +773,65 @@ void hello(){
     printf("\n");
     printf("Now, let's welcome Lask-Bot from the year 2077. It will give you a brief insight of the game.");
     printf("\n");
-    printf("Laska-Bot says: Here I am fellow player, would you like me to explain the game to you?(Y/N)\n");
+    printf("Laska-Bot: Here I am fellow player, would you like me to explain the game to you?(Y/N)\n");
     printf("\n");
 
     while (answer){
-        scanf("%c", &decision);
+        decision = getchar();
         if (decision == 'Y' || decision == 'y') {
-            printf("Awesome\n");
             printf("\n");
-            printf(" - - - - - The Equipment - - - - -\n");
+            printf("Laska-Bot: Awesome, here you can find the rules!\n");
+            printf("\n");
+            printf(" - - - - - The Equipment - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+            printf("A 7x7 board, 11 black pawns and 11 white pawns.\n");
+            printf("\n");
             printf(" - Why is it 7x7?\n");
-            printf(" - - - - - The Pawns - - - - -\n");
-            printf(" - Who moves first?\n");
-            printf(" - - - - - The Moves - - - - -\n");
-            printf(" - How to move a pawn\n");
-            printf(" - The Capture\n");
-            printf(" - Forcing Capture\n");
-            printf(" - - - - - The Promotion - - - - -\n");
-            printf(" - - - - - Extra Rules for THIS GAME ONLY - - - - -\n");
-            printf(" - - - - - The End of the Game - - - - -\n");
-
+            printf("\tThe reason for using a 7 x 7 board is to remove the possibility for the game to end in a draw.\n");
+            printf("\n");
+            printf(" - - - - - The Pawns - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+            printf("SOLDIER: A single counter. It can move only diagonally forwards.\n");
+            printf("\tWhen it reaches the opponent 's side of the board, it is promoted to an officer.\n");
+            printf("OFFICER: A single counter. It can move in either direction, forwards or backwards diagonally.\n");
+            printf("COLUMN:  A stack of two or more soldiers or officers of one colour, possibly containing prisoners\n");
+            printf("\tIt is moved as a single piece. The top counter, the commander, determines who owns and moves the column.\n");
+            printf("COMMANDER: The top counter of a column. Only if it is an officer may the column move in either direction.\n");
+            printf("\n");
+            printf(" - - - - - The Moves & Constraints - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+            printf(" - Who moves first?:\n");
+            printf("\tWhite Player starts first. When they their turn is over, e.g. after their move, it's Black's turn and viceversa.");
+            printf(" - How to move a pawn:\n");
+            printf("\tJust type the coordinates as the game is going to ask you. If it is a legal move, the pawn will be moved there\n");
+            printf(" - The Capture:\n");
+            printf("\tWhen you move your pawn, if there's another pawn in the way and it's your enemy's you capture it automatically.\n");
+            printf(" - Forcing Capture:\n");
+            printf("\tIf you have the possibility to capture a pawn, you must do it.\n");
+            printf(" - Freeing prisoners:\n");
+            printf("\tIf you leap over an enemy column, you capture the commander and free your pawn.\n");
+            printf("\n");
+            printf(" - - - - - The Promotion - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+            printf(" - Becoming an OFFICER:\n");
+            printf("\tWhen a column reaches the opposite end of the board, the opponent’s front line, its commander is promoted.\n");
+            printf("\tHowever, promotion only comes at the end of a move.\n");
+            printf("\tIf captured, an officer retains its rank for use if later released.\n");
+            printf("\n");
+            printf(" - - - - - Extra Rules for MINI LASCA VERSION ONLY - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+            printf("\t1) You can only capture one prisoner per turn.\n");
+            printf("\t2) Columns have a maximum height of 3 pawns. The very next prisoner captured is removed from the table.\n");
+            printf("\n");
+            printf(" - - - - - The End of the Game - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+            printf("When a player can only make illegal moves or loses all of their pawns, they lose the game.\n");
+            printf("\n");
+            printf("\n");
             printf("\n");
             answer = 0;
+            break;
 
         } else if (decision == 'N' || decision == 'n') {
             printf("You sure are an expert then. I'll keep an eye on you, anyway.\n");
             printf("Don't make any silly mistake!\n");
             printf("\n");
             answer = 0;
+            break;
         }
     }
 }

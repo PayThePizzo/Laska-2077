@@ -2,7 +2,7 @@
 #include "laska.h"
 
 int main() {
-    int winner = -99, sup = -99;
+    int winner = -99 , sup = -99;
     tgame *dama = create(7,7);
     initialize(dama,dama->cols,dama->rows);
 

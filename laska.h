@@ -362,4 +362,4 @@ void goodbye();
 void credits();
 
 
-#endif LASKA_LASKA_H
+#endif //LASKA_LASKA_H
