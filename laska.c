@@ -41,9 +41,7 @@ void initialize(tgame * dama, int cols, int rows){
 /*chessboard creation*/
     for(i = 0;i<rows;i++){
         for(j=0;j<cols;j++) {
-            if (i % 2 == 0 && j % 2 == 0) {
-                dama->mat[i][j]->id = 0;
-            } else if (i % 2 != 0 && j % 2 != 0) {
+            if ((i % 2 == 0 && j % 2 == 0)|| (i % 2 != 0 && j % 2 != 0)){
                 dama->mat[i][j]->id = 0;
             } else {
                 dama->mat[i][j]->id = 1;
@@ -91,20 +89,23 @@ void freegame(tgame *dama, int rows, int cols) {
 
 int convert(int dim){
     char a = 'a';
-    int i = 1;
+    int i = 1, res = 0;
 
     while (i){
         scanf(" %c",&a);
         if(a>='A' && a<=('A'+dim-1)) {
-            return a - 65;
+            res = a - 65;
             i = 0;
         }else if(a>='a' && a<=('a'+dim-1)){
-            return a-97;
+            res = a-97;
             i = 0;
         }else if (a == 'X' || a == 'x'){
             printf("Quitting this session.");   /* Da Includere*/
+            res = 0;
+            i = 0;
         }
     }
+    return res;
 }
 
 int check_number(int dim){
@@ -126,7 +127,7 @@ void print(tgame dama, int rows , int cols){
     printf("%43s","LASKA GAME\n");
     printf("\t");
 
-    for (int i = 0; i < rows; ++i) {
+    for (i = 0; i < rows; ++i) {
         printf(" %c\t",65+i);
     }
     printf("\n        _________________________________________________________\n");
@@ -168,11 +169,11 @@ void top_print(tgame dama, int rows , int cols){
     printf("%43s","LASKA GAME\n");
     printf("\t");
 
-    for (int i = 0; i < rows; ++i) {
+    for (i = 0; i < rows; ++i) {
         printf("    %c\t",65+i);
     }
 
-    printf("\n        _________________________________________________________\n");;
+    printf("\n        _________________________________________________________\n");
 
     for (i = 0; i < rows; ++i) {
         printf("      %d\t",i+1);
@@ -348,14 +349,14 @@ int player_can_capture(tgame *dama, int turn){
             p.i = i;
             p.j = j;
             if(dama->mat[i][j]->id == turn+2 ){
-                if(turn==0 && white_capture_check(dama, p, turn))
+                if ((turn == 0 && white_capture_check(dama, p, turn))||(turn == 1 && black_capture_check(dama, p, turn))){
                     flag = 1;
-                else if(turn==1 && black_capture_check(dama, p, turn))
-                    flag = 1;
+                }
             }
             else if(dama->mat[i][j]->id == turn+4 ){
-                if(dama_capture_check(dama, p, turn))
+                if(dama_capture_check(dama, p, turn)){
                     flag = 1;
+                }
             }
         }
     }
@@ -371,14 +372,14 @@ int player_can_move(tgame *dama, int turn){
             p.i = i;
             p.j = j;
             if(dama->mat[i][j]->id == turn+2 ){
-                if(turn==0 && white_move_check(dama, p))
+                if((turn==0 && white_move_check(dama, p))||(turn==1 && black_move_check(dama, p))){
                     flag = 1;
-                else if(turn==1 && black_move_check(dama, p))
-                    flag = 1;
+                }
             }
             else if(dama->mat[i][j]->id == turn+4 ){
-                if(dama_move_check(dama, p))
+                if(dama_move_check(dama, p)){
                     flag = 1;
+                }
             }
         }
     }
@@ -416,10 +417,9 @@ int legal_choice(tgame *dama, int turn, point a){
                 return 3;
         }
         else{
-            if (turn == 0 && white_move_check(dama, a))
+            if ((turn == 0 && white_move_check(dama, a))||(turn == 1 && black_move_check(dama, a))){
                 return 2;
-            else if (turn == 1 && black_move_check(dama, a))
-                return 2;
+            }
             else{
                 return 3;
             }
@@ -464,10 +464,7 @@ int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
             else
                 return 4;
         }
-        else if (turn == 0 && (((b.i==(a.i)-1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)-1)&& (b.j==(a.j)+1)))){
-            return 0;
-        }
-        else if (turn == 1 && (((b.i==(a.i)+1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)+1)&& (b.j==(a.j)+1)))){
+        else if((turn == 0 && (((b.i==(a.i)-1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)-1)&&(b.j==(a.j)+1)))) || (turn == 1 && (((b.i==(a.i)+1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)+1)&& (b.j==(a.j)+1))))){
             return 0;
         }
         else{
@@ -630,11 +627,11 @@ int game(tgame *dama, int rows, int cols, int print_version){
     return 10;
 }
 
-//Menu
+
 
 int main_menu(){
     int input = -1;
-    int cond= 1;
+    int cond = 1;
 
     printf("\n");
     printf("Now, let me introduce you what modalities we built. Here you find the menu:\n");
@@ -738,7 +735,7 @@ void result_menu(int winner){
 
 
 
-//Messages
+
 
 void hello(){
     int answer = 1;
@@ -764,8 +761,7 @@ void hello(){
            "| $$      /      $$ \\$$    \\ | $$   $$ /      $$      |  $$$$$$ | $$\\$$\\$$  /  $$     /  $$      \n"
            "| $$_____|  $$$$$$$ _\\$$$$$$\\| $$$$$$\\|  $$$$$$$      | $$_____ | $$_\\$$$$ /  $$     /  $$       \n"
            "| $$     \\\\$$    $$|       $$| $$  \\$$\\\\$$    $$      | $$     \\ \\$$  \\$$$|  $$     |  $$        \n"
-           " \\$$$$$$$$ \\$$$$$$$ \\$$$$$$$  \\$$   \\$$ \\$$$$$$$       \\$$$$$$$$  \\$$$$$$  \\$$       \\$$         \n"
-           "                                                                                                 ");
+           " \\$$$$$$$$ \\$$$$$$$ \\$$$$$$$  \\$$   \\$$ \\$$$$$$$       \\$$$$$$$$  \\$$$$$$  \\$$       \\$$         \n");
     printf("\n");
     printf("\n");
     printf("Hi there, welcome to Laska 2077!\n");

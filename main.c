@@ -2,7 +2,7 @@
 #include "laska.h"
 
 int main() {
-    int winner = INT_MIN, sup = INT_MIN;
+    int winner = -99, sup = -99;
     tgame *dama = create(7,7);
     initialize(dama,dama->cols,dama->rows);
 
@@ -34,8 +34,9 @@ int main() {
     return 0;
 }
 
-// Functions for the game
-/*  -2) Coin Toss
+
+/*Functions for the game
+ * -2) Coin Toss
  *  -1) Legal Choice
  *   0) Legal Move
  *
@@ -48,8 +49,8 @@ int main() {
  */
 
 
-// Games
-/*  1) Single Player    - Game
+/*  Games
+ * 1) Single Player    - Game
  *  2) 2 Players        - Game
  *  3) Player vs Pc     - Gamepc
  *  4) Pc vs Pc         - BotFight

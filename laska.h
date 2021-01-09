@@ -55,7 +55,7 @@ typedef struct dama{
 
 
 
-// Create, Initialize & Free
+
 /**
  * Creates a new Laska Board.
  *
@@ -85,7 +85,7 @@ void freegame(tgame *result, int rows, int cols);
 
 
 
-// Auxiliary Functions
+
 
 /**
  *
@@ -127,7 +127,7 @@ void print(tgame dama, int rows , int cols);
  */
 void top_print(tgame dama, int rows , int cols);
 
-// Core Functions
+
 
 /**
  * Puts the pawn given in input at the end of the list of pieces of the position given in input.
@@ -319,7 +319,7 @@ int game(tgame *dama, int rows, int cols, int print_version);
 
 
 
-//Menu
+
 
 /**
  *
@@ -345,7 +345,7 @@ void result_menu(int winner);
 
 
 
-//Messages
+
 /**
  * Greetings menu for player. It is used to show some basic rules to the player if they want to.
  */
@@ -362,4 +362,4 @@ void goodbye();
 void credits();
 
 
-#endif //LASKA_LASKA_H
+#endif LASKA_LASKA_H
