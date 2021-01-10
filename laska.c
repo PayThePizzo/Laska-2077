@@ -36,6 +36,15 @@ tgame* create(int cols,int rows){
     return dama;
 }
 
+point_list *create_choices_list(){
+    point_list *l;
+    l= (point_list *) malloc(sizeof(point_list));
+    assert(l!=NULL);
+    l->list = NULL;
+    l->dim = 0;
+    return l;
+}
+
 void initialize(tgame * dama, int cols, int rows){
     int i = 0, j = 0;
 /*chessboard creation*/
@@ -85,6 +94,18 @@ void freegame(tgame *dama, int rows, int cols) {
 
     free(dama->mat);
     free(dama);
+}
+
+void free_choices_list(point_list * l){
+    point_cell * temporary;
+    if(l->list!=NULL){
+        temporary = l->list;
+        while(temporary->next!= NULL){
+            temporary = temporary->next;
+        }
+        free (temporary);
+    }
+    free (l);
 }
 
 int convert(int dim){
@@ -546,23 +567,120 @@ int victory(tgame *dama, int turn){
     }
 }
 
-int game(tgame *dama, int rows, int cols, int print_version){
+void add_at_the_end(point_list *l, point p){
+    point_cell * temporary;
+    point_cell * i;
+
+    temporary = (point_cell *) malloc (sizeof(point_cell));
+    assert(temporary!=NULL);
+
+    temporary->p = p;
+    temporary->next = NULL;
+
+    if(l->list==NULL){
+        l->list=temporary;
+    }
+    else{
+        i=l->list;
+        while (i->next!=NULL){
+            i = i->next;
+        }
+        i->next = temporary;
+    }
+    l->dim +=1;
+}
+
+point_list * avaiable_choices(tgame *dama, int rows, int cols, int turn){
+    int i, j;
+    point_list * l;
+    l= create_choices_list();
+
+    if(player_can_capture(dama, turn)){
+        for (i=0; i<rows; i++){
+            for(j=0; j<cols; j++){
+                point p;
+                p.i = i;
+                p.j = j;
+                if(dama->mat[i][j]->id == turn+2 && black_capture_check(dama, p, turn)){
+                    add_at_the_end(l, p);
+                }
+                else if(dama->mat[i][j]->id == turn+4 && dama_capture_check(dama, p, turn)){
+                    add_at_the_end(l, p);
+                }
+            }
+        }
+    }
+    else{
+        for(i=0; i<rows; i++){
+            for(j=0; j<cols; j++){
+            point p;
+            p.i = i;
+            p.j = j;
+            if(dama->mat[i][j]->id == turn+2 && black_move_check(dama, p)){
+                add_at_the_end(l, p);
+            }
+            else if(dama->mat[i][j]->id == turn+4 && dama_move_check(dama, p)){
+                add_at_the_end(l, p);
+            }
+            }
+        }
+    }
+    return l;
+}
+
+void computer_moves(tgame *dama, int rows, int cols, int turn){
+    point_list * l;
+    point_cell * point_a ;
+    point_cell * pos_point_a;
+    point b;
+    int flag = 0;
+    int i=0,j=0;
+    int size=0;
+    int pos=0;
+    srand(time(NULL));
+    
+    l = avaiable_choices(dama, rows, cols, turn);
+    pos_point_a = l->list;
+    size = l->dim;
+    pos = rand() % size;
+    for(i=0;i<pos;i++){
+        pos_point_a = pos_point_a->next;
+    }
+    point_a = pos_point_a;
+    for(i=0; i<rows && flag==0; i++){
+        for(j=0; j<cols && flag==0; j++){
+            b.i = i;
+            b.j = j;
+            if (!illegal_move (dama, turn, point_a->p, b, legal_choice(dama, turn, point_a->p))){
+                flag = 1;
+            }
+        }
+    }
+    
+    move(dama, point_a->p , b);
+    printf("Computer moves from %c%d to %c%d\n", (point_a->p.j)+65, ++(point_a->p.i), (b.j)+65, ++(b.i));
+    promotion(dama, turn);
+    free_choices_list(l);
+}
+
+int game(tgame *dama, int rows, int cols, int print_version, int play_mode){
     point a,b;
     int turn = 0;
-    int code_error = 0; /*Modifica*/
-    int endgame = 0;
+    int code_error;
     int moves =0;
+    char color [6];
 
-    while(!endgame){
+    while(!victory(dama, turn)){
         do{
             if(print_version==0)
                 print (*dama, rows, cols);
             else
                 top_print(*dama, rows, cols);
-            if(turn ==0)
-                printf("\nWhite's turn\n\n");
+            if (turn==0)
+                strcpy(color,"white");
             else
-                printf("\nBlack's turn\n\n");
+                strcpy(color,"black");
+            printf("\nIt's %s turn\n\n", color);
             printf("Write the start and the destination coordinate without spaces, for example a5b4\n");
             a.j = convert(dama->cols);
             a.i = check_number(dama->cols);
@@ -599,8 +717,7 @@ int game(tgame *dama, int rows, int cols, int print_version){
         move(dama, a, b);
         moves++;
         promotion(dama, turn);
-        if(victory(dama, turn)){
-            endgame=1;                                          
+        if(victory(dama, turn)){                                         
             if(print_version==0)
                 print (*dama, rows, cols);
             else
@@ -608,7 +725,28 @@ int game(tgame *dama, int rows, int cols, int print_version){
             printf("total moves = %d\n", moves);
             return turn;
         }
-        turn = enemy(turn);
+        if(play_mode==2){
+            turn = enemy(turn);
+        }
+        if(play_mode==3){
+            if(print_version==0)
+                print (*dama, rows, cols);
+            else
+                top_print(*dama, rows, cols);
+
+            computer_moves(dama,dama->rows,dama->cols,1);
+            moves++;
+
+            if(victory(dama, 1)){                                         
+                if(print_version==0)
+                    print (*dama, rows, cols);
+                else
+                    top_print(*dama, rows, cols);
+                printf("total moves = %d\n", moves);
+                return 1;
+            }
+        }
+    
     }
     return 10;
 }
