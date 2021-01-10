@@ -32,6 +32,26 @@ typedef struct point{
 */
 
 /**
+ * This struct rappresents one element of a list of points.
+ *
+ * @struct point node
+ */
+typedef struct point_cell{
+    point p;
+    struct point_cell * next;
+} point_cell;
+
+/**
+ * This struct has the size of the list and the pointer to the head of the list.
+ *
+ * @struct list of points
+ */
+typedef struct point_list{
+    int dim;
+    point_cell * list;
+} point_list;
+
+/**
  * If the cell is empty it represents the color, otherwise it represents the pawn (obviously the cell is white).
  *
  * @struct Box of Laska board
@@ -66,6 +86,15 @@ typedef struct dama{
 tgame* create(int cols,int rows);
 
 /**
+ * Creates a list of the possible pawn you can choose to move.
+ *
+ * 
+ * 
+ * @return the list and the size of the new points list
+ */
+point_list * create_choices_list();
+
+/**
  * Initializes the colors of the boxes and places the pawns.
  *
  * @param dama laska board
@@ -83,8 +112,13 @@ void initialize(tgame * dama, int cols, int rows);
  */
 void freegame(tgame *result, int rows, int cols);
 
-
-
+/**
+ * Frees the list of points.
+ *
+ * 
+ * @param pointer to the head of the list to free
+ */
+void free_choices_list(point_list * l);
 
 
 /**
@@ -307,15 +341,44 @@ void promotion(tgame *dama, int turn);
 int victory(tgame *dama, int turn);
 
 /**
+ * It adds at the end of a list the coordinates of a pawn.
+ *
+ * @param l the list to modify
+ * @param p the point that have to be added to the list
+ */
+void add_at_the_end(point_list *l, point p);
+
+/**
+ * it finds all the possible pawns the player may move.
+ *
+ * @param dama laska board
+ * @param cols columns size
+ * @param rows rows size
+ * @return a pointer to the structure of the list of points
+ */
+point_list * avaiable_choices(tgame *dama, int rows, int cols, int turn);
+
+/**
+ * it finds all the possible pawns the player may move.
+ *
+ * @param dama laska board
+ * @param cols columns size
+ * @param rows rows size
+ * @param turn white(0) or black(1)
+ */
+void computer_moves(tgame *dama, int rows, int cols, int turn);
+
+/**
  * Contains the main function for user interaction from standard input.
  *
  * @param dama Laska board
  * @param rows rows size
  * @param cols columns size
  * @param print_version the gamer choose which view he/she prefers, front or top
+ * @param play_mode 1 if single player, 2 if 2 players, 3 if player vs pc, 4 if pc vs pc
  * @return 0 if white won, 1 if black won
  */
-int game(tgame *dama, int rows, int cols, int print_version);
+int game(tgame *dama, int rows, int cols, int print_version, int play_mode);
 
 
 
