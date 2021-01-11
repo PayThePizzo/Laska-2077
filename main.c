@@ -12,9 +12,9 @@ int main() {
     if(sup){
         switch (main_menu()) {
             case 0:
-                winner = game(dama, dama->rows, dama->cols,3);
+                winner = game(dama, dama->rows, dama->cols,4);
             case 1:
-                winner = game(dama, dama->rows, dama->cols,3);
+                winner = game(dama, dama->rows, dama->cols,4);
             case 2:
                 winner = 2;
             case 3:
