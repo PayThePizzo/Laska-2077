@@ -153,15 +153,6 @@ int check_number(int dim);
  */
 void print(tgame dama, int rows , int cols);
 
-/**
- * Prints the laska board at the moment, top-view.
- *
- * @param dama Laska board
- * @param rows rows size
- * @param cols columns size
- */
-void top_print(tgame dama, int rows , int cols);
-
 
 
 /**
@@ -375,11 +366,10 @@ void computer_moves(tgame *dama, int rows, int cols, int turn);
  * @param dama Laska board
  * @param rows rows size
  * @param cols columns size
- * @param print_version the gamer choose which view he/she prefers, front or top
  * @param play_mode 1 if single player, 2 if 2 players, 3 if player vs pc, 4 if pc vs pc
  * @return 0 if white won, 1 if black won
  */
-int game(tgame *dama, int rows, int cols, int print_version, int play_mode);
+int game(tgame *dama, int rows, int cols, int play_mode);
 
 
 
