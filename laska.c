@@ -524,10 +524,13 @@ void promotion(tgame *dama, int turn){
     }
 }
 
-/*returns 0 if no winner, 1 if white player is the winner, 2 if vlack player is the winner*/
-int victory(tgame *dama, int turn){
-    if(!player_can_capture(dama,enemy(turn)) && !player_can_move(dama,enemy(turn)))
+/*returns 0 if no winner, 1 if white player is the winner, 2 if black player is the winner*/
+int victory(tgame *dama, int rows, int cols, int turn, int moves){
+    if(!player_can_capture(dama,enemy(turn)) && !player_can_move(dama,enemy(turn))){
+        print (*dama, rows, cols);
+        printf("total moves = %d\n", moves);
         return turn+1;
+    }
     else{
         return 0;
     }
@@ -685,52 +688,60 @@ int game(tgame *dama, int rows, int cols, int play_mode){
     int moves =0;
     char color [6];
 
-    while(!victory(dama, turn)){
-        do{
-   
-            print (*dama, rows, cols);
-            if (turn==0)
-                strcpy(color,"white");
-            else
-                strcpy(color,"black");
-            printf("\nIt's %s turn\n\n", color);
-            printf("Write the start and the destination coordinate without spaces, for example a5b4\n");
-            a.j = convert(dama->cols);
-            a.i = check_number(dama->cols);
-            (a.i) --;
-            code_error = legal_choice(dama, turn, a);
-            b.j = convert(dama->rows);
-            b.i = check_number(dama->rows);
-            (b.i) --;
-            if (code_error!=7&&code_error!=10&&code_error!=11)
-                code_error= (illegal_move (dama, turn, a, b, legal_choice(dama, turn, a)));
-            if(code_error){
-                error(dama, dama->rows, dama->cols, turn, code_error);
-            }
-        } while (code_error);  
+    while(!victory(dama, rows, cols, turn, moves)){
+        if(play_mode==2 || play_mode==3){
+            do{
+                print (*dama, rows, cols);
+                if (turn==0)
+                    strcpy(color,"white");
+                else
+                    strcpy(color,"black");
+                printf("\nIt's %s turn\n\n", color);
+                printf("Write the start and the destination coordinate without spaces, for example a5b4\n");
+                a.j = convert(dama->cols);
+                a.i = check_number(dama->cols);
+                (a.i) --;
+                code_error = legal_choice(dama, turn, a);
+                b.j = convert(dama->rows);
+                b.i = check_number(dama->rows);
+                (b.i) --;
+                if (code_error!=7&&code_error!=10&&code_error!=11)
+                    code_error= (illegal_move (dama, turn, a, b, legal_choice(dama, turn, a)));
+                if(code_error){
+                    error(dama, dama->rows, dama->cols, turn, code_error);
+                }
+            } while (code_error);  
 
-        move(dama, a, b);
-        moves++;
-        promotion(dama, turn);
-        if(victory(dama, turn)){                                         
-            print (*dama, rows, cols);
-            printf("total moves = %d\n", moves);
-            return turn;
+            move(dama, a, b);
+            moves++;
+            promotion(dama, turn);
+            if(victory(dama, rows, cols, turn, moves)){                                         
+                return turn;
+            }
         }
         if(play_mode==2){
             turn = enemy(turn);
         }
-        if(play_mode==3){
+        else if(play_mode==3){
             print (*dama, rows, cols);
 
             computer_moves(dama,dama->rows,dama->cols,1);
             moves++;
 
-            if(victory(dama, 1)){                                         
-                print (*dama, rows, cols);
-                printf("total moves = %d\n", moves);
+            if(victory(dama, rows, cols, 1, moves)){                                        
                 return 1;
             }
+        }
+        else if(play_mode==4){
+            print (*dama, rows, cols);
+
+            computer_moves(dama,dama->rows,dama->cols, turn);
+            moves++;
+
+            if(victory(dama, rows, cols, turn, moves)){                                        
+                return turn;
+            }
+            turn = enemy(turn);
         }
     
     }
