@@ -188,40 +188,6 @@ void print(tgame dama, int rows , int cols){
     }        
 }
 
-void top_print(tgame dama, int rows , int cols){
-    int i = 0, j = 0, z = 0
-            ;
-    printf("%43s","LASKA GAME\n");
-    printf("\t");
-
-    for (i = 0; i < rows; ++i) {
-        printf("    %c\t",65+i);
-    }
-
-    printf("\n        _________________________________________________________\n");
-
-    for (i = 0; i < rows; ++i) {
-        printf("      %d\t",i+1);
-        for (j = 0; j <cols; ++j) {    
-                if(dama.mat[i][j]->id==0){
-                    printf("%c%c%c%c%c%c",219,219,219,219,219,219);
-                }else if(dama.mat[i][j]->id==2){
-                    printf("   %c ",'w');
-                }else if(dama.mat[i][j]->id==3){
-                    printf("   %c ",'b');
-                }else if(dama.mat[i][j]->id==4){
-                    printf("   %c ",'W');
-                }else if(dama.mat[i][j]->id==5){
-                    printf("   %c ",'B');
-                }
-        printf("\t|");
-        }
-        printf("\n        _________________________________________________________");
-        printf("\n");
-
-    }        
-}
-
 void add(tgame *dama, int pawn, int r, int c){
 
     if (dama->mat[r][c]->id==0){
@@ -663,7 +629,7 @@ void computer_moves(tgame *dama, int rows, int cols, int turn){
     free_choices_list(l);
 }
 
-int game(tgame *dama, int rows, int cols, int print_version, int play_mode){
+int game(tgame *dama, int rows, int cols, int play_mode){
     point a,b;
     int turn = 0;
     int code_error;
@@ -672,10 +638,8 @@ int game(tgame *dama, int rows, int cols, int print_version, int play_mode){
 
     while(!victory(dama, turn)){
         do{
-            if(print_version==0)
-                print (*dama, rows, cols);
-            else
-                top_print(*dama, rows, cols);
+   
+            print (*dama, rows, cols);
             if (turn==0)
                 strcpy(color,"white");
             else
@@ -718,10 +682,7 @@ int game(tgame *dama, int rows, int cols, int print_version, int play_mode){
         moves++;
         promotion(dama, turn);
         if(victory(dama, turn)){                                         
-            if(print_version==0)
-                print (*dama, rows, cols);
-            else
-                top_print(*dama, rows, cols);
+            print (*dama, rows, cols);
             printf("total moves = %d\n", moves);
             return turn;
         }
@@ -729,19 +690,13 @@ int game(tgame *dama, int rows, int cols, int print_version, int play_mode){
             turn = enemy(turn);
         }
         if(play_mode==3){
-            if(print_version==0)
-                print (*dama, rows, cols);
-            else
-                top_print(*dama, rows, cols);
+            print (*dama, rows, cols);
 
             computer_moves(dama,dama->rows,dama->cols,1);
             moves++;
 
             if(victory(dama, 1)){                                         
-                if(print_version==0)
-                    print (*dama, rows, cols);
-                else
-                    top_print(*dama, rows, cols);
+                print (*dama, rows, cols);
                 printf("total moves = %d\n", moves);
                 return 1;
             }
