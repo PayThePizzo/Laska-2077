@@ -327,10 +327,13 @@ void promotion(tgame *dama, int turn);
  * Checks if there has been a victory.
  *
  * @param dama Laska board
+ * @param rows rows size
+ * @param cols columns size
  * @param turn current game turn
+ * @param moves current moves to print
  * @return 0 if no one has won yet, 1 if white has won, 2 if black has won
  */
-int victory(tgame *dama, int turn);
+int victory(tgame *dama, int rows, int cols, int turn, int moves);
 
 /**
  * It adds at the end of a list the coordinates of a pawn.
