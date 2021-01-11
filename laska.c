@@ -556,7 +556,7 @@ void add_at_the_end(point_list *l, point p){
     l->dim +=1;
 }
 
-point_list * avaiable_choices(tgame *dama, int rows, int cols, int turn){
+point_list *avaiable_choices(tgame *dama, int rows, int cols, int turn){
     int i, j;
     point_list * l;
     l= create_choices_list();
@@ -567,10 +567,13 @@ point_list * avaiable_choices(tgame *dama, int rows, int cols, int turn){
                 point p;
                 p.i = i;
                 p.j = j;
-                if(dama->mat[i][j]->id == turn+2 && black_capture_check(dama, p, turn)){
+                if(turn ==1 && dama->mat[i][j]->id == turn+2 && black_capture_check(dama, p, turn)){
                     add_at_the_end(l, p);
                 }
-                else if(dama->mat[i][j]->id == turn+4 && dama_capture_check(dama, p, turn)){
+                else if (turn ==0 && dama->mat[i][j]->id == turn+2 && white_capture_check(dama, p, turn)){
+                    add_at_the_end(l, p);
+                }
+                if(dama->mat[i][j]->id == turn+4 && dama_capture_check(dama, p, turn)){
                     add_at_the_end(l, p);
                 }
             }
@@ -582,10 +585,13 @@ point_list * avaiable_choices(tgame *dama, int rows, int cols, int turn){
             point p;
             p.i = i;
             p.j = j;
-            if(dama->mat[i][j]->id == turn+2 && black_move_check(dama, p)){
+            if(turn == 1 && dama->mat[i][j]->id == turn+2 && black_move_check(dama, p)){
                 add_at_the_end(l, p);
             }
-            else if(dama->mat[i][j]->id == turn+4 && dama_move_check(dama, p)){
+            else if(turn == 0 && dama->mat[i][j]->id == turn+2 && white_move_check(dama, p)){
+                add_at_the_end(l, p);
+            }
+            if(dama->mat[i][j]->id == turn+4 && dama_move_check(dama, p)){
                 add_at_the_end(l, p);
             }
             }
@@ -629,6 +635,49 @@ void computer_moves(tgame *dama, int rows, int cols, int turn){
     free_choices_list(l);
 }
 
+void error(tgame *dama, int rows, int cols,int turn, int code_error){
+    point_list * l;
+    point_cell * point_a;
+
+    printf("Laska-Bot Says:\n");
+    if (code_error ==1){
+        printf("FORCING CAPTURE - Pieces must capture if in a position to do so.\n You can move only the pawn inside one of this boxes:\n");
+        l = avaiable_choices(dama, rows, cols, turn);
+        point_a = l->list;
+        while(point_a->next!=NULL){
+            printf(" %c%d  or ", (point_a->p.j)+65 , ++(point_a->p.i));
+            point_a = point_a->next;
+        }
+        printf(" %c%d .\n", (point_a->p.j)+65 , ++(point_a->p.i));
+        free_choices_list(l);
+    }
+    else if(code_error ==2)
+        printf("The Dama (promoted pawn) may capture only in the 4 diagonals if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
+    else if(code_error ==3)
+        printf("The pawn may capture only in the 2 diagonals forward if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
+    else if(code_error ==4)
+        printf("The Dama (promoted pawn) may move only in the 4 diagonals if it's free.\n");
+    else if(code_error ==5)
+        printf("The pawn may move only in the 2 diagonals forward if it's free.\n");
+    else if(code_error ==6)
+        printf("You can move only into free white empty bowes\n");
+    else if(code_error == 7)
+        printf("The selected box have to contain your pawn\n");
+    else if(code_error == 10)
+        printf("The pawn you choosed can not be moved\n");
+    else if(code_error == 11){
+        printf("Unfortunately, you can't choose this pawn because you care forced to capture foe's pawns, so you have to choose an other pawn.\nYou can move only the pawn inside one of this boxes:\n");
+        l = avaiable_choices(dama, rows, cols, turn);
+        point_a = l->list;
+        while(point_a->next!=NULL){
+            printf(" %c%d  or ", (point_a->p.j)+65 , ++(point_a->p.i));
+            point_a = point_a->next;
+        }
+        printf(" %c%d .\n", (point_a->p.j)+65 , ++(point_a->p.i));
+        free_choices_list(l);
+    }
+}
+
 int game(tgame *dama, int rows, int cols, int play_mode){
     point a,b;
     int turn = 0;
@@ -656,25 +705,7 @@ int game(tgame *dama, int rows, int cols, int play_mode){
             if (code_error!=7&&code_error!=10&&code_error!=11)
                 code_error= (illegal_move (dama, turn, a, b, legal_choice(dama, turn, a)));
             if(code_error){
-                printf("Laska-Bot Says:\n");
-                if (code_error ==1)
-                    printf("FORCING CAPTURE - Pieces must capture if in a position to do so.\n");
-                else if(code_error ==2)
-                    printf("The Dama (promoted pawn) may capture only in the 4 diagonals if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
-                else if(code_error ==3)
-                    printf("The pawn may capture only in the 2 diagonals forward if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
-                else if(code_error ==4)
-                    printf("The Dama (promoted pawn) may move only in the 4 diagonals if it's free.\n");
-                else if(code_error ==5)
-                    printf("The pawn may move only in the 2 diagonals forward if it's free.\n");
-                else if(code_error ==6)
-                    printf("You can move only into free white empty bowes\n");
-                else if(code_error == 7)
-                    printf("The selected box have to contain your pawn\n");
-                else if(code_error == 10)
-                    printf("The pawn you choosed can not be moved\n");
-                else if(code_error == 11)
-                    printf("Unfortunately, you can't choose this pawn because you care forced to capture foe's pawns, so you have to choose an other pawn.\n");
+                error(dama, dama->rows, dama->cols, turn, code_error);
             }
         } while (code_error);  
 
