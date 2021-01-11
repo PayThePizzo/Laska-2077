@@ -361,6 +361,17 @@ point_list * avaiable_choices(tgame *dama, int rows, int cols, int turn);
 void computer_moves(tgame *dama, int rows, int cols, int turn);
 
 /**
+ * Prints the type of error or a suggestion.
+ *
+ * @param dama Laska board
+ * @param rows rows size
+ * @param cols columns size
+ * @param turn 0 white or 1 black
+ * @param code_error the type of error
+ */
+void error(tgame *dama, int rows, int cols,int turn, int code_error);
+
+/**
  * Contains the main function for user interaction from standard input.
  *
  * @param dama Laska board
