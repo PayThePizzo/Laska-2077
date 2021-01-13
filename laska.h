@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include <time.h>
 #include <math.h>
@@ -387,7 +388,10 @@ int game(tgame *dama, int rows, int cols, int play_mode);
 
 
 
-
+/**
+ *
+ */
+void choose_menu();
 
 /**
  *

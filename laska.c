@@ -108,6 +108,12 @@ void free_choices_list(point_list * l){
     free (l);
 }
 
+int coin_toss(){
+    srand(time(NULL));
+    int r = ((int) rand() / (RAND_MAX)) + 1;
+    return r;
+}
+
 int convert(int dim){
     char a = 'a';
     int i = 1, res = 0;
@@ -685,7 +691,7 @@ int game(tgame *dama, int rows, int cols, int play_mode){
     point a,b;
     int turn = 0;
     int code_error;
-    int moves =0;
+    int moves = 0;
     char color [6];
 
     while(!victory(dama, rows, cols, turn, moves)){
@@ -749,6 +755,9 @@ int game(tgame *dama, int rows, int cols, int play_mode){
 }
 
 
+void choose_menu(){
+
+}
 
 int main_menu(){
     int input = -1;

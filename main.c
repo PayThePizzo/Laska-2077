@@ -36,21 +36,15 @@ int main() {
 
 
 /*Functions for the game
- * -2) Coin Toss
- *  -1) Legal Choice
- *   0) Legal Move
+ * 0) Coin Toss
+ * 1) Scelta
  *
- *  1) Check Limit -> dato il puntatore alla pedina, mi dice se la pedina e' troppo alta
- *  2) Check Grow -> dato il puntatore alla pedina e le coordinate in cui viene inserita, mi dice se la pedina cresce
- *  3) Move
- *  4) Remove Pawn
- *  5) Grow -> Aggiunge uno alla pedina, rimuove la pedina avversaria
- *  6) Check Win -> date le regole del gioco, la scacchiera e le pedine rimaste, mi dice se una mossa fa vincere la partita
+ *
  */
 
 
 /*  Games
- * 1) Single Player    - Game
+ * 1) Single Player     - Game
  *  2) 2 Players        - Game
  *  3) Player vs Pc     - Gamepc
  *  4) Pc vs Pc         - BotFight
@@ -62,6 +56,9 @@ int main() {
  * - Undo move
  * - Pass turn
  *
+ *
+ *
+ *  STRINGA SCELTA yes no
  */
 
 
@@ -76,10 +73,6 @@ int main() {
  *
  *  - Funzionalita' di Quit in qualsiasi momento
  *  - Funzionalita' di Give Up in qualsiasi momento
- *
- *  - Suggerimenti del computer.
- *  -
- *
  *
  *  warning C4715: 'illegal_move': not all control paths return a value
     warning C4715: 'main_menu': not all control paths return a value
