@@ -381,7 +381,7 @@ void error(tgame *dama, int rows, int cols,int turn, int code_error);
  * @param dama Laska board
  * @param rows rows size
  * @param cols columns size
- * @param play_mode 1 if single player, 2 if 2 players, 3 if player vs pc, 4 if pc vs pc
+ * @param play_mode 0 if 2 players, 1 if player vs pc, 2 if pc vs pc
  * @return 0 if white won, 1 if black won
  */
 int game(tgame *dama, int rows, int cols, int play_mode);
