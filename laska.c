@@ -894,19 +894,19 @@ int main_menu(){
 
 int decision_menu() {
     int winner = 0, cond = 1;
-    char decision = 'a';
+    char decision[3];
 
-    printf("Are you ready to play?(Y/N)\n");
+    printf("Are you ready to play?(yes/no)\n");
 
     while (cond){
-        decision = getchar();
-        if (decision == 'Y' || decision == 'y') {
+        scanf("%s", decision);
+        if (decision[0] == 'y' && decision [1] == 'e' && decision[2] == 's') {
             printf("\n");
             printf("\n");
             printf("Very Well, let's go on\n");
             printf("\n");
             return 1;
-        } else if (decision == 'N' || decision == 'n') {
+        } else if (decision[0] == 'n' && decision[1]== 'o') {
             return 0;
         }
     }
@@ -929,11 +929,9 @@ void result_menu(int winner){
 
 
 
-
-
 void hello(){
-    int answer = 1;
-    char decision = 'a';
+    int cond = 1;
+    char decision[3];
 
     printf(" __       __            __                                                      __               \n"
            "|  \\  _  |  \\          |  \\                                                    |  \\              \n"
@@ -960,17 +958,18 @@ void hello(){
     printf("\n");
     printf("Hi there, welcome to Laska 2077!\n");
     printf("Check out the official site of the game here: http://www.lasca.org/ \n");
+    printf(" ******** DISCLAIMER: The input you may type is always shown, other kinds of input may make the game fail. *********\n");
     printf("\n");
     printf("\n");
     printf("Now, let's welcome Lask-Bot from the year 2077. It will give you a brief insight of the game.");
     printf("\n");
-    printf("Laska-Bot: Here I am fellow player, would you like me to explain the game to you?(Y/N)\n");
+    printf("Laska-Bot: Here I am fellow player, would you like me to explain the game to you?(yes/no)\n");
     printf("\n");
 
-    while (answer){
-        decision = getchar();
+    while (cond){
+        scanf("%s", decision);
 
-        if (decision == 'Y' || decision == 'y') {
+        if (decision[0] == 'y' && decision [1] == 'e' && decision[2] == 's') {
             printf("\n");
             printf("Laska-Bot: Awesome, here you can find the rules!\n");
             printf("\n");
@@ -1015,12 +1014,12 @@ void hello(){
             printf("\n");
             printf("\n");
             printf("\n");
-            answer = 0;
-        } else if (decision == 'N' || decision == 'n') {
+            cond = 0;
+        } else if (decision[0] == 'n' && decision[1]== 'o') {
             printf("You sure are an expert then. I'll keep an eye on you, anyway.\n");
             printf("Don't make any silly mistake!\n");
             printf("\n");
-            answer = 0;
+            cond = 0;
         }
     }
 }

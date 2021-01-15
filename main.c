@@ -12,13 +12,17 @@ int main() {
     if(sup){
         switch (main_menu()) {
             case 0:
-                winner = game(dama, dama->rows, dama->cols,4);
+                // player solo
+                winner = game(dama, dama->rows, dama->cols,2);
             case 1:
-                winner = game(dama, dama->rows, dama->cols,4);
+                // player vs player
+                winner = game(dama, dama->rows, dama->cols,2);
             case 2:
-                winner = 2;
+                // pc vs player
+                winner = game(dama, dama->rows, dama->cols,3);
             case 3:
-                winner = 3;
+                // pc vs pc
+                winner = game(dama, dama->rows, dama->cols,4);
             default:
                 printf("Error in Play or Not section of Main");
                 EXIT_FAILURE;
