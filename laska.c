@@ -732,7 +732,7 @@ int game(tgame *dama, int rows, int cols, int play_mode){
                 int winner;
 
                 winner = victory(dama, rows, cols, turn, moves);                                  
-                return winner;
+                return --(winner);
             }
             turn = enemy(turn);
         }
