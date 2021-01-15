@@ -54,7 +54,7 @@ void initialize(tgame * dama, int cols, int rows){
     /*chessboard creation*/
     for(i = 0;i<rows;i++){
         for(j=0;j<cols;j++) {
-            if (i % 2 == j % 2){
+            if ((i % 2 == 0 && j % 2 == 0)||(i % 2 != 0 && j%2 !=0)){
                 dama->mat[i][j]->id = 0;
             } else {
                 dama->mat[i][j]->id = 1;
@@ -84,8 +84,9 @@ void freegame(tgame *dama, int rows, int cols) {
     for(i=0; i<rows; i++){
         for (j=0; j<cols; j++){
 
-            if(dama->mat[i][j]->next==NULL)
+            if(dama->mat[i][j]->next==NULL){
                 free(dama->mat[i][j]);
+            }
             else if(dama->mat[i][j]->next->next==NULL){
                 free(dama->mat[i][j]->next);
                 free(dama->mat[i][j]);
@@ -137,14 +138,15 @@ int convert(int dim){
 
         if(a>='A' && a<=('A'+dim-1)) {
             return res = a - 65;
-            break;
+            i = 0;
 
         }else if(a>='a' && a<=('a'+dim-1)){
             return res = a-97;
-            break;
+            i = 0;
 
         }else if (a == 'X' || a == 'x'){
             printf("Quitting this session.");   /* Da Includere*/
+            i = 0;
             EXIT_FAILURE;
         }
     }
@@ -154,12 +156,12 @@ int convert(int dim){
 
 int check_number(int dim){
     char i = 'a';
-    int a = 1;
+    int cond = 1;
 
-    while (a){
+    while (cond){
         i = getchar();
         if(i>='1' && i<='1'+dim) {
-            a = 0;
+            cond = 0;
             return ((int) i - '0');
         }else {
             printf("The selected box doesn't exist. Please select a number from %d to %d\n", 1, dim);
@@ -829,7 +831,7 @@ void choose_menu(){
 }
 
 int main_menu(){
-    int input = -1;
+    int input;
     int cond = 1;
 
     printf("\n");
@@ -847,7 +849,7 @@ int main_menu(){
     printf("\n");
     printf("\n");
     printf("You can Quit or Give Up at any time by typing 'x', unless two PCs are playing.\n");
-    printf("Yeah, Super-Fast\n");
+    printf("Yeah, they are super-Fast\n");
     printf("\n");
     printf("Let's hear it then, have you made up your mind? Type the code of the game to play");
     printf("\n");
@@ -893,7 +895,7 @@ int main_menu(){
 }
 
 int decision_menu() {
-    int winner = 0, cond = 1;
+    int res = 0, cond = 1;
     char decision[3];
 
     printf("Are you ready to play?(yes/no)\n");
@@ -905,11 +907,17 @@ int decision_menu() {
             printf("\n");
             printf("Very Well, let's go on\n");
             printf("\n");
-            return 1;
+            res = 1;
+            cond = 0;
+
         } else if (decision[0] == 'n' && decision[1]== 'o') {
-            return 0;
+            res = 0;
+            cond = 0;
+            goodbye();
         }
     }
+
+    return res;
 }
 
 void result_menu(int winner){
