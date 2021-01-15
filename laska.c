@@ -728,8 +728,11 @@ int game(tgame *dama, int rows, int cols, int play_mode){
             computer_moves(dama,dama->rows,dama->cols, turn);
             moves++;
 
-            if(victory(dama, rows, cols, turn, moves)){                                        
-                return turn;
+            if(victory(dama, rows, cols, turn, moves)){   
+                int winner;
+
+                winner = victory(dama, rows, cols, turn, moves);                                  
+                return winner;
             }
             turn = enemy(turn);
         }
