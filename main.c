@@ -29,6 +29,7 @@ int main() {
             case 3:
                 // pc vs pc
                 winner = game(dama, dama->rows, dama->cols,4);
+                result_menu(winner);
         }
     }
     freegame(dama,dama->rows,dama->cols);
