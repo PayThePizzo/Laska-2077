@@ -3,9 +3,9 @@
 
 int main() {
     int winner = -99 , sup = -99;
+
     tgame *dama = create(7,7);
     initialize(dama,dama->cols,dama->rows);
-
     hello();
     sup = decision_menu();
 
@@ -24,10 +24,9 @@ int main() {
                 EXIT_FAILURE;
         }
     }
+
     result_menu(winner);
-
     freegame(dama,dama->rows,dama->cols);
-
     goodbye();
     credits();
 
@@ -38,6 +37,7 @@ int main() {
 /*Functions for the game
  * 0) Coin Toss
  * 1) Scelta
+ *      DISCLAIMER se si scrivono cose a caso
  *
  *
  */
