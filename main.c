@@ -63,11 +63,12 @@ int main() {
 
 /*  What is left to implement ?
  *
- *  - Scelta colore casuale con una moneta
- *  - Scelta personaggio tradizionale
  *  - Funzionalita' di Quit in qualsiasi momento
  *  - Funzionalita' di Give Up in qualsiasi momento
  *  - Reset Game ()
  *  - Passa il turno
  *  - Undo Move
+ *  -
+ *
+ *  REFACTOR CODICE
  */

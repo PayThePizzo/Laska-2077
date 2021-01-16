@@ -10,7 +10,7 @@ legend id
 5-> black dama
 */
 
-tgame* create(int cols,int rows){
+tgame * create(int cols,int rows){
     tgame *dama;
     int i, j;
 
@@ -89,8 +89,9 @@ void freegame(tgame *dama, int rows, int cols) {
 
     for(i = 0; i<rows; i++){
         for (j=0; j<cols; j++){
-            if(dama->mat[i][j]->next==NULL)
-                free(dama->mat[i][j]);                     
+            if(dama->mat[i][j]->next==NULL) {
+                free(dama->mat[i][j]);
+            }
             else if(dama->mat[i][j]->next->next==NULL){ 
                 free(dama->mat[i][j]->next);                
                 free(dama->mat[i][j]);
@@ -321,23 +322,28 @@ int white_capture_check(tgame *dama, point a, int turn){
     if(a.i<2) {
         return 0;
     }else if(a.j==0 || a.j==1){
-        if((dama->mat[a.i-1][a.j+1]->id == e+2 || dama->mat[a.i-1][a.j+1]->id == e+4) && dama->mat[a.i-2][a.j+2]->id == 0) {
+        if((dama->mat[a.i-1][a.j+1]->id == e+2 || dama->mat[a.i-1][a.j+1]->id == e+4)
+            && dama->mat[a.i-2][a.j+2]->id == 0) {
             return 1;
         }else {
             return 0;
         }
     }
     else if (a.j==dama->cols-1 || a.j==dama->cols-2) {
-        if ((dama->mat[a.i - 1][a.j - 1]->id == e + 2 || dama->mat[a.i - 1][a.j - 1]->id == e + 4) &&
-            dama->mat[a.i - 2][a.j - 2]->id == 0) {
+        if ((dama->mat[a.i - 1][a.j - 1]->id == e + 2 || dama->mat[a.i - 1][a.j - 1]->id == e + 4)
+            && dama->mat[a.i - 2][a.j - 2]->id == 0) {
+
             return 1;
         } else{
             return 0;
         }
     }
     else{
-        if(((dama->mat[a.i-1][a.j+1]->id == e+2 || dama->mat[a.i-1][a.j+1]->id == e+4) && dama->mat[a.i-2][a.j+2]->id == 0)||
-        ((dama->mat[a.i-1][a.j-1]->id == e+2 || dama->mat[a.i-1][a.j-1]->id == e+4) && dama->mat[a.i-2][a.j-2]->id == 0)) {
+        if(((dama->mat[a.i-1][a.j+1]->id == e+2 || dama->mat[a.i-1][a.j+1]->id == e+4)
+            && dama->mat[a.i-2][a.j+2]->id == 0)||
+            ((dama->mat[a.i-1][a.j-1]->id == e+2 || dama->mat[a.i-1][a.j-1]->id == e+4)
+            && dama->mat[a.i-2][a.j-2]->id == 0)) {
+
             return 1;
         }
         else {
@@ -354,22 +360,26 @@ int black_capture_check(tgame *dama, point a, int turn){
     if(a.i > (dama->rows-3)){
         return 0;
     } else if(a.j==0 || a.j==1){
-        if((dama->mat[a.i+1][a.j+1]->id == e+2 || dama->mat[a.i+1][a.j+1]->id == e+4) && dama->mat[a.i+2][a.j+2]->id == 0) {
+        if((dama->mat[a.i+1][a.j+1]->id == e+2 || dama->mat[a.i+1][a.j+1]->id == e+4)
+            && dama->mat[a.i+2][a.j+2]->id == 0) {
             return 1;
         }else {
             return 0;
         }
     }
     else if (a.j==dama->cols-1 || a.j==dama->cols-2){
-        if((dama->mat[a.i+1][a.j-1]->id == e+2 || dama->mat[a.i+1][a.j-1]->id == e+4) && dama->mat[a.i+2][a.j-2]->id == 0){
+        if((dama->mat[a.i+1][a.j-1]->id == e+2 || dama->mat[a.i+1][a.j-1]->id == e+4)
+            && dama->mat[a.i+2][a.j-2]->id == 0){
             return 1;
         }else {
             return 0;
         }
     }
     else{
-        if(((dama->mat[a.i+1][a.j+1]->id == e+2 || dama->mat[a.i+1][a.j+1]->id == e+4) && dama->mat[a.i+2][a.j+2]->id == 0)||
-        ((dama->mat[a.i+1][a.j-1]->id == e+2 || dama->mat[a.i+1][a.j-1]->id == e+4) && dama->mat[a.i+2][a.j-2]->id == 0)) {
+        if(((dama->mat[a.i+1][a.j+1]->id == e+2 || dama->mat[a.i+1][a.j+1]->id == e+4)
+            && dama->mat[a.i+2][a.j+2]->id == 0)||
+            ((dama->mat[a.i+1][a.j-1]->id == e+2 || dama->mat[a.i+1][a.j-1]->id == e+4)
+            && dama->mat[a.i+2][a.j-2]->id == 0)) {
             return 1;
         }else {
             return 0;
@@ -439,20 +449,25 @@ int legal_choice(tgame *dama, int turn, point a){
 
     if(dama->mat[a.i][a.j]->id== turn+2 || dama->mat[a.i][a.j]->id== turn+4){
         if (player_can_capture(dama,turn)){
+
             if(is_promoted (dama,a,turn)){
+
                 if (dama_capture_check(dama, a, turn)) {
                     choice = 8;
                 }else {
                     choice = 11;
                 }
             }else{
+
                 if(turn == 0){
+
                     if(white_capture_check(dama, a, turn)){
                         choice = 8;
                     }else {
                         choice = 11;
                     }
                 }else{
+
                     if(black_capture_check(dama, a, turn)) {
                         choice = 8;
                     }else {
@@ -462,12 +477,14 @@ int legal_choice(tgame *dama, int turn, point a){
             }
         }
         else if(is_promoted (dama,a,turn)){
+
             if(dama_move_check(dama, a)) {
                 choice = 9;
             }else {
                 choice = 10;
             }
         }else{
+
             if ((turn == 0 && white_move_check(dama, a)) || (turn == 0 && white_move_check(dama, a))) {
                 choice = 9;
             }else{
@@ -988,6 +1005,7 @@ int main_menu(){
             printf("\n");
             return input;
     }
+
 }
 
 int decision_menu() {
