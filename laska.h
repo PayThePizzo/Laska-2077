@@ -11,8 +11,10 @@
 
 /** \mainpage Laska
  *
- *  This library implements the Mini-Laska Project called "Laska-2077"
+ *  @file laska.h
  *  @authors Gianmaria Pizzo & Aleksandra Gjorgievska
+ *  @brief This library implements the Mini-Laska Project called "Laska-2077"
+ *  @date 17/01/2020
  */
 
 /**
