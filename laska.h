@@ -122,13 +122,6 @@ void freegame(tgame *result, int rows, int cols);
  */
 void free_choices_list(point_list * l);
 
-
-/**
- *
- * @return
- */
-int coin_toss();
-
 /**
  * Read a character from the keyboard. In case the letter is not correct, the function is repeated until a valid letter is typed.
  *
@@ -386,7 +379,17 @@ void error(tgame *dama, int rows, int cols,int turn, int code_error);
  */
 int game(tgame *dama, int rows, int cols, int play_mode);
 
+/**
+ *
+ * @return
+ */
+int coin_toss();
 
+/**
+ *
+ * @return
+ */
+int check_answer();
 
 /**
  *

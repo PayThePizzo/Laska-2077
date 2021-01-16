@@ -165,14 +165,13 @@ int check_number(int dim){
 }
 
 void print(tgame dama, int rows , int cols){
-    int i = 0, j = 0, z = 0;
-    int empty = 0;
+    int i = 0, j = 0, z = 0, empty = 0;
     boxpawn **t;
 
     printf("%43s","LASKA GAME\n");
     printf("\t");
 
-    for (int i = 0; i < rows; ++i) {
+    for(i = 0; i < rows; ++i) {
         printf(" %c\t",65+i);
     }
 
@@ -781,9 +780,9 @@ int game(tgame *dama, int rows, int cols, int play_mode){
             do{
                 print (*dama, rows, cols);
                 if (turn==0) {
-                    strcpy(color, "white");
+                    strcpy(color, "White");
                 }else {
-                    strcpy(color,"black");
+                    strcpy(color,"Black");
                 }
 
                 printf("\nIt's %s turn\n\n", color);
@@ -846,8 +845,85 @@ int game(tgame *dama, int rows, int cols, int play_mode){
     return 10;
 }
 
-void choose_menu(){
+int coin_toss(){
+    double n;
+    int i;
 
+    for(i = 0; i<100; i++){
+        n = ((double)rand() / (RAND_MAX));
+    }
+
+    if(n>= 0.5){
+        n = 1;
+    }else{
+        n = 0;
+    }
+
+    return n;
+}
+
+int check_answer(){
+    int answer = 0, cond = 1;
+    char decision[3];
+
+    while (cond){
+        scanf("%s", decision);
+        if (decision[0] == 'y' && decision [1] == 'e' && decision[2] == 's') {
+            printf("\n");
+            answer = 1;
+            cond = 0;
+
+        } else if (decision[0] == 'n' && decision[1]== 'o') {
+            answer = 0;
+            cond = 0;
+        }
+    }
+
+    return answer;
+}
+
+void choose_menu(){
+    int cond = 1, input = -1, sup = -1;
+
+    printf("\n");
+    printf("You on the left will be Player-1 and you on the right will lose.\n");
+    printf("Sorry, I'm a jokester. You, on the right, will be Player-2.\n");
+    printf("\n");
+    printf("You can either toss a coin (type: 0) or decide for yourselves (type: 1), just let me know");
+    printf("\n");
+    printf("\n");
+
+    while(cond){
+        scanf("%d", &input);
+
+        if(input == 1){
+            printf("Good job, less work for my algorithm. YAYYY\n");
+            printf("Remember: White starts first.\n");
+            cond = 0;
+        }else if (input == 0){
+            printf("Oh no, I don't have any spare change on me\n");
+            printf("\n");
+            printf("Luckily for you I had a bitcoin left. We can toss this one, but don't lose it pls\n");
+            printf("As now, it is worth over 40k $\n");
+            printf("\n");
+            printf("Now, here it comes!\n");
+            printf("\n");
+            sup = coin_toss();
+
+            if(sup == 1){
+                printf("\n");
+                printf("Player-1 you will be using the white pawns.\n");
+                printf("Player-2 you will move after he is done.\n");
+                printf("\n");
+            }else if (sup == 0){
+                printf("\n");
+                printf("Player-2 you will be using the white pawns.\n");
+                printf("Player-1 you will move after he is done.\n");
+                printf("\n");
+            }
+            cond = 0;
+        }
+    }
 }
 
 int main_menu(){
@@ -919,12 +995,11 @@ int decision_menu() {
     char decision[3];
 
     printf("Are you ready to play?(yes/no)\n");
+    printf("\n");
 
     while (cond){
         scanf("%s", decision);
         if (decision[0] == 'y' && decision [1] == 'e' && decision[2] == 's') {
-            printf("\n");
-            printf("\n");
             printf("Very Well, let's go on\n");
             printf("\n");
             res = 1;
