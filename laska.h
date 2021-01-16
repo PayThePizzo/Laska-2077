@@ -66,7 +66,6 @@ typedef struct boxpawn {
 
 /**
  *
- *
  * @struct Laska board
  */
 typedef struct dama{

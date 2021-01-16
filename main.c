@@ -19,7 +19,11 @@ int main() {
                 printf("\n");
                 winner = game(dama, dama->rows, dama->cols,2);
                 result_menu(winner);
-                goodbye();
+
+                if(winner != 10){
+                    goodbye();
+                }
+
             case 1:
                 // player vs player
                 printf("\n");
@@ -29,7 +33,11 @@ int main() {
                 printf("\n");
                 winner = game(dama, dama->rows, dama->cols,2);
                 result_menu(winner);
-                goodbye();
+
+                if(winner != 10){
+                    goodbye();
+                }
+
             case 2:
                 // pc vs player
                 printf("\n");
@@ -37,13 +45,18 @@ int main() {
                 printf("\n");
                 winner = game(dama, dama->rows, dama->cols,3);
                 result_menu(winner);
-                goodbye();
+
+                if(winner != 10){
+                    goodbye();
+                }
+
             case 3:
                 // pc vs pc
                 printf("\n");
                 printf("Keep the eyes on the ball, or at least try to!\n");
                 printf("Shall they start?(yes/no)\n");
                 sup = check_answer();
+
                 if(sup){
                     winner = game(dama, dama->rows, dama->cols,4);
                     result_menu(winner);
@@ -60,13 +73,6 @@ int main() {
 
 
 /*  What is left to implement ?
- *
- *  - Funzionalita' di Quit in qualsiasi momento
- *  - Funzionalita' di Give Up in qualsiasi momento
  *  - Reset Game ()
- *  - Passa il turno
- *  - Undo Move
- *  -
  *
- *  REFACTOR CODICE
  */

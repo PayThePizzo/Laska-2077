@@ -137,6 +137,14 @@ int convert(int dim){
         else if(a>='a' && a<=('a'+dim-1)) {
             a -= 97;
             cond = 0;
+        }else if(a == 'x' || a == 'X'){
+            printf("Quitting session.\n");
+            a = 88;
+            cond = 0;
+        }else if(a == 'k' || a == 'K'){
+            printf("Giving Up\n");
+            a = 75;
+            cond = 0;
         }
         else{
             printf("The selected box doesn't exist. Please select a letter from %c to %c\n", 65, 65+dim-1);
@@ -768,7 +776,7 @@ void error(tgame *dama, int rows, int cols,int turn, int code_error){
     }else if(code_error == 10){
         printf("The pawn you choosed can not be moved\n");
     }else if(code_error == 11){
-        printf("Unfortunately, you can't choose this pawn because you care forced to capture foe's pawns, so you have to choose an other pawn.\nYou can move only the pawn inside one of this boxes:\n");
+        printf("Unfortunately, you can't choose this pawn because you are forced to capture foe's pawns, so you have to choose an other pawn.\nYou can move only the pawn inside one of this boxes:\n");
         l = avaiable_choices(dama, rows, cols, turn);
         point_a = l->list;
 
@@ -806,12 +814,25 @@ int game(tgame *dama, int rows, int cols, int play_mode){
                 printf("Write the start and the destination coordinate without spaces, for example a5b4\n");
 
                 a.j = convert(dama->cols);
+                /* quitting */
+                if(a.j == 88){
+                    return 10;
+                }else if(a.j == 75){
+                    return enemy(turn);
+                }
                 a.i = check_number(dama->cols);
                 (a.i) --;
 
                 code_error = legal_choice(dama, turn, a);
 
                 b.j = convert(dama->rows);
+                /* quitting */
+                if(a.j == 88){
+                    return 10;
+                } else if(b.j == 75){
+                    return enemy(turn);
+                }
+
                 b.i = check_number(dama->rows);
                 (b.i) --;
 
@@ -961,7 +982,7 @@ int main_menu(){
     printf("\n");
     printf("\n");
     printf("\n");
-    printf("You can Quit or Give Up at any time by typing 'x', unless two PCs are playing.\n");
+    printf("You can Quit at any time by typing (type: x) or give up (type: k), unless two PCs are playing.\n");
     printf("Yeah, they are super-Fast\n");
     printf("\n");
     printf("Let's hear it then, have you made up your mind? Type the code of the game to play");
@@ -975,36 +996,36 @@ int main_menu(){
         }
     }while(cond);
 
-    switch (input) {
-        case 0:
-            printf("You chose: Single Player");
-            printf("\n");
-            printf("Man, if I were you, I'd make some new friends...");
-            printf("\n");
-            printf("\n");
-            return input;
-        case 1:
-            printf("You chose: Player vs Player");
-            printf("\n");
-            printf("Finally, you got some friends to play with!");
-            printf("\n");
-            printf("\n");
-            return input;
-        case 2:
-            printf("You chose: Player vs Pc");
-            printf("\n");
-            printf("I'm impressed you managed to lose your friends that fast, you really are a disaster at social life");
-            printf("\n");
-            printf("\n");
-            return input;
-        case 3:
-            printf("You chose: Pc vs Pc");
-            printf("\n");
-            printf("I know you might not care, but watching two computers play against each other... is pretty lame");
-            printf("\n");
-            printf("\n");
-            return input;
+    if(input == 0) {
+        printf("You chose: Single Player");
+        printf("\n");
+        printf("Man, if I were you, I'd make some new friends...");
+        printf("\n");
+        printf("\n");
+        return input;
+    }else if (input == 1) {
+        printf("You chose: Player vs Player");
+        printf("\n");
+        printf("Finally, you got some friends to play with!");
+        printf("\n");
+        printf("\n");
+        return input;
+    }else if (input == 2) {
+        printf("You chose: Player vs Pc");
+        printf("\n");
+        printf("I'm impressed you managed to lose your friends that fast, you really are a disaster at social life");
+        printf("\n");
+        printf("\n");
+        return input;
+    }else if (input == 3) {
+        printf("You chose: Pc vs Pc");
+        printf("\n");
+        printf("I know you might not care, but watching two computers play against each other... is pretty lame");
+        printf("\n");
+        printf("\n");
+        return input;
     }
+
 
 }
 
@@ -1033,18 +1054,19 @@ int decision_menu() {
     return res;
 }
 
-void result_menu(int winner){
+void result_menu(int winner) {
 
-    if(winner == 0){
+    if (winner == 0) {
         printf("\n");
         printf("White gamer is the winner!");
         printf("\n");
-    }else if (winner == 1) {
+    } else if (winner == 1) {
         printf("\n");
         printf("Black player is the winner!");
         printf("\n");
-    } else{
-        printf("No Pain, No Gain.");
+    } else if (winner == 10) {
+        printf("\n");
+        printf("Thanks for trying.");
         printf("\n");
     }
 }
