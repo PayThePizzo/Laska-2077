@@ -54,8 +54,6 @@ int main() {
     freegame(dama,dama->rows,dama->cols);
     credits();
 
-
-
     return 0;
 }
 
