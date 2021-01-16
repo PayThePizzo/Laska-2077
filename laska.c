@@ -18,15 +18,15 @@ tgame * create(int cols,int rows){
     dama=(tgame*)malloc(sizeof(tgame));                       
     assert(dama!=NULL);
 
-/*save dimensions*/
+/*saves dimensions*/
     dama->rows=rows;                                          
     dama->cols=cols;
 
-/* allocate vector rows pointers */
+/* allocates vector rows pointers */
     dama->mat=(boxpawn***)malloc(sizeof(boxpawn**)*rows);     
     assert(dama->mat!=NULL);
 
-/*allocate pawns pointers and boxes*/
+/*allocates pawns pointers and boxes*/
     for(i=0;i<rows;i++){
 
         dama->mat[i]=(boxpawn**)malloc(sizeof(boxpawn*)*cols);
@@ -69,7 +69,7 @@ void initialize(tgame * dama, int cols, int rows){
             }
         }
     }
-/*pawn placement*/
+    /*pawn placement*/
     for (i = 0; i <rows ; i++) {
         for (j = 0; j < cols; j++) {
             if (dama->mat[i][j]->id == 0) {
@@ -79,7 +79,6 @@ void initialize(tgame * dama, int cols, int rows){
                     dama->mat[i][j]->id = 3;
                 }
             }
-
         }
     }
 }
@@ -89,6 +88,7 @@ void freegame(tgame *dama, int rows, int cols) {
 
     for(i = 0; i<rows; i++){
         for (j=0; j<cols; j++){
+
             if(dama->mat[i][j]->next==NULL) {
                 free(dama->mat[i][j]);
             }
@@ -102,6 +102,7 @@ void freegame(tgame *dama, int rows, int cols) {
                 free(dama->mat[i][j]); 
             }
         }
+
         free(dama->mat[i]);
     }
 
@@ -435,17 +436,11 @@ int player_can_move(tgame *dama, int turn){
             p.j = j;
 
             if(dama->mat[i][j]->id == turn+2 ){
-                if(turn==0 && white_move_check(dama, p)) {
+                if((turn==0 && white_move_check(dama, p)) || (turn==1 && black_move_check(dama, p))) {
                     flag = 1;
                 }
-                else if(turn==1 && black_move_check(dama, p)) {
-                    flag = 1;
-                }
-            }
-            else if(dama->mat[i][j]->id == turn+4 ){
-                if(dama_move_check(dama, p)) {
-                    flag = 1;
-                }
+            }else if((dama->mat[i][j]->id == turn+4) && (dama_move_check(dama, p))){
+                flag = 1;
             }
         }
     }
@@ -593,6 +588,7 @@ void move (tgame *dama, point a, point b){
 }
 
 int enemy(int turn){
+
     if(turn == 0)
         return 1;
     else{
@@ -626,7 +622,7 @@ int victory(tgame *dama, int rows, int cols, int turn, int moves){
 
     if(!player_can_capture(dama,enemy(turn)) && !player_can_move(dama,enemy(turn))){
         print (*dama, rows, cols);
-        printf("total moves = %d\n", moves);
+        printf("Total moves = %d\n", moves);
         return turn+1;
     }
     else{
@@ -706,7 +702,7 @@ point_list * avaiable_choices(tgame *dama, int rows, int cols, int turn){
 }
 
 void computer_moves(tgame *dama, int rows, int cols, int turn){
-    int flag = 0, i = 0 ,j = 0, size=0, pos=0;
+    int flag = 0, i = 0 , j = 0, size=0, pos=0;
     point_list * l;
     point_cell * point_a ;
     point_cell * pos_point_a;
@@ -795,10 +791,6 @@ int game(tgame *dama, int rows, int cols, int play_mode){
     int turn = 0, moves = 0, code_error;
     char color [6];
 
-    /*
-    turn = color_menu();
-    */
-
     while(!victory(dama, rows, cols, turn, moves)){
         if(play_mode==2 || play_mode==3){
 
@@ -812,21 +804,26 @@ int game(tgame *dama, int rows, int cols, int play_mode){
 
                 printf("\nIt's %s turn\n\n", color);
                 printf("Write the start and the destination coordinate without spaces, for example a5b4\n");
+                printf("\n");
+                printf("\n");
 
                 a.j = convert(dama->cols);
-                /* quitting */
+
+                /* quitting or giving up */
                 if(a.j == 88){
                     return 10;
                 }else if(a.j == 75){
                     return enemy(turn);
                 }
+
                 a.i = check_number(dama->cols);
                 (a.i) --;
 
                 code_error = legal_choice(dama, turn, a);
 
                 b.j = convert(dama->rows);
-                /* quitting */
+
+                /* quitting or giving up*/
                 if(a.j == 88){
                     return 10;
                 } else if(b.j == 75){
@@ -951,12 +948,12 @@ void choose_menu(){
             if(sup == 1){
                 printf("\n");
                 printf("Player-1 you will be using the white pawns.\n");
-                printf("Player-2 you will move after he is done.\n");
+                printf("Player-2 you will move after they are done.\n");
                 printf("\n");
             }else if (sup == 0){
                 printf("\n");
                 printf("Player-2 you will be using the white pawns.\n");
-                printf("Player-1 you will move after he is done.\n");
+                printf("Player-1 you will move after they are done.\n");
                 printf("\n");
             }
             cond = 0;
