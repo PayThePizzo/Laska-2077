@@ -7,40 +7,28 @@
 #include <assert.h>
 #include <time.h>
 #include <math.h>
-#include <string.h>
+
 
 /** \mainpage Laska
  *
- *  This library implements the Mini-Laska Project of Gianmaria Pizzo and Aleksandra Gjorgievska
- *
+ *  This library implements the Mini-Laska Project called "Laska-2077"
+ *  @authors Gianmaria Pizzo & Aleksandra Gjorgievska
  */
 
 /**
- *
  * @struct Laska board coordinates
  */
 typedef struct point{
-    int j, i;
+    int j; /**< the j coordinate */
+    int i; /**< the i coordinate */
 } point;
 
-/*
- * Id
- * 0-> white box
- * 1-> black box
- * 2-> white pawn
- * 3-> black pawn
- * 4-> white dama
- * 5-> black dama
-*/
-
 /**
- * This struct rappresents one element of a list of points.
- *
- * @struct point node
+ * @struct represents one element of a point list.
  */
 typedef struct point_cell{
-    point p;
-    struct point_cell * next;
+    point p;    /**< the coordinates of the cell*/
+    struct point_cell * next;   /**< pointer to the very next cell*/
 } point_cell;
 
 /**
@@ -49,33 +37,40 @@ typedef struct point_cell{
  * @struct list of points
  */
 typedef struct point_list{
-    int dim;
-    point_cell * list;
+    int dim;    /**< the dimension*/
+    point_cell * list; /**< a list of cells*/
 } point_list;
 
 /**
  * If the cell is empty it represents the color, otherwise it represents the pawn (obviously the cell is white).
  *
+ * @code
+ * Id:
+ *
+ * 0-> white box
+ * 1-> black box
+ * 2-> white pawn
+ * 3-> black pawn
+ * 4-> white dama
+ * 5-> black dama
+ * @endcode
+ *
  * @struct Box of Laska board
  */
 typedef struct boxpawn {
-    int id;
-    struct boxpawn *next;
+    int id;     /**< the color*/
+    struct boxpawn *next;   /**< pointer to the next boxpawn*/
 } boxpawn;
-
 
 /**
  *
  * @struct Laska board
  */
 typedef struct dama{
-    int cols;
-    int rows;
-    boxpawn ***mat;
+    int cols;   /**< the columns*/
+    int rows;   /**< the rows*/
+    boxpawn ***mat;     /**< the main structure*/
 } tgame;
-
-
-
 
 /**
  * Creates a new Laska Board.
@@ -88,8 +83,6 @@ tgame* create(int cols,int rows);
 
 /**
  * Creates a list of the possible pawn you can choose to move.
- *
- * 
  * 
  * @return the list and the size of the new points list
  */
@@ -115,7 +108,6 @@ void freegame(tgame *result, int rows, int cols);
 
 /**
  * Frees the list of points.
- *
  * 
  * @param pointer to the head of the list to free
  */
@@ -146,8 +138,6 @@ int check_number(int dim);
  */
 void print(tgame dama, int rows , int cols);
 
-
-
 /**
  * Puts the pawn given in input at the end of the list of pieces of the position given in input.
  *
@@ -164,7 +154,8 @@ void add(tgame *dama, int pawn, int r, int c);
  * @param dama Laska board
  * @param r the row number of the box in which to place the pawn on top of the stack
  * @param c the column number of the box in which to place the pawn on top of the stack
- * @return the top pawn in position [r][c]
+ *
+ * @returns the top pawn in position [r][c]
  */
 int remove_pawn(tgame *dama, int r, int c);
 
@@ -173,7 +164,8 @@ int remove_pawn(tgame *dama, int r, int c);
  *
  * @param dama Laska board
  * @param a the row and column coordinates of the selected box
- * @return returns 1 if it has the possibility to move, 0 otherwise
+ *
+ * @returns returns 1 if it has the possibility to move, 0 otherwise
  */
 int white_move_check(tgame *dama, point a);
 
@@ -182,6 +174,7 @@ int white_move_check(tgame *dama, point a);
  *
  * @param dama Laska board
  * @param a the row and column coordinates of the selected box
+ *
  * @return returns 1 if it has the possibility to move, 0 otherwise
  */
 int black_move_check(tgame *dama, point a);
@@ -191,6 +184,7 @@ int black_move_check(tgame *dama, point a);
  *
  * @param dama Laska board
  * @param a the row and column coordinates of the selected box
+ *
  * @return returns 1 if it has the possibility to move, 0 otherwise
  */
 int dama_move_check(tgame *dama, point a);
@@ -202,6 +196,7 @@ int dama_move_check(tgame *dama, point a);
  * @param dama Laska board
  * @param a the row and column coordinates of the selected box
  * @param turn current game turn
+ *
  * @return returns 1 if it has the possibility to capture a foe, 0 otherwise
  */
 int white_capture_check(tgame *dama, point a, int turn);
@@ -213,6 +208,7 @@ int white_capture_check(tgame *dama, point a, int turn);
  * @param dama Laska board
  * @param a the row and column coordinates of the selected box
  * @param turn current game turn
+ *
  * @return returns 1 if it has the possibility to capture a foe, 0 otherwise
  */
 int black_capture_check(tgame *dama, point a, int turn);
@@ -224,6 +220,7 @@ int black_capture_check(tgame *dama, point a, int turn);
  * @param dama Laska board
  * @param a the row and column coordinates of the selected box
  * @param turn current game turn
+ *
  * @return returns 1 if it has the possibility to capture a foe, 0 otherwise
  */
 int dama_capture_check(tgame *dama, point a, int turn);
@@ -233,6 +230,7 @@ int dama_capture_check(tgame *dama, point a, int turn);
  *
  * @param dama Laska board
  * @param turn current game turn
+ *
  * @return returns 1 if the player can capture in the current turn, 0 otherwise
  */
 int player_can_capture(tgame *dama,int turn);
@@ -242,6 +240,7 @@ int player_can_capture(tgame *dama,int turn);
  *
  * @param dama Laska board
  * @param turn current game turn
+ *
  * @return returns 1 if the player can move at least 1 pawn, 0 otherwise
  */
 int player_can_move(tgame *dama, int turn);
@@ -253,7 +252,10 @@ int player_can_move(tgame *dama, int turn);
  * @param dama Laska board
  * @param turn current game turn
  * @param a the row and column coordinates of the selected box
- * @return  7 if you can't select that box because i's not your pawn, 8 if the player can choose that box but now you must capture foe's pawn, 9 if you can move, 10 if the selected pawn is not free to move ,11 if you are forced to capture so you have to choose an other pawn
+ *
+ * @return  7 if you can't select that box because i's not your pawn, 8 if the player can choose that box but now you
+ * must capture foe's pawn, 9 if you can move, 10 if the selected pawn is not free to move, 11 if you are forced to
+ * capture so you have to choose an other pawn
  */
 int legal_choice(tgame *dama, int turn, point a);
 
@@ -264,11 +266,19 @@ int legal_choice(tgame *dama, int turn, point a);
  * @param turn current game turn
  * @param a the row and column coordinates of the origin box
  * @param b the row and column coordinates of the destination box
- * @param have_to_capture the parameter returned by legal_chice, if the value is 8, it means that the choosed pawn is correct but now the player is forced to capture
- * @return 0 if it doesn't violate the rules, code_error(1) if you are forced to capture foe's pawn but you are moving somewhere else,
- *         code_error(2) if dama is trying to capture in a wrong way, code_error(3) if a pawn is trying to capture in a wrong way,
- *         code_error(4) if dama is not moving on one of the 4 free nearby diagonals, code_error(5) id a pawn is not moving on one of the 2 forward diagonals,
- *         code_error(6) it's not possible to move in boxes that aren't white and empty
+ * @param have_to_capture the parameter returned by legal_chice, if the value is 8, it means that the choosed pawn
+ * is correct but now the player is forced to capture
+ *
+ * @return
+ * @code
+ *         0 if it doesn't violate the rules.
+ *         code_error(1) if you are forced to capture foe's pawn but you are moving somewhere else.
+ *         code_error(2) if dama is trying to capture in a wrong way.
+ *         code_error(3) if a pawn is trying to capture in a wrong way.
+ *         code_error(4) if dama is not moving on one of the 4 free nearby diagonals.
+ *         code_error(5) id a pawn is not moving on one of the 2 forward diagonals.
+ *         code_error(6) it's not possible to move in boxes that aren't white and empty.
+ * @endcode
  */
 int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture);
 
@@ -277,6 +287,7 @@ int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture);
  *
  * @param a the row and column coordinates of the origin box
  * @param b the row and column coordinates of the destination box
+ *
  * @return the row and column coordinates of the middle box
  */
 point findmiddle(point a, point b);
@@ -294,6 +305,7 @@ void move (tgame *dama, point a, point b);
  * Returns the opponent's id code, it is used to change turns or to find opponent's pieces.
  *
  * @param turn current game turn
+ *
  * @return if it takes white as input it returns black, if it takes black input it returns white
  */
 int enemy(int turn);
@@ -304,6 +316,7 @@ int enemy(int turn);
  * @param dama Laska board
  * @param a the row and column coordinates of the selected box
  * @param turn current game turn
+ *
  * @return returns 1 if the selected box contains a promoted pawn, 0 otherwise.
  */
 int is_promoted (tgame *dama, point a, int turn);
@@ -324,6 +337,7 @@ void promotion(tgame *dama, int turn);
  * @param cols columns size
  * @param turn current game turn
  * @param moves current moves to print
+ *
  * @return 0 if no one has won yet, 1 if white has won, 2 if black has won
  */
 int victory(tgame *dama, int rows, int cols, int turn, int moves);
@@ -342,6 +356,7 @@ void add_at_the_end(point_list *l, point p);
  * @param dama laska board
  * @param cols columns size
  * @param rows rows size
+ *
  * @return a pointer to the structure of the list of points
  */
 point_list * avaiable_choices(tgame *dama, int rows, int cols, int turn);
@@ -374,51 +389,50 @@ void error(tgame *dama, int rows, int cols,int turn, int code_error);
  * @param rows rows size
  * @param cols columns size
  * @param play_mode 2 if 2 players, 3 if player vs pc, 4 if pc vs pc
+ *
  * @return 0 if white won, 1 if black won
  */
 int game(tgame *dama, int rows, int cols, int play_mode);
 
 /**
+ * Function which returns a random toin coss
  *
- * @return
+ * @returns 1 or 0 randomly
  */
 int coin_toss();
 
 /**
+ * Function that checks the input and returns an integer
  *
- * @return
+ * @return 1 if the input is "yes", and 0 if the input is "no"
  */
 int check_answer();
 
 /**
- *
+ * Intermediate menu that helps deciding which player starts first
  */
 void choose_menu();
 
 /**
- *
+ * The main menu, which introduces all the modalities our guest(s) can choose from
  *
  * @return
  */
 int main_menu();
 
 /**
- *
+ * Intermediate menu that confirms the willingness to play/leave the game
  *
  * @return
  */
 int decision_menu();
 
 /**
- *
+ * Menu that displays the winner of the game or the message "thanks for trying"
  *
  * @param winner
- *
  */
 void result_menu(int winner);
-
-
-
 
 /**
  * Greetings menu for player. It is used to show some basic rules to the player if they want to.
