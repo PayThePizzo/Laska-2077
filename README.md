@@ -79,8 +79,7 @@ These are some kinds of error messages you could get while playing:
 ---
 1. Easter Eggs: Laska-bot and Narrator like to make your day worse. But HE is coming to help.
     + Don't get upset, haters gonna hate.
-    + Meet K.R. straight from the year 2077.
-     - Who does not love him?
+    + Meet K.R. straight from the year 2077. Who does not love him?
 
 2. Revise the rules
     + Laska bot is here to help! Look up the rules so you can play this wonderful game.
