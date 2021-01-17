@@ -14,26 +14,28 @@ Gianmaria Pizzo, Aleksandra Gjorgievska & Riccardo Peresin.
 ### Prerequisites
 ---
 + Mac Os & Linux:
-    - Unix Terminal
+    - Unix-like Terminal
     - Gcc compiler
 
 Or
 
 + Windows:
-    - Visual Studio
-    - CLion
+    - Any IDE that supports gcc compiler like Visual Studio or CLion
+    - Any Gcc compiler (We recommend using Visual Studio's)
 ---
 
 
 ### Installing
+---
+
 Simply download the source code from this page and run it through the following commands:
 
 ```
-gcc laska.c 
+gcc main.c 
 ./a.out
 ```
 
-If you have Windows, after installing these two softwares you just need to run the main.c in release mode.
+If you have Windows, after installing a software and a gcc compiler, you just need to run the main.c in release mode.
 You can do this both in CLion or Visual Studio.
 
 
@@ -42,8 +44,10 @@ And play the game to show the machine, or your opponent, who's the best.
 ```
 until finished
 ```
+---
 
 ### No clue how to play the game? We are here to help!
+---
 
 The rules for this game are to be found inside the game and many reminders are thrown whenever a player violates them.
 These are some kinds of error messages you could get while playing:
@@ -71,7 +75,7 @@ These are some kinds of error messages you could get while playing:
 
 "Error move function"
 ```
-
+---
 
 ## Features
 ---
