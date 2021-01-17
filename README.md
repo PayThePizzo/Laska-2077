@@ -37,7 +37,7 @@ gcc main.c
 ```
 
 If you have Windows, after installing a software and a gcc compiler, you just need to import the files and run the main.c in release mode.
-You can also get them from VCS: 
+You can also get them from VCS: https://github.com/PayThePizzo/Laska-2077.git
 You can do this both in CLion or Visual Studio.
 
 
