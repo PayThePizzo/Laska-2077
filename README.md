@@ -1,13 +1,10 @@
 # Laska 2077
 
 This project was made for our Introduction to Programming course. 
-
 It represents a digital mini-version of the famous tablegame, Lasca.
 Plus, it is inspired from THAT new futuristic game featuring Keanu Reeves.
 
 Check out the official site of the game, here: http://www.lasca.org/
-
-The rules for this game are to be found inside the game and many reminders are thrown whenever a player violates them.
 
 
 ### Credits
@@ -43,6 +40,9 @@ And play the game to show the machine, or your opponent, who's the best.
 until finished
 ```
 
+### No clue how to play the game? We are here to help!
+
+The rules for this game are to be found inside the game and many reminders are thrown whenever a player violates them.
 These are some kinds of error messages you could get while playing:
 
 ```
@@ -67,8 +67,6 @@ These are some kinds of error messages you could get while playing:
 "Unfortunately, you can't choose this pawn because you are forced to capture foe's pawns, so you have to choose an other pawn.You can move only the pawn inside one of this boxes:"
 
 "Error move function"
-
-
 ```
 
 
@@ -96,18 +94,36 @@ These are some kinds of error messages you could get while playing:
     + Toss a coin to decide who's gonna play first!
     + Moves counter
     + Whose turn is this?
+    + Active monitoring of the rules
     + Quit
     + Give Up
     + Restart the game
 ---
 
 
-### Standard
+### Standard & Style
 
 We follwed ANSI C 90 Standard rules to build this project.
+The code style is snake_case type.
 
 ```
-Give an example
+int foo_aux(int sup){
+
+ ** Variable Declaration/ Memory allocation **
+ int aux_temp;
+ double a = 0.0;
+
+ ** Statements/ Body of function **
+ aux = sup;
+
+ if(aux){
+    a = 0.1;
+ }
+ aux = (int)a;
+ 
+ ** Return statemente/ Memory deallocation **
+ return aux_temp;
+}
 ```
 
 
@@ -144,6 +160,7 @@ Esempio:
 * **Gianmaria** - *Front End Designer & Feature Creator* - [PayThePizzo](https://github.com/PayThePizzo)
 * **Aleksandra** - *Structure & Rules Handler* - [aleksandragjorgievska](https://github.com/aleksandragjorgievska)
 * **Riccardo** - *Group Member*
+
 
 ### License
 
