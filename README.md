@@ -151,7 +151,7 @@ Some messages may be shown multiple times, that is a "reward" for following the 
 
 ### Contributing
 
-We'd like to thank our professors Claudio Lucchese, Alvise Spano'  and out tutors Alberto Veneri and Antonio Emanuele Cina' for helping us during the creation of our project.
+We'd like to thank our professors Claudio Lucchese, Alvise Spano' and our tutors Alberto Veneri and Antonio Emanuele Cina' for helping us during the creation of our project.
 
 
 ### Versioning
