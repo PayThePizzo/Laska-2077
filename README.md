@@ -44,6 +44,8 @@ These are some kinds of error messages you could get while playing:
 ```
 "The selected box doesn't exist. Please select a letter from _ to _ ."
 
+"FORCING CAPTURE - Pieces must capture if in a position to do so."
+
 "The Dama (promoted pawn) may capture only in the 4 diagonals if the adjacet is a foe's pawn and the next on the diagonal is free."
 
 "The pawn may capture only in the 2 diagonals forward if the adjacet is a foe's pawn and the next on the diagonal is free."
@@ -59,13 +61,40 @@ These are some kinds of error messages you could get while playing:
 "The pawn you choosed can not be moved"
 
 "Unfortunately, you can't choose this pawn because you are forced to capture foe's pawns, so you have to choose an other pawn.You can move only the pawn inside one of this boxes:"
+
+"Error move function"
+
+
 ```
 
 
-** Features **
+## Features
 ---
-1. B4st4rd Easter Eggs: Laska-bot and Narrator like to make your day worse.
-    + Don't get upset
+1. Easter Eggs: Laska-bot and Narrator like to make your day worse. But HE is coming to help.
+    + Don't get upset, haters gonna hate.
+    + Meet K.R. straight from the year 2077.
+     - Who does not love him?
+
+2. Revise the rules
+    + Laska bot is here to help! Look up the rules so you can play this wonderful game.
+    + Not clear yet? visit the official website.
+
+3. 2-D? No problem, you can still see what is underneath the surface!
+    + As you capture players you can still see how tall your stack is.
+
+4. Many game modes available!
+    + Single Player
+    + Player vs Player
+    + Player vs Pc
+    + Pc vs Pc
+
+5. Extra features for lazy people
+    + Toss a coin to decide who's gonna play first!
+    + Moves counter
+    + Whose turn is this?
+    + Quit
+    + Give Up
+    + Restart the game
 ---
 
 
