@@ -67,7 +67,7 @@ $clean
     
 ![alt text](https://github.com/PayThePizzo/Laska-2077/blob/main/vcs.png?raw=true)
 
-2. Run the main.c in release mode.
+2. Run it in debug/release mode.
 
 3. Play the game to show the machine, or your opponent, who's the best.
 
