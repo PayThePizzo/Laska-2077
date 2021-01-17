@@ -1,7 +1,9 @@
 # Laska 2077
 
 This project was made for our Introduction to Programming course. 
-It represent the digital mini-version of the famous tablegame, Lasca. Plus it is inspired from THAT new futuristic game featuring Keanu Reeves.
+It represent the digital mini-version of the famous tablegame, Lasca. 
+Plus, it is inspired from THAT new futuristic game featuring Keanu Reeves.
+
 Check out the official site of the game, here: http://www.lasca.org/
 
 The rules for this game are to be found inside the game and many reminders are thrown whenever a player violates them.
