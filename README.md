@@ -62,11 +62,11 @@ These are some kinds of error messages you could get while playing:
 ```
 
 
-## Features
-
-+ 1. B4st4rd Easter Eggs: Laska-bot and Narrator like to make your day worse.
-- 1. Don't get upset
-
+** Features **
+---
+1. B4st4rd Easter Eggs: Laska-bot and Narrator like to make your day worse.
+    + Don't get upset
+---
 
 
 ### Break down into end to end tests
