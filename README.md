@@ -62,9 +62,14 @@ These are some kinds of error messages you could get while playing:
 ```
 
 
-## Running the tests
+## Features
 
-Explain how to run the automated tests for this system
++1
+-1 
+-2
+
++2
+
 
 ### Break down into end to end tests
 
