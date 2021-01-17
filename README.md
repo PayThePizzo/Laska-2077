@@ -139,7 +139,6 @@ The rules for this game are to be found inside the game and many reminders are t
 Here's a little insight of the welcome section:
 
 ![alt text](https://github.com/PayThePizzo/Laska-2077/blob/main/View.jpg?raw=true)
----
 
 
 ### Standard & Style
