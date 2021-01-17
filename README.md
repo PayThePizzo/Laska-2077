@@ -64,6 +64,8 @@ $clean
 
 1. Import the unzipped windows directory (through your IDE).
     + You can also get the files from VCS: https://github.com/PayThePizzo/Laska-2077.git
+    
+![alt text](https://github.com/PayThePizzo/Laska-2077/blob/main/vcs.png?raw=true)
 
 2. Run the main.c in release mode.
 
