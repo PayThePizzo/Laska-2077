@@ -17,41 +17,48 @@ Gianmaria Pizzo & Aleksandra Gjorgievska.
 ---
 + Mac Os & Linux:
     - Unix-like Terminal
-    - Gcc compiler
+    - Xcode tools and gcc compiler
 
 Or
 
 + Windows:
-    - Any IDE that supports gcc compiler like Visual Studio or CLion
-    - Any Gcc compiler (We recommend using Visual Studio's)
+    - Any IDE like CLion or Visual Studio
+    - Any gcc compiler (We recommend using Visual Studio's)
 ---
 
 
-### Installing
+## Installing
 
-Simply download the source code from this page and run it through the following commands in your unix terminal:
+### Mac & Linux
+
+1. Simply download the source code from this page and run it through the following commands in your unix terminal:
 
 ```
 gcc main.c 
 ./a.out
 ```
 
-If you have Windows, after installing a software and a gcc compiler, you just need to import the files and run the main.c in release mode.
-You can also get them from VCS: https://github.com/PayThePizzo/Laska-2077.git
+### Windows
 
-You can do this both in CLion or Visual Studio.
+1. Import the unzipped windows directory (through your IDE).
 
+You can also get the files from VCS: https://github.com/PayThePizzo/Laska-2077.git
 
-And play the game to show the machine, or your opponent, who's the best.
+2. Run the main.c in release mode.
+
+3. Play the game to show the machine, or your opponent, who's the best.
 
 ```
-White/Black player wins!
+White player wins!
+
+Black player wins!
 ```
 
 ### No clue how to play the game? We are here to help!
 ---
 
 The rules for this game are to be found inside the game and many reminders are thrown whenever a player violates them.
+    + check the official website for more details.
 These are some kinds of error messages you could get while playing:
 
 ```
