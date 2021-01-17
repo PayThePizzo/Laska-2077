@@ -41,7 +41,7 @@ You can do this both in CLion or Visual Studio.
 And play the game to show the machine, or your opponent, who's the best.
 
 ```
-until finished
+White/Black player wins!
 ```
 
 ### No clue how to play the game? We are here to help!
