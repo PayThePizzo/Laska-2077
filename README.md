@@ -87,7 +87,7 @@ These are some kinds of error messages you could get while playing:
     + Laska bot is here to help! Look up the rules so you can play this wonderful game.
     + Not clear yet? visit the official website.
 
-3. 2-D? No problem, you can still see what is underneath the surface!
+3. 2D? No problem, you can still see what is underneath the surface!
     + As you capture players you can still see how tall your stack is.
 
 4. Many game modes available!
@@ -178,3 +178,4 @@ It is not to be distributed for plagiarizing purposes or sold.
 
 * This was our first time coding together and my colleagues were amazing.
 * This project was made to respect the ANSI C 90 standards.
+---
