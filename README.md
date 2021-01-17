@@ -29,14 +29,15 @@ Or
 
 ### Installing
 
-Simply download the source code from this page and run it through the following commands:
+Simply download the source code from this page and run it through the following commands in your unix terminal:
 
 ```
 gcc main.c 
 ./a.out
 ```
 
-If you have Windows, after installing a software and a gcc compiler, you just need to run the main.c in release mode.
+If you have Windows, after installing a software and a gcc compiler, you just need to import the files and run the main.c in release mode.
+You can also get them from VCS: 
 You can do this both in CLion or Visual Studio.
 
 
