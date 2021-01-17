@@ -26,7 +26,6 @@ Or
 
 
 ### Installing
----
 
 Simply download the source code from this page and run it through the following commands:
 
@@ -44,7 +43,6 @@ And play the game to show the machine, or your opponent, who's the best.
 ```
 until finished
 ```
----
 
 ### No clue how to play the game? We are here to help!
 ---
@@ -75,7 +73,7 @@ These are some kinds of error messages you could get while playing:
 
 "Error move function"
 ```
----
+
 
 ## Features
 ---
