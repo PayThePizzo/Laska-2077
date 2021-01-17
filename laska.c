@@ -1,5 +1,12 @@
 #include "laska.h"
 
+/**
+ *  @file laska.c
+ *  @authors Gianmaria Pizzo & Aleksandra Gjorgievska
+ *  @brief This is the source code file of the Mini-Laska Project called "Laska-2077"
+ *  @date 17/01/2020
+ */
+
 tgame * create(int cols,int rows){
     tgame *dama;
     int i, j;
@@ -30,17 +37,6 @@ tgame * create(int cols,int rows){
     }
 
     return dama;
-}
-
-point_list * create_choices_list(){
-    point_list *l;
-
-    l = (point_list *) malloc(sizeof(point_list));
-    assert(l!=NULL);
-    l->list = NULL;
-    l->dim = 0;
-
-    return l;
 }
 
 void initialize(tgame * dama, int cols, int rows){
@@ -98,6 +94,17 @@ void freegame(tgame *dama, int rows, int cols) {
 
     free(dama->mat);
     free(dama);
+}
+
+point_list * create_choices_list(){
+    point_list *l;
+
+    l = (point_list *) malloc(sizeof(point_list));
+    assert(l!=NULL);
+    l->list = NULL;
+    l->dim = 0;
+
+    return l;
 }
 
 void free_choices_list(point_list * l){

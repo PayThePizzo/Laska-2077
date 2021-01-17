@@ -1,10 +1,17 @@
 #include <stdio.h>
 #include "laska.h"
 
+/**
+ *  @file main.c
+ *  @authors Gianmaria Pizzo & Aleksandra Gjorgievska
+ *  @brief This is the main file of the Mini-Laska Project called "Laska-2077"
+ *  @date 17/01/2020
+ */
+
 int main() {
     int winner, sup, cond = 1, answer, aux;
     tgame *dama;
-    srand(time(NULL));
+    srand(time(NULL));  /** < starting of the rand seed*/
 
     do {
         dama = create(7, 7);

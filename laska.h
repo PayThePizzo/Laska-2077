@@ -9,7 +9,7 @@
 #include <math.h>
 
 
-/** \mainpage Laska
+/** @mainpage Laska
  *
  *  @file laska.h
  *  @authors Gianmaria Pizzo & Aleksandra Gjorgievska
@@ -84,13 +84,6 @@ typedef struct dama{
 tgame* create(int cols,int rows);
 
 /**
- * Creates a list of the possible pawn you can choose to move.
- * 
- * @return the list and the size of the new points list
- */
-point_list * create_choices_list();
-
-/**
  * Initializes the colors of the boxes and places the pawns.
  *
  * @param dama laska board
@@ -107,6 +100,13 @@ void initialize(tgame * dama, int cols, int rows);
  * @param cols columns size
  */
 void freegame(tgame *result, int rows, int cols);
+
+/**
+ * Creates a list of the possible pawn you can choose to move.
+ *
+ * @return the list and the size of the new points list
+ */
+point_list * create_choices_list();
 
 /**
  * Frees the list of points.
@@ -390,9 +390,9 @@ void error(tgame *dama, int rows, int cols,int turn, int code_error);
  * @param dama Laska board
  * @param rows rows size
  * @param cols columns size
- * @param play_mode 2 if 2 players, 3 if player vs pc, 4 if pc vs pc
+ * @param play_mode 2 if player vs player, 3 if player vs pc, 4 if pc vs pc
  *
- * @return 0 if white won, 1 if black won
+ * @return 0 if white won, 1 if black won, 10 if someone left hte game
  */
 int game(tgame *dama, int rows, int cols, int play_mode);
 
