@@ -1,12 +1,13 @@
 # Laska 2077
 
-This project was made for our Introduction to Programming Course. It represent the digital mini-version of the famous tablegame, Lasca.
+This project was made for our Introduction to Programming course. 
+It represent the digital mini-version of the famous tablegame, Lasca. Plus it is inspired from THAT new futuristic game featuring Keanu Reeves.
 Check out the official site of the game, here: http://www.lasca.org/
 
 The rules for this game are to be found inside the game and many reminders are thrown whenever a player violates them.
 
 
-## Credits
+### Credits
 Gianmaria Pizzo, Aleksandra Gjorgievska & Riccardo Peresin.
 
 
@@ -98,25 +99,25 @@ These are some kinds of error messages you could get while playing:
 ---
 
 
-### Break down into end to end tests
+### Standard
 
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-
-### And coding style tests or memory leak tests
-
-Explain what these tests test and why
+We follwed ANSI C 90 Standard rules to build this project.
 
 ```
 Give an example
 ```
 
 
-## Built With
+### Disclaimer
+
+Follow the instructions given or the program will fail.
+
+```
+**DISCLAIMER: The input you may type is always shown, other kinds of input may make the game fail.**
+```
+
+
+### Built With
 
 * CLion
 * Visual Studio - Release/Debug
@@ -124,12 +125,12 @@ Give an example
 * Doxygen
 
 
-## Contributing
+### Contributing
 
 We'd like to thank our professors Claudio Lucchese and Alvise Spano' for helping us during the creation of our project.
 
 
-## Versioning
+### Versioning
 
 Version 1.0
 
@@ -141,14 +142,14 @@ Esempio:
 * **Aleksandra** - *Structure & Rules Handler* - [aleksandragjorgievska](https://github.com/aleksandragjorgievska)
 * **Riccardo** - *Group Member*
 
-## License
+### License
 
 This project is to be taken as an example. 
 Anyone can build their own little game using only basic ANSI C.
 It is not to be distributed for plagiarizing purposes or sold.
 
 
-## Acknowledgments
+### Acknowledgments
 
 * This was our first time coding together and my colleagues were amazing.
 * This project was made to respect the ANSI C 90 standards.
