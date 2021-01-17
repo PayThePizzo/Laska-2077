@@ -1,15 +1,5 @@
 #include "laska.h"
 
-/*
-legend id
-0-> white box
-1-> black box
-2-> white pawn
-3-> black pawn
-4-> white dama
-5-> black dama
-*/
-
 tgame * create(int cols,int rows){
     tgame *dama;
     int i, j;

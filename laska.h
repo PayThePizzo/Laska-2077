@@ -57,7 +57,7 @@ typedef struct point_list{
  * 5-> black dama
  * @endcode
  *
- * @struct Box of Laska board
+ * @struct box of Laska board
  */
 typedef struct boxpawn {
     int id;     /**< the color*/
@@ -452,4 +452,4 @@ void goodbye();
 void credits();
 
 
-#endif //LASKA_LASKA_H
+#endif /* LASKA_LASKA_H */

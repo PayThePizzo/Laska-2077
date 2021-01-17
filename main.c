@@ -15,7 +15,7 @@ int main() {
             aux = main_menu();
 
             if(aux == 0) {
-                // player solo
+                /*player solo*/
                 printf("\n");
                 printf("You're playing solo. Since life's been hard for you, you can play both players and decide who wins.\n");
                 printf("\n");
@@ -23,7 +23,7 @@ int main() {
                 result_menu(winner);
             }
             else if(aux == 1) {
-                // player vs player
+                /*player vs player*/
                 printf("\n");
                 printf("Hey you guys, let's decide your colors first!\n");
                 printf("\n");
@@ -33,7 +33,7 @@ int main() {
                 result_menu(winner);
             }
             else if(aux == 2) {
-                // pc vs player
+                /*pc vs player*/
                 printf("\n");
                 printf("This pc is too arrogant to start first, you'll use the white pawns\n");
                 printf("\n");
@@ -41,7 +41,7 @@ int main() {
                 result_menu(winner);
             }
             else if(aux == 3) {
-                // pc vs pc
+                /* pc vs pc */
                 printf("\n");
                 printf("Keep the eyes on the ball, or at least try to!\n");
                 printf("Shall they start?(yes/no)\n");
