@@ -7,14 +7,14 @@ It represents a digital mini-version of the famous tablegame, Lasca.
 Plus, it is inspired from THAT new futuristic game featuring Keanu Reeves.
 
 Check out the official site of the game, here: http://www.lasca.org/
-
+---
 
 ### Credits
 Gianmaria Pizzo & Aleksandra Gjorgievska.
 
 
 ## Prerequisites
----
+
 + Mac Os & Linux:
     - Unix-like Terminal
     - Xcode tools and gcc compiler
@@ -58,7 +58,6 @@ Black player wins!
 ```
 $clean
 ```
----
 
 ### Windows
 
@@ -79,7 +78,6 @@ Black player wins!
 ---
 
 ### No clue how to play the game? We are here to help!
----
 
 The rules for this game are to be found inside the game and many reminders are thrown whenever a player violates them.
     + Type "yes" as soon as the game starts!
@@ -110,10 +108,10 @@ The rules for this game are to be found inside the game and many reminders are t
 
 "Error move function"
 ```
-
+---
 
 ## Features
----
+
 1. Easter Eggs: Laska-bot and Narrator like to make your day worse. But HE is coming to help.
     + Don't get upset, haters gonna hate.
     + Meet K.R. straight from the year 2077. Who does not love him?
@@ -143,7 +141,7 @@ The rules for this game are to be found inside the game and many reminders are t
 Here's a little insight of the welcome section:
 
 ![alt text](https://github.com/PayThePizzo/Laska-2077/blob/main/View.jpg?raw=true)
-
+---
 
 
 ### Standard & Style
@@ -170,7 +168,7 @@ int foo_aux(int sup){
  return aux_temp;
 }
 ```
-
+---
 
 ### Disclaimer
 
