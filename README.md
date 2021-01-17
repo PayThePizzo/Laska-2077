@@ -31,18 +31,32 @@ Or
 
 ### Mac & Linux
 
-1. Simply download the source code from this page and run it through the following commands in your unix terminal:
+1. Simply download the source code from this repository.
 
+2. Unzip it on your desktop and move the "Laska-main-2077" to your desktop.
+
+3. Run the following commands in your unix terminal to change directory and enter the main folder:
 ```
-gcc main.c 
-./a.out
+$cd Desktop
+
+$cd Laska-2077-main
 ```
+4. Run the following commands to create the object file and the executable file, and then play.
+```
+$make
+
+$./laska
+```
+5. Remove extra copies after the game with the following command:
+```
+$clean
+```
+---
 
 ### Windows
 
 1. Import the unzipped windows directory (through your IDE).
-
-You can also get the files from VCS: https://github.com/PayThePizzo/Laska-2077.git
+    + You can also get the files from VCS: https://github.com/PayThePizzo/Laska-2077.git
 
 2. Run the main.c in release mode.
 
@@ -53,6 +67,7 @@ White player wins!
 
 Black player wins!
 ```
+---
 
 ### No clue how to play the game? We are here to help!
 ---
