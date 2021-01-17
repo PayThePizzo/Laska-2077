@@ -23,7 +23,7 @@ Or
 
 + Windows:
     - Any IDE like CLion or Visual Studio
-    - Any gcc compiler (We recommend using Visual Studio's)
+    - Any gcc compiler (We recommend using Visual Studio's and WSL's)
 ---
 
 
@@ -47,7 +47,14 @@ $make
 
 $./laska
 ```
-5. Remove extra copies after the game with the following command:
+5. Play the game to show the machine, or your opponent, who's the best.
+
+```
+White player wins!
+
+Black player wins!
+```
+6. Remove extra copies after the game with the following command:
 ```
 $clean
 ```
@@ -73,8 +80,10 @@ Black player wins!
 ---
 
 The rules for this game are to be found inside the game and many reminders are thrown whenever a player violates them.
-    + check the official website for more details.
-These are some kinds of error messages you could get while playing:
+    + Type "yes" as soon as the game starts!
+    + Check the official website for more details.
+
+* These are some kinds of error messages you could get while playing:
 
 ```
 "The selected box doesn't exist. Please select a letter from _ to _ ."
