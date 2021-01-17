@@ -73,7 +73,6 @@ White player wins!
 
 Black player wins!
 ```
----
 
 ### No clue how to play the game? We are here to help!
 
@@ -106,7 +105,6 @@ The rules for this game are to be found inside the game and many reminders are t
 
 "Error move function"
 ```
----
 
 ## Features
 
@@ -165,7 +163,6 @@ int foo_aux(int sup){
  return aux_temp;
 }
 ```
----
 
 ### Disclaimer
 
