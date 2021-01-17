@@ -7,7 +7,6 @@ It represents a digital mini-version of the famous tablegame, Lasca.
 Plus, it is inspired from THAT new futuristic game featuring Keanu Reeves.
 
 Check out the official site of the game, here: http://www.lasca.org/
----
 
 ### Credits
 Gianmaria Pizzo & Aleksandra Gjorgievska.
