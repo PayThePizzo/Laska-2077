@@ -11,7 +11,7 @@ Check out the official site of the game, here: http://www.lasca.org/
 Gianmaria Pizzo, Aleksandra Gjorgievska & Riccardo Peresin.
 
 
-### Prerequisites
+## Prerequisites
 ---
 + Mac Os & Linux:
     - Unix-like Terminal
