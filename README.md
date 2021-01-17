@@ -8,7 +8,7 @@ Check out the official site of the game, here: http://www.lasca.org/
 
 
 ### Credits
-Gianmaria Pizzo, Aleksandra Gjorgievska & Riccardo Peresin.
+Gianmaria Pizzo & Aleksandra Gjorgievska.
 
 
 ## Prerequisites
@@ -161,10 +161,8 @@ Version 1.0
 
 ## Authors
 
-Esempio:
 * **Gianmaria** - *Front End Designer & Feature Creator* - [PayThePizzo](https://github.com/PayThePizzo)
 * **Aleksandra** - *Structure & Rules Handler* - [aleksandragjorgievska](https://github.com/aleksandragjorgievska)
-* **Riccardo** - *Group Member*
 
 
 ### License
