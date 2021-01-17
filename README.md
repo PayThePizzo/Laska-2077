@@ -1,5 +1,7 @@
 # Laska 2077
 
+![alt text](https://github.com/PayThePizzo/Laska-2077/blob/main/lask-2070-logo.png?raw=true)
+
 This project was made for our Introduction to Programming course. 
 It represents a digital mini-version of the famous tablegame, Lasca.
 Plus, it is inspired from THAT new futuristic game featuring Keanu Reeves.
