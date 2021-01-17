@@ -107,7 +107,7 @@ These are some kinds of error messages you could get while playing:
 
 Here's a little insight of the welcome section:
 
-![alt text](https://github.com/PayThePizzo/Laska-2077/blob/main/Insight.png?raw=true)
+![alt text](https://github.com/PayThePizzo/Laska-2077/blob/main/Ins.png?raw=true)
 
 
 
