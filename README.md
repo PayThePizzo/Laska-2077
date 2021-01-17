@@ -23,7 +23,6 @@ Or
 + Windows:
     - Any IDE like CLion or Visual Studio
     - Any gcc compiler (We recommend using Visual Studio's and WSL's)
----
 
 
 ## Installing
