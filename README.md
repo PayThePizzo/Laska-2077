@@ -59,11 +59,11 @@ These are some kinds of error messages you could get while playing:
 
 "FORCING CAPTURE - Pieces must capture if in a position to do so."
 
-"The Dama (promoted pawn) may capture only in the 4 diagonals if the adjacet is a foe's pawn and the next on the diagonal is free."
+"The Officer may capture only in the 4 diagonals if the adjacet is a foe's pawn and the next on the diagonal is free."
 
 "The pawn may capture only in the 2 diagonals forward if the adjacet is a foe's pawn and the next on the diagonal is free."
 
-"The Dama (promoted pawn) may move only in the 4 diagonals if it's free."
+"The Officer may move only in the 4 diagonals if it's free."
 
 "The pawn may move only in the 2 diagonals forward if it's free."
 
