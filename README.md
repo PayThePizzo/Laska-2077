@@ -12,15 +12,18 @@ Gianmaria Pizzo, Aleksandra Gjorgievska & Riccardo Peresin.
 
 
 ### Prerequisites
-Mac Os & Linux:
-- Unix Terminal
-- Gcc compiler
+---
++ Mac Os & Linux:
+    - Unix Terminal
+    - Gcc compiler
 
 Or
 
-Windows:
-- Visual Studio
-- CLion
++ Windows:
+    - Visual Studio
+    - CLion
+---
+
 
 ### Installing
 Simply download the source code from this page and run it through the following commands:
@@ -130,6 +133,7 @@ int foo_aux(int sup){
 ### Disclaimer
 
 Follow the instructions given or the program will fail.
+Some messages may be shown multiple times, that is a "reward" for following the rules.
 
 ```
 **DISCLAIMER: The input you may type is always shown, other kinds of input may make the game fail.**
@@ -146,7 +150,7 @@ Follow the instructions given or the program will fail.
 
 ### Contributing
 
-We'd like to thank our professors Claudio Lucchese and Alvise Spano' for helping us during the creation of our project.
+We'd like to thank our professors Claudio Lucchese, Alvise Spano'  and out tutors Alberto Veneri and Antonio Emanuele Cina' for helping us during the creation of our project.
 
 
 ### Versioning
