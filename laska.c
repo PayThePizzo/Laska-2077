@@ -325,9 +325,16 @@ int white_capture_check(tgame *dama, point a, int turn){
 
     e = enemy(turn);
 
+    /* checks whether there are at least 2 rows above*/
     if(a.i<2) {
+        /* if not, you cannot capture, there must be at least 3 rows */
         return 0;
-    }else if(a.j==0 || a.j==1){
+    }
+    /* checks if the pawn is at the upper left margin (col 0 and col 1) */
+    else if(a.j==0 || a.j==1){
+
+        /*  (3) if the move goes towards north-east, the boxpawn of arrival is empty and the boxpawn in the middle
+         *  is occupied by an enemy, then returns 1; else 0. */
         if((dama->mat[a.i-1][a.j+1]->id == e+2 || dama->mat[a.i-1][a.j+1]->id == e+4)
             && dama->mat[a.i-2][a.j+2]->id == 0) {
             return 1;
@@ -335,7 +342,11 @@ int white_capture_check(tgame *dama, point a, int turn){
             return 0;
         }
     }
+    /* checks if the pawn is at the upper right margin */
     else if (a.j==dama->cols-1 || a.j==dama->cols-2) {
+
+        /* (5) if the move goes towards north-west, the boxpawn of arrival is empty and the boxpawn in the middle
+        *  is occupied by an enemy, then returns 1; else 0. */
         if ((dama->mat[a.i - 1][a.j - 1]->id == e + 2 || dama->mat[a.i - 1][a.j - 1]->id == e + 4)
             && dama->mat[a.i - 2][a.j - 2]->id == 0) {
 
@@ -345,6 +356,8 @@ int white_capture_check(tgame *dama, point a, int turn){
         }
     }
     else{
+
+        /* checks whether (3) or (5) are true, then move towards N-E or N-W*/
         if(((dama->mat[a.i-1][a.j+1]->id == e+2 || dama->mat[a.i-1][a.j+1]->id == e+4)
             && dama->mat[a.i-2][a.j+2]->id == 0)||
             ((dama->mat[a.i-1][a.j-1]->id == e+2 || dama->mat[a.i-1][a.j-1]->id == e+4)
@@ -363,9 +376,16 @@ int black_capture_check(tgame *dama, point a, int turn){
 
     e = enemy(turn);
 
+    /* checks whether there are at least 2 rows below*/
     if(a.i > (dama->rows-3)){
+        /* if not, you cannot capture, there must be at least 3 rows */
         return 0;
-    } else if(a.j==0 || a.j==1){
+    }
+    /* checks if the pawn is at the upper left margin (col 0 and col 1) */
+    else if(a.j==0 || a.j==1){
+
+        /*  (3) if the move goes towards south-east, the boxpawn of arrival is empty and the boxpawn in the middle
+         *  is occupied by an enemy, then returns 1; else 0. */
         if((dama->mat[a.i+1][a.j+1]->id == e+2 || dama->mat[a.i+1][a.j+1]->id == e+4)
             && dama->mat[a.i+2][a.j+2]->id == 0) {
             return 1;
@@ -373,7 +393,11 @@ int black_capture_check(tgame *dama, point a, int turn){
             return 0;
         }
     }
+    /* checks if the pawn is at the upper right margin */
     else if (a.j==dama->cols-1 || a.j==dama->cols-2){
+
+        /*  (5) if the move goes towards south-west, the boxpawn of arrival is empty and the boxpawn in the middle
+         *  is occupied by an enemy, then returns 1; else 0. */
         if((dama->mat[a.i+1][a.j-1]->id == e+2 || dama->mat[a.i+1][a.j-1]->id == e+4)
             && dama->mat[a.i+2][a.j-2]->id == 0){
             return 1;
@@ -382,6 +406,7 @@ int black_capture_check(tgame *dama, point a, int turn){
         }
     }
     else{
+        /* checks whether (3) or (5) are true, then move towards S-E or S-W*/
         if(((dama->mat[a.i+1][a.j+1]->id == e+2 || dama->mat[a.i+1][a.j+1]->id == e+4)
             && dama->mat[a.i+2][a.j+2]->id == 0)||
             ((dama->mat[a.i+1][a.j-1]->id == e+2 || dama->mat[a.i+1][a.j-1]->id == e+4)
@@ -409,6 +434,7 @@ int player_can_capture(tgame *dama, int turn){
 
             if(dama->mat[i][j]->id == turn+2 ){
                 if((turn==0 && white_capture_check(dama, p, turn)) || (turn==1 && black_capture_check(dama, p, turn))) {
+
                     flag = 1;
                 }
             }else if(dama->mat[i][j]->id == turn+4 ){
@@ -500,26 +526,43 @@ int legal_choice(tgame *dama, int turn, point a){
 
 int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
     int move;
+    point p;
 
+    /* boxpawn is empty*/
     if(dama->mat[b.i][b.j]->id == 0){
+
+        /* check forced capture */
         if(have_to_capture == 8){
-            point p = findmiddle(a, b);
+            p = findmiddle(a, b);
+
+            /* checks if the boxpawn you leaped over is occupied by an enemy */
             if(dama->mat[p.i][p.j]->id == enemy(turn)+2 || dama->mat[p.i][p.j]->id == enemy(turn)+4){
+
+                /* checks if it is an officer */
                 if(is_promoted (dama,a,turn)){
+
+                    /* if distance, vertically and horizontally speaking, is equal to 2 */
                     if ( abs(b.i - a.i)==2 && abs(b.j - a.j)==2) {
                         move = 0;
                     }else {
                         move = 2;
                     }
                 }
+
+                /* white's turn */
                 else if(turn == 0){
+
+                    /* checks if pawn is moved towards N-E or N-W */
                     if(a.i == (b.i)+2 && (a.j == (b.j)+2 || a.j == (b.j)-2)) {
                         move = 0;
                     }else {
                         move = 3;
                     }
                 }
+                /* black's turn */
                 else if(turn == 1){
+
+                    /* checks if pawn is moved towards S-E or S-W */
                     if (a.i == b.i-2 && (a.j == b.j+2 || a.j == b.j-2)){
                         move = 0;
                     }else {
@@ -530,15 +573,22 @@ int illegal_move (tgame *dama, int turn, point a, point b, int have_to_capture){
                 move = 1;
             }
         }
+        /* checks if you can only move without capturing */
         else if(is_promoted (dama,a,turn)){
+
+            /* checks distance == 1*/
             if(abs(b.i - a.i)==1 && abs(b.j - a.j)==1) {
                 move = 0;
             }else {
                 move = 4;
             }
-        }else if (turn == 0 && (((b.i==(a.i)-1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)-1)&& (b.j==(a.j)+1)))){
+        }
+        /* white pawn can move only N-E or N-W*/
+        else if (turn == 0 && (((b.i==(a.i)-1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)-1)&& (b.j==(a.j)+1)))){
             move = 0;
-        }else if (turn == 1 && (((b.i==(a.i)+1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)+1)&& (b.j==(a.j)+1)))){
+        }
+        /* black pawn can move only S-E or S-W*/
+        else if (turn == 1 && (((b.i==(a.i)+1)&& (b.j==(a.j)-1)) || ((b.i==(a.i)+1)&& (b.j==(a.j)+1)))){
             move = 0;
         }else{
             move = 5;
@@ -657,6 +707,7 @@ point_list * avaiable_choices(tgame *dama, int rows, int cols, int turn){
 
     l = create_choices_list();
 
+    /* checks if forced capture */
     if(player_can_capture(dama, turn)){
         for (i=0; i<rows; i++){
             for(j=0; j<cols; j++){
@@ -664,12 +715,15 @@ point_list * avaiable_choices(tgame *dama, int rows, int cols, int turn){
                 p.i = i;
                 p.j = j;
 
+                /* if it is black's turn, checks if the pawn is a soldier and whether it is forced to capture*/
                 if(turn ==1 && dama->mat[i][j]->id == turn+2 && black_capture_check(dama, p, turn)){
                     add_at_the_end(l, p);
                 }
+                /* if it is white's turn, checks if the pawn is soldier and whether it is forced to capture*/
                 else if (turn ==0 && dama->mat[i][j]->id == turn+2 && white_capture_check(dama, p, turn)){
                     add_at_the_end(l, p);
                 }
+                /* if it is an officer, checks whether it can capture*/
                 if(dama->mat[i][j]->id == turn+4 && dama_capture_check(dama, p, turn)){
                     add_at_the_end(l, p);
                 }
@@ -683,12 +737,15 @@ point_list * avaiable_choices(tgame *dama, int rows, int cols, int turn){
                 p.i = i;
                 p.j = j;
 
+                /* if it's black's turn, checks the if it is a soldier and whether it may be moved*/
                 if(turn == 1 && dama->mat[i][j]->id == turn+2 && black_move_check(dama, p)){
                     add_at_the_end(l, p);
                 }
+                /* if it's white's turn, checks the if it is a soldier and whether it may be moved*/
                 else if(turn == 0 && dama->mat[i][j]->id == turn+2 && white_move_check(dama, p)){
                     add_at_the_end(l, p);
                 }
+                /* if it is an officer and whether it may be moved*/
                 if(dama->mat[i][j]->id == turn+4 && dama_move_check(dama, p)){
                     add_at_the_end(l, p);
                 }
