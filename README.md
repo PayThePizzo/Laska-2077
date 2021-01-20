@@ -60,8 +60,9 @@ $clean
 ### Windows
 
 1. Import the unzipped windows directory (through your IDE).
-    + You can also get the files from VCS: https://github.com/PayThePizzo/Laska-2077.git
-    
+
+    +   You can also get the files from VCS: https://github.com/PayThePizzo/Laska-2077.git
+      
 ![alt text](https://github.com/PayThePizzo/Laska-2077/blob/main/vcs.png?raw=true)
 
 2. Run it in debug/release mode.
@@ -77,8 +78,10 @@ Black player wins!
 ### No clue how to play the game? We are here to help!
 
 The rules for this game are to be found inside the game and many reminders are thrown whenever a player violates them.
-    + Type "yes" as soon as the game starts!
-    + Check the official website for more details.
+
+    +   Type "yes" as soon as the game starts!
+    
+    +   Check the official website for more details.
 
 * These are some kinds of error messages you could get while playing:
 
