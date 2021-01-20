@@ -65,9 +65,13 @@ $clean
       
 ![alt text](https://github.com/PayThePizzo/Laska-2077/blob/main/vcs.png?raw=true)
 
-2. Run it in debug/release mode.
+2. Edit the makelists file so it can find the right folder/project to link
 
-3. Play the game to show the machine, or your opponent, who's the best.
+![alt text](https://github.com/PayThePizzo/Laska-2077/blob/main/makelistlaska.png?raw=true)
+
+3. Run it in debug/release mode.
+
+4. Play the game to show the machine, or your opponent, who's the best.
 
 ```
 White player wins!
