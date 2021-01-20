@@ -813,21 +813,21 @@ void error(game_t *dama, int rows, int cols,int turn, int code_error){
         free_choices_list(l);
     }
     else if(code_error ==2){
-        printf("The Dama (promoted pawn) may capture only in the 4 diagonals if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
+        printf("The Officer (promoted pawn) may capture only in the 4 diagonals if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
     }else if(code_error ==3){
         printf("The pawn may capture only in the 2 diagonals forward if the adjacet is a foe's pawn and the next on the diagonal is free.\n");
     }else if(code_error ==4){
-        printf("The Dama (promoted pawn) may move only in the 4 diagonals if it's free.\n");
+        printf("The Officer (promoted pawn) may move only in the 4 diagonals if it's free.\n");
     }else if(code_error ==5){
         printf("The pawn may move only in the 2 diagonals forward if it's free.\n");
     }else if(code_error ==6){
         printf("You can move only into free white empty bowes\n");
     }else if(code_error == 7){
-        printf("The selected box have to contain your pawn\n");
+        printf("The selected box must contain your pawn\n");
     }else if(code_error == 10){
         printf("The pawn you choosed can not be moved\n");
     }else if(code_error == 11){
-        printf("Unfortunately, you can't choose this pawn because you are forced to capture foe's pawns, so you have to choose an other pawn.\nYou can move only the pawn inside one of this boxes:\n");
+        printf("Unfortunately, you can't choose this pawn because you are forced to capture foe's pawns, so you must choose an other pawn.\nYou can move only the pawn inside one of this boxes:\n");
         l = avaiable_choices(dama, rows, cols, turn);
         point_a = l->list;
 
