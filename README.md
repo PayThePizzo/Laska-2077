@@ -31,7 +31,7 @@ Or
 
 1. Simply download the source code from this repository.
 
-2. Unzip it on your desktop and move the "Laska-main-2077" to your desktop.
+2. Unzip it on your desktop and move the "Laska-2077-main" to your desktop.
 
 3. Run the following commands in your unix terminal to change directory and enter the main folder:
 ```
