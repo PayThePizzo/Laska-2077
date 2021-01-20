@@ -210,6 +210,6 @@ It is not to be distributed for plagiarizing purposes or sold.
 
 ### Acknowledgments
 
-* This was our first time coding together and my colleagues were amazing.
+* This was our first time coding together and my colleague was amazing.
 * This project was made to respect the ANSI C 90 standards.
 
